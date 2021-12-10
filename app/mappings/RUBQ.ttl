@@ -41,7 +41,7 @@
         rml:referenceFormulation ql:JSONPath;
         rml:iterator "$.[*]"];
     rr:subjectMap [
-        rr:template "urn:qa:benchmark#question-{_id}";
+        rr:template "urn:qa:benchmark#question-{uid}";
         rr:class qab:Question];
     rr:predicateObjectMap [
         rr:predicate qab:isElementOf;
@@ -50,25 +50,45 @@
     rr:predicateObjectMap [
         rr:predicate qab:hasId;
         rr:objectMap [
-            rml:reference "_id";
+            rml:reference "uid";
             rr:datatype xsd:nonNegativeInteger]];
     rr:predicateObjectMap [
-        rr:predicate qab:correctedQuestion;
+        rr:predicate qab:questionText;
         rr:objectMap [
-            rml:reference "corrected_question";
+            rml:reference "question_text";
             rr:datatype xsd:string]];
     rr:predicateObjectMap [
-        rr:predicate qab:intermediaryQuestion;
+        rr:predicate qab:query;
         rr:objectMap [
-            rml:reference "intermediary_question";
+            rml:reference "query";
             rr:datatype xsd:string]];
     rr:predicateObjectMap [
-        rr:predicate qab:sparqlQuery;
+        rr:predicate qab:answerText;
         rr:objectMap [
-            rml:reference "sparql_query";
+            rml:reference "answer_text";
             rr:datatype xsd:string]];
     rr:predicateObjectMap [
-        rr:predicate qab:sparqlTemplateId;
+        rr:predicate qab:questionURI;
         rr:objectMap [
-            rml:reference "sparql_template_id";
-            rr:datatype xsd:nonNegativeInteger]].
+            rml:reference "question_uris.[*]";
+            rr:datatype xsd:string]];
+    rr:predicateObjectMap [
+        rr:predicate qab:questionProp;
+        rr:objectMap [
+            rml:reference "question_props.[*]";
+            rr:datatype xsd:string]];
+    rr:predicateObjectMap [
+        rr:predicate qab:answer;
+        rr:objectMap [
+            rml:reference "answers.[*].value";
+            rr:datatype xsd:string]];
+    rr:predicateObjectMap [
+        rr:predicate qab:tag;
+        rr:objectMap [
+            rml:reference "tags.[*]";
+            rr:datatype xsd:string]];
+    rr:predicateObjectMap [
+        rr:predicate qab:questionEng;
+        rr:objectMap [
+            rml:reference "question_eng";
+            rr:datatype xsd:string]].
