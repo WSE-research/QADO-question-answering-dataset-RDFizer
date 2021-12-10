@@ -1,0 +1,74 @@
+@prefix rml: <http://semweb.mmlab.be/ns/rml#> .
+@prefix rr: <http://www.w3.org/ns/r2rml#> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+@prefix void: <http://rdfs.org/ns/void#> .
+@prefix prov: <http://www.w3.org/ns/prov#> .
+@prefix qab: <urn:qa:benchmark#> .
+@prefix ql: <http://semweb.mmlab.be/ns/ql#>.
+@base <URL#>.
+
+
+<#DatasetMapping> a rr:TriplesMap;
+    rml:logicalSource [
+        rml:source "example.json";
+        rml:referenceFormulation ql:JSONPath;
+        rml:iterator "$.questions.[*]"];
+    rr:subjectMap [
+        rr:template "urn:qa:benchmark#dataset";
+        rr:class qab:Benchmark];
+    rr:predicateObjectMap [
+        rr:predicate void:dataDump;
+        rr:objectMap [
+            rr:template "URL"]];
+    rr:predicateObjectMap [
+        rr:predicate rdfs:label;
+        rr:objectMap [
+            rr:template "LABEL";
+            rr:datatype xsd:string]];
+    rr:predicateObjectMap [
+        rr:predicate foaf:homepage;
+        rr:objectMap [
+            rr:template "HOMEPAGE";
+            rr:datatype xsd:string]].
+
+
+<#QuestionMapping> a rr:TriplesMap;
+    rml:logicalSource [
+        rml:source "example.json";
+        rml:referenceFormulation ql:JSONPath;
+        rml:iterator "$.[*]"];
+    rr:subjectMap [
+        rr:template "urn:qa:benchmark#question-{_id}";
+        rr:class qab:Question];
+    rr:predicateObjectMap [
+        rr:predicate qab:isElementOf;
+        rr:objectMap[
+            rr:template "urn:qa:benchmark#dataset"]];
+    rr:predicateObjectMap [
+        rr:predicate qab:hasId;
+        rr:objectMap [
+            rml:reference "_id";
+            rr:datatype xsd:nonNegativeInteger]];
+    rr:predicateObjectMap [
+        rr:predicate qab:correctedQuestion;
+        rr:objectMap [
+            rml:reference "corrected_question";
+            rr:datatype xsd:string]];
+    rr:predicateObjectMap [
+        rr:predicate qab:intermediaryQuestion;
+        rr:objectMap [
+            rml:reference "intermediary_question";
+            rr:datatype xsd:string]];
+    rr:predicateObjectMap [
+        rr:predicate qab:sparqlQuery;
+        rr:objectMap [
+            rml:reference "sparql_query";
+            rr:datatype xsd:string]];
+    rr:predicateObjectMap [
+        rr:predicate qab:sparqlTemplateId;
+        rr:objectMap [
+            rml:reference "sparql_template_id";
+            rr:datatype xsd:nonNegativeInteger]].

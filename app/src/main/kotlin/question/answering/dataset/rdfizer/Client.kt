@@ -3,11 +3,11 @@ import java.rmi.registry.LocateRegistry
 
 fun main() {
     // URL of the JSON file
-    val url = "https://raw.githubusercontent.com/ag-sc/QALD/master/7/data/qald-7-train-multilingual.json"
+    val url = "https://raw.githubusercontent.com/vladislavneon/RuBQ/master/RuBQ_1.0/RuBQ_1.0_test.json"
 
     // output file and directory
-    val outputDirectory = "output/qald/7"
-    val outputFile = "qald-7-train-multilingual.ttl"
+    val outputDirectory = "output/rubq/1"
+    val outputFile = "rubq-1-test.ttl"
 
     // get registry for RMI
     val registry = LocateRegistry.getRegistry(20000)
@@ -16,6 +16,6 @@ fun main() {
     val service = registry.lookup("rdfizer") as RDFRMIServiceInterface
 
     // convert JSON to RDF and print result
-    service.mapRDF(url, outputDirectory, outputFile, "QALD", "QALD 7 train data", "http://example.com")
+    service.mapRDF(url, outputDirectory, outputFile, "rubq", "RuBQ 1.0 test data", "http://example.com")
     println(service.getRDFFile(outputDirectory, outputFile))
 }

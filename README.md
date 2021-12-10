@@ -11,3 +11,4 @@ listing on port 20000 by default.
 A reference implementation of a client accessing the service is provided in `Client.kt`.
 By default the following templates are supported:
 * QALD
+* LC-QuAD
