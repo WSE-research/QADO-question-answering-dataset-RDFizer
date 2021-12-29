@@ -126,6 +126,8 @@ class RDFRMIService: RDFRMIServiceInterface {
 }
 
 fun main() {
+    System.setProperty("java.rmi.server.hostname", "192.168.178.14")
+
     val registry = LocateRegistry.createRegistry(20000)
     val remote = RDFRMIService()
 
