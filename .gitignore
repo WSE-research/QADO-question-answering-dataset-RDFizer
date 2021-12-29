@@ -6,8 +6,6 @@ __pycache__/
 # C extensions
 *.so
 
-/app/outputs/
-
 # Distribution / packaging
 .Python
 build/
@@ -135,3 +133,4 @@ dmypy.json
 
 # Ignore Gradle build output directory
 build
+/app/outputs/
