@@ -6,7 +6,7 @@ __pycache__/
 # C extensions
 *.so
 
-app/outputs
+app/outputs/
 
 # Distribution / packaging
 .Python
