@@ -12,3 +12,5 @@ A reference implementation of a client accessing the service is provided in `Cli
 By default the following templates are supported:
 * QALD
 * LC-QuAD
+* RuBQ
+* CWQ

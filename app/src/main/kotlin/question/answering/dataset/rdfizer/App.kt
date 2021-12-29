@@ -52,7 +52,7 @@ interface RDFRMIServiceInterface: Remote {
 class RDFRMIService: RDFRMIServiceInterface {
     override fun getRDFFile(outputDirectory: String, outputFile: String): String {
         return try {
-            File("$outputDirectory/$outputFile").readText()
+            File("outputs/${outputDirectory.replace("..", "")}/$outputFile").readText()
         } catch (e: IOException) {
             "File not found!"
         }
@@ -71,7 +71,7 @@ class RDFRMIService: RDFRMIServiceInterface {
         val jsonObject = response.body().toString()
 
         try {
-            val outputDirectoryObject = File(outputDirectory)
+            val outputDirectoryObject = File("outputs/${outputDirectory.replace("..", "")}")
             outputDirectoryObject.mkdirs()
 
             // store JSON data
@@ -108,7 +108,7 @@ class RDFRMIService: RDFRMIServiceInterface {
             val result: QuadStore? = executor.executeV5(null)[NamedNode("rmlmapper://default.store")]
 
             // write triples to output file
-            val output: OutputStream = FileOutputStream("${outputDirectory}/${outputFile}")
+            val output: OutputStream = FileOutputStream("outputs/${outputDirectory.replace("..", "")}/${outputFile}")
             val out = BufferedWriter(OutputStreamWriter(output))
             result?.write(out, "turtle")
 

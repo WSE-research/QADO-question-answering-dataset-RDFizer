@@ -1,0 +1,118 @@
+@prefix rml: <http://semweb.mmlab.be/ns/rml#> .
+@prefix rr: <http://www.w3.org/ns/r2rml#> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+@prefix void: <http://rdfs.org/ns/void#> .
+@prefix prov: <http://www.w3.org/ns/prov#> .
+@prefix qab: <urn:qa:benchmark#> .
+@prefix ql: <http://semweb.mmlab.be/ns/ql#>.
+@base <URL#>.
+
+
+<#DatasetMapping> a rr:TriplesMap;
+    rml:logicalSource [
+        rml:source "example.json";
+        rml:referenceFormulation ql:JSONPath;
+        rml:iterator "$.[*]"];
+    rr:subjectMap [
+        rr:template "urn:qa:benchmark#dataset";
+        rr:class qab:Benchmark];
+    rr:predicateObjectMap [
+        rr:predicate void:dataDump;
+        rr:objectMap [
+            rr:template "URL"]];
+    rr:predicateObjectMap [
+        rr:predicate rdfs:label;
+        rr:objectMap [
+            rr:template "LABEL";
+            rr:datatype xsd:string]];
+    rr:predicateObjectMap [
+        rr:predicate foaf:homepage;
+        rr:objectMap [
+            rr:template "HOMEPAGE";
+            rr:datatype xsd:string]].
+
+
+<#QuestionMapping> a rr:TriplesMap;
+    rml:logicalSource [
+        rml:source "example.json";
+        rml:referenceFormulation ql:JSONPath;
+        rml:iterator "$.[*]"];
+    rr:subjectMap [
+        rr:template "urn:qa:benchmark#question-{ID}";
+        rr:class qab:Question];
+    rr:predicateObjectMap [
+        rr:predicate qab:hasId;
+        rr:objectMap [
+            rml:reference "ID";
+            rr:datatype xsd:string]];
+    rr:predicateObjectMap [
+        rr:predicate qab:compositionAnswer;
+        rr:objectMap [
+            rml:reference "composition_answer";
+            rr:datatype xsd:string]];
+    rr:predicateObjectMap [
+        rr:predicate qab:compositionalityType;
+        rr:objectMap [
+            rml:reference "compositionality_type";
+            rr:datatype xsd:string]];
+    rr:predicateObjectMap [
+        rr:predicate qab:createdAt;
+        rr:objectMap [
+            rml:reference "created";
+            rr:datatype xsd:date]];
+    rr:predicateObjectMap [
+        rr:predicate qab:machineQuestion;
+        rr:objectMap [
+            rml:reference "machine_question";
+            rr:datatype xsd:string]];
+    rr:predicateObjectMap [
+        rr:predicate qab:question;
+        rr:objectMap [
+            rml:reference "question";
+            rr:datatype xsd:string]];
+    rr:predicateObjectMap [
+        rr:predicate qab:sparql;
+        rr:objectMap [
+            rml:reference "sparql";
+            rr:datatype xsd:string]];
+    rr:predicateObjectMap [
+        rr:predicate qab:webqspId;
+        rr:objectMap [
+            rml:reference "webqsp_ID";
+            rr:datatype xsd:string]];
+    rr:predicateObjectMap [
+        rr:predicate qab:webqspQuestion;
+        rr:objectMap [
+            rml:reference "webqsp_question";
+            rr:datatype xsd:string]];
+    rr:predicateObjectMap [
+        rr:predicate qab:hasAnswer;
+        rr:objectMap [
+            rr:template "urn:qa:benchmark#answer-{answers.[*].answer_id}"]].
+
+<#AnswerMapping> a rr:TriplesMap;
+    rml:logicalSource [
+        rml:source "example.json";
+        rml:referenceFormulation ql:JSONPath;
+        rml:iterator "$..answers.[*]"];
+    rr:subjectMap [
+        rr:template "urn:qa:benchmark#answer-{answer_id}";
+        rr:class qab:Answer];
+    rr:predicateObjectMap [
+        rr:predicate qab:hasId;
+        rr:objectMap [
+            rml:reference "answer_id";
+            rr:datatype xsd:string]];
+    rr:predicateObjectMap [
+        rr:predicate qab:answer;
+        rr:objectMap [
+            rml:reference "answer";
+            rr:datatype xsd:string]];
+    rr:predicateObjectMap [
+        rr:predicate qab:alias;
+        rr:objectMap [
+            rml:reference "aliases.[*]";
+            rr:datatype xsd:string]].
