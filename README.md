@@ -24,3 +24,8 @@ By default, the following formats are supported:
 * LC-QuAD (`lc-quad`)
 * RuBQ (`rubq`)
 * CWQ (`cwq`)
+
+The follow cURL command can be used to convert a JSON file of the QALD benchmark
+into RDF.
+
+`curl http://$HOST:$PORT/json2rdf -X POST -H "Content-Type: application/json" -d "{\"filePath\": \"https://raw.githubusercontent.com/ag-sc/QALD/master/9/data/qald-9-test-multilingual.json\", \"format\": \"qald\", \"label\": \"QALD 9\", \"homepage\": \"https://github.com/ag-sc/QALD\"}"`
