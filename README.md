@@ -1,16 +1,26 @@
 # question-answering-dataset-RDFizer
-This tool provides an RMI service to convert structured data into RDF.
+This tool provides a webservice to convert structured data into RDF.
 
 ## Setup service
 To run the service locally run `./gradlew run`. Otherwise, you can set up a Docker container
 running the service by executing `docker build -t rdfizer:latest .` and 
-`docker run -d -p "$EXTERNAL_PORT:20000" rdfizer:latest`. The registry of the RMI server is
-listing on port 20000 by default.
+`docker run -d -p "$EXTERNAL_PORT:8080" rdfizer:latest`.
 
 ## Accessing service
-A reference implementation of a client accessing the service is provided in `Client.kt`.
-By default the following templates are supported:
-* QALD
-* LC-QuAD
-* RuBQ
-* CWQ
+To transform a JSON file to RDF perform a `POST`-Request at `$HOST:$PORT/json2rdf` with a JSON
+payload of the following structure:
+
+```json
+{
+  "format": "Mapping file name",
+  "label": "Name for the generated RDF triples",
+  "filePath": "URL of the JSON file",
+  "homepage": "URL of the data publisher"
+}
+```
+
+By default, the following formats are supported:
+* QALD (`qald`)
+* LC-QuAD (`lc-quad`)
+* RuBQ (`rubq`)
+* CWQ (`cwq`)

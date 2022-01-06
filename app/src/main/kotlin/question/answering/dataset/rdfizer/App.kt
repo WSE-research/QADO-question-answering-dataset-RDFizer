@@ -10,70 +10,42 @@ import be.ugent.rml.store.QuadStoreFactory
 import be.ugent.rml.store.RDF4JStore
 import be.ugent.rml.term.NamedNode
 
+import io.ktor.application.*
+import io.ktor.features.*
+import io.ktor.http.*
+import io.ktor.request.*
+import io.ktor.response.*
+import io.ktor.routing.*
+import io.ktor.serialization.*
+import io.ktor.server.engine.*
+import io.ktor.server.netty.*
+import kotlinx.serialization.Serializable
+
 import java.net.URI
 import java.net.http.HttpClient
 import java.net.http.HttpRequest
 import java.net.http.HttpResponse
 import java.io.*
 import java.util.HashMap
-import java.rmi.Remote
-import java.rmi.RemoteException
-import java.rmi.registry.LocateRegistry
-import kotlin.jvm.Throws
-import java.rmi.server.UnicastRemoteObject
 
 
-interface RDFRMIServiceInterface: Remote {
-    /**
-     * Converts a remote JSON file to RDF triples
-     *
-     * @param file_path: HTTP link to the JSON source file
-     * @param outputDirectory: Directory for the output file
-     * @param outputFile: file name for the output
-     * @param format: name of the corresponding mapping file
-     * @param label: label for the Question Answering Dataset
-     * @param homepage: link to the homepage of the project
-     * @throws RemoteException
-     *
-     * @author Oliver Schmidtke
-     */
-    @Throws(RemoteException::class)
-    fun mapRDF(file_path: String, outputDirectory: String, outputFile: String, format: String,
-                      label: String, homepage: String)
-
-    /**
-     *
-     */
-    @Throws(RemoteException::class)
-    fun getRDFFile(outputDirectory: String, outputFile: String): String
-}
-
-
-class RDFRMIService: RDFRMIServiceInterface {
-    override fun getRDFFile(outputDirectory: String, outputFile: String): String {
-        return try {
-            File("outputs/${outputDirectory.replace("..", "")}/$outputFile").readText()
-        } catch (e: IOException) {
-            "File not found!"
-        }
-    }
-
-    override fun mapRDF(file_path: String, outputDirectory: String, outputFile: String, format: String,
-        label: String, homepage: String) {
+@Serializable
+data class Json2RDFTransformer(private val filePath: String, private val format: String,
+                          private val label: String, private val homepage: String) {
+    fun mapRDF(): String {
         // create temporary
         val tempFile: File = kotlin.io.path.createTempFile().toFile()
         val tempRMLRules: File = kotlin.io.path.createTempFile().toFile()
 
+        var outputText: String
+
         // fetch JSON file
         val client: HttpClient = HttpClient.newBuilder().build()
-        val request: HttpRequest = HttpRequest.newBuilder().uri(URI.create(file_path)).build()
+        val request: HttpRequest = HttpRequest.newBuilder().uri(URI.create(filePath)).build()
         val response: HttpResponse<*> = client.send(request, HttpResponse.BodyHandlers.ofString())
         val jsonObject = response.body().toString()
 
         try {
-            val outputDirectoryObject = File("outputs/${outputDirectory.replace("..", "")}")
-            outputDirectoryObject.mkdirs()
-
             // store JSON data
             tempFile.writeText(jsonObject)
 
@@ -84,7 +56,7 @@ class RDFRMIService: RDFRMIServiceInterface {
             // read mapping file and replace placeholder
             var newMapping = mappingFile.readText()
             newMapping = newMapping.replace("example.json", tempFile.absolutePath)
-            newMapping = newMapping.replace("URL", file_path)
+            newMapping = newMapping.replace("URL", filePath)
             newMapping = newMapping.replace("LABEL", label)
             newMapping = newMapping.replace("HOMEPAGE", homepage)
 
@@ -108,32 +80,44 @@ class RDFRMIService: RDFRMIServiceInterface {
             val result: QuadStore? = executor.executeV5(null)[NamedNode("rmlmapper://default.store")]
 
             // write triples to output file
-            val output: OutputStream = FileOutputStream("outputs/${outputDirectory.replace("..", "")}/${outputFile}")
+            val output: OutputStream = ByteArrayOutputStream()
             val out = BufferedWriter(OutputStreamWriter(output))
             result?.write(out, "turtle")
+
+            outputText = output.toString()
 
             out.close()
         } catch (e: Exception) {
             e.printStackTrace()
-            error(e.message?: "")
+            outputText = e.message?: "Unknown error occurred"
         } finally {
             // remove temporary files
             tempFile.delete()
             tempRMLRules.delete()
         }
-    }
 
+        return outputText
+    }
 }
 
+
+
 fun main() {
-    System.setProperty("java.rmi.server.hostname", "192.168.178.14")
+    embeddedServer(Netty, port = 8080) {
+        install(ContentNegotiation) {
+            json()
+        }
 
-    val registry = LocateRegistry.createRegistry(20000)
-    val remote = RDFRMIService()
+        routing {
+            get("/") {
+                call.respondText("Hello, world!")
+            }
 
-    registry.bind("rdfizer", UnicastRemoteObject.exportObject(remote, 0))
+            post("/json2rdf") {
+                val json2rdfTransformer = call.receive<Json2RDFTransformer>()
 
-    /*mapRDF("https://raw.githubusercontent.com/ag-sc/QALD/master/7/data/qald-7-train-multilingual.json",
-        "output/qald/7", "qald-7-train-multilingual.ttl", "QALD", "QALD 7 train data",
-        "http://example.com")*/
+                call.respondText(json2rdfTransformer.mapRDF(), ContentType("text", "turtle"))
+            }
+        }
+    }.start(wait = true)
 }

@@ -8,7 +8,8 @@
 
 plugins {
     // Apply the org.jetbrains.kotlin.jvm Plugin to add support for Kotlin.
-    id("org.jetbrains.kotlin.jvm") version "1.5.31"
+    kotlin("jvm") version "1.6.10"
+    kotlin("plugin.serialization") version "1.6.10"
 
     // Apply the application plugin to add support for building a CLI application in Java.
     application
@@ -36,6 +37,10 @@ dependencies {
     // https://mvnrepository.com/artifact/be.ugent.rml/rmlmapper
     implementation("be.ugent.rml:rmlmapper:4.12.0")
 
+    implementation("io.ktor:ktor-server-core:1.6.7")
+    implementation("io.ktor:ktor-server-netty:1.6.7")
+    implementation("ch.qos.logback:logback-classic:1.2.5")
+    implementation("io.ktor:ktor-serialization:1.6.7")
 
     // Use the Kotlin test library.
     testImplementation("org.jetbrains.kotlin:kotlin-test")
