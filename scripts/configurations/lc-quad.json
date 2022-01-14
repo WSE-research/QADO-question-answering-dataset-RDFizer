@@ -11,13 +11,13 @@
         "homepage": "http://lc-quad.sda.tech/"
     },
     {
-        "filePath": "https://figshare.com/articles/dataset/training_set_for_lcquad_2_0/8479055",
+        "filePath": "https://figshare.com/ndownloader/files/15738824",
         "format": "lc-quad",
         "label": "lcquad 2.0 train",
         "homepage": "http://lc-quad.sda.tech/"
     },
     {
-        "filePath": "https://figshare.com/articles/dataset/test_set_for_lcquad_2_0/8479052",
+        "filePath": "https://figshare.com/ndownloader/files/15738818",
         "format": "lc-quad",
         "label": "lcquad 2.0 test",
         "homepage": "http://lc-quad.sda.tech/"
