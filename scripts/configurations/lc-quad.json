@@ -1,0 +1,25 @@
+[{
+        "filePath": "https://figshare.com/ndownloader/files/23454047",
+        "format": "lc-quad",
+        "label": "lcquad 1.0 test en de",
+        "homepage": "http://lc-quad.sda.tech/"
+    },
+    {
+        "filePath": "https://figshare.com/ndownloader/files/23454050",
+        "format": "lc-quad",
+        "label": "lcquad 1.0 train en de",
+        "homepage": "http://lc-quad.sda.tech/"
+    },
+    {
+        "filePath": "https://figshare.com/articles/dataset/training_set_for_lcquad_2_0/8479055",
+        "format": "lc-quad",
+        "label": "lcquad 2.0 train",
+        "homepage": "http://lc-quad.sda.tech/"
+    },
+    {
+        "filePath": "https://figshare.com/articles/dataset/test_set_for_lcquad_2_0/8479052",
+        "format": "lc-quad",
+        "label": "lcquad 2.0 test",
+        "homepage": "http://lc-quad.sda.tech/"
+    }
+]

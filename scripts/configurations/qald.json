@@ -1,0 +1,67 @@
+[{
+        "filePath": "https://github.com/ag-sc/QALD/raw/master/6/data/qald-6-train-datacube.json",
+        "format": "qald",
+        "label": "QALD 6 train datacube",
+        "homepage": "https://github.com/ag-sc/QALD"
+    },
+    {
+        "filePath": "https://github.com/ag-sc/QALD/raw/master/6/data/qald-6-train-hybrid.json",
+        "format": "qald",
+        "label": "QALD 6 train hybrid",
+        "homepage": "https://github.com/ag-sc/QALD"
+    },
+    {
+        "filePath": "https://github.com/ag-sc/QALD/raw/master/6/data/qald-6-train-multilingual-raw.json",
+        "format": "qald",
+        "label": "QALD 6 train multilingual raw",
+        "homepage": "https://github.com/ag-sc/QALD"
+    },
+    {
+        "filePath": "https://github.com/ag-sc/QALD/raw/master/6/data/qald-6-train-multilingual.json",
+        "format": "qald",
+        "label": "QALD 6 train multilingual",
+        "homepage": "https://github.com/ag-sc/QALD"
+    },
+    {
+        "filePath": "https://github.com/ag-sc/QALD/raw/master/7/data/qald-7-train-multilingual.json",
+        "format": "qald",
+        "label": "QALD 7 train multilingual",
+        "homepage": "https://github.com/ag-sc/QALD"
+    },
+    {
+        "filePath": "https://github.com/ag-sc/QALD/raw/master/7/data/qald-7-train-multilingual-extended-json.json",
+        "format": "qald",
+        "label": "QALD 7 train multilingual extended",
+        "homepage": "https://github.com/ag-sc/QALD"
+    },
+    {
+        "filePath": "https://github.com/ag-sc/QALD/raw/master/8/data/qald-8-train-multilingual.json",
+        "format": "qald",
+        "label": "QALD 8 train multilingual",
+        "homepage": "https://github.com/ag-sc/QALD"
+    },
+    {
+        "filePath": "https://github.com/ag-sc/QALD/raw/master/8/data/qald-8-test-multilingual.json?raw=true",
+        "format": "qald",
+        "label": "QALD 8 test multilingual",
+        "homepage": "https://github.com/ag-sc/QALD"
+    },
+    {
+        "filePath": "https://github.com/ag-sc/QALD/raw/master/9/data/qald-9-train-multilingual.json?raw=true",
+        "format": "qald",
+        "label": "QALD 9 train multilingual",
+        "homepage": "https://github.com/ag-sc/QALD"
+    },
+    {
+        "filePath": "https://raw.githubusercontent.com/ag-sc/QALD/master/9/data/qald-9-train-multilingual.json",
+        "format": "qald",
+        "label": "QALD 9 train multilingual --- githubusercontent",
+        "homepage": "https://github.com/ag-sc/QALD"
+    },
+    {
+        "filePath": "https://raw.githubusercontent.com/ag-sc/QALD/master/9/data/qald-9-test-multilingual.json",
+        "format": "qald",
+        "label": "QALD 9 test multilingual",
+        "homepage": "https://github.com/ag-sc/QALD"
+    }
+]

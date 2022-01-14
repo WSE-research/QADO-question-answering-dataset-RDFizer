@@ -1,0 +1,25 @@
+[{
+        "filePath": "https://github.com/vladislavneon/RuBQ/raw/master/RuBQ_1.0/RuBQ_1.0_dev.json?raw=true",
+        "format": "rubq",
+        "label": "RuBQ 1.0 dev",
+        "homepage": "https://github.com/vladislavneon/RuBQ"
+    },
+    {
+        "filePath": "https://github.com/vladislavneon/RuBQ/raw/master/RuBQ_1.0/RuBQ_1.0_test.json?raw=true",
+        "format": "rubq",
+        "label": "RuBQ 1.0 test",
+        "homepage": "https://github.com/vladislavneon/RuBQ"
+    },
+    {
+        "filePath": "https://github.com/vladislavneon/RuBQ/raw/master/RuBQ_2.0/RuBQ_2.0_dev.json?raw=true",
+        "format": "rubq",
+        "label": "RuBQ 2.0 dev",
+        "homepage": "https://github.com/vladislavneon/RuBQ"
+    },
+    {
+        "filePath": "https://github.com/vladislavneon/RuBQ/raw/master/RuBQ_2.0/RuBQ_2.0_test.json?raw=true",
+        "format": "rubq",
+        "label": "RuBQ 2.0 test",
+        "homepage": "https://github.com/vladislavneon/RuBQ"
+    }
+]
