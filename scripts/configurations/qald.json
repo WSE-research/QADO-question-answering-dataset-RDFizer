@@ -53,12 +53,6 @@
         "homepage": "https://github.com/ag-sc/QALD"
     },
     {
-        "filePath": "https://raw.githubusercontent.com/ag-sc/QALD/master/9/data/qald-9-train-multilingual.json",
-        "format": "qald",
-        "label": "QALD 9 train multilingual --- githubusercontent",
-        "homepage": "https://github.com/ag-sc/QALD"
-    },
-    {
         "filePath": "https://raw.githubusercontent.com/ag-sc/QALD/master/9/data/qald-9-test-multilingual.json",
         "format": "qald",
         "label": "QALD 9 test multilingual",
