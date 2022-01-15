@@ -29,28 +29,57 @@ import java.io.*
 import java.util.HashMap
 
 
+class JSONNotFoundException(url: String): Throwable() {
+    override val message = "$url not found"
+}
+
+
+class MappingNotDoneException(override val message: String): Throwable()
+
+
 @Serializable
-data class Json2RDFTransformer(private val filePath: String, private val format: String,
+data class Json2RDFTransformer(private var filePath: String, private var format: String,
                           private val label: String, private val homepage: String) {
     fun mapRDF(): String {
+        format = format.uppercase().replace("..", "").replace("/", "")
+        format = format.replace("\\", "")
+
         // create temporary
         val tempFile: File = kotlin.io.path.createTempFile().toFile()
         val tempRMLRules: File = kotlin.io.path.createTempFile().toFile()
 
-        var outputText: String
+        val outputText: String
+        var jsonObject: String
 
         // fetch JSON file
-        val client: HttpClient = HttpClient.newBuilder().build()
-        val request: HttpRequest = HttpRequest.newBuilder().uri(URI.create(filePath)).build()
-        val response: HttpResponse<*> = client.send(request, HttpResponse.BodyHandlers.ofString())
-        val jsonObject = response.body().toString()
+        do {
+            val client: HttpClient = HttpClient.newBuilder().build()
+            val request: HttpRequest = HttpRequest.newBuilder().uri(URI.create(filePath)).build()
+            val response: HttpResponse<*> = client.send(request, HttpResponse.BodyHandlers.ofString())
+            val contentType = response.headers().allValues("content-type")[0]
+
+            if(response.statusCode() >= 400) {
+                throw JSONNotFoundException(filePath)
+            }
+
+            jsonObject = response.body().toString()
+
+            if(response.statusCode() in 300..399) {
+                filePath = response.headers().allValues("location")[0]
+                continue
+            }
+
+            if(response.statusCode() == 200 && contentType != "application/json" && !contentType.contains("text/plain")) {
+                throw JSONNotFoundException(filePath)
+            }
+        } while (response.statusCode() != 200)
 
         try {
             // store JSON data
             tempFile.writeText(jsonObject)
 
             // select mapping file
-            val mapPath = "mappings/${format.uppercase()}.ttl"
+            val mapPath = "mappings/${format}.ttl"
             val mappingFile = File(mapPath)
 
             // read mapping file and replace placeholder
@@ -89,7 +118,7 @@ data class Json2RDFTransformer(private val filePath: String, private val format:
             out.close()
         } catch (e: Exception) {
             e.printStackTrace()
-            outputText = e.message?: "Unknown error occurred"
+            throw MappingNotDoneException(e.message?: "Unknown error occurred")
         } finally {
             // remove temporary files
             tempFile.delete()
@@ -99,7 +128,6 @@ data class Json2RDFTransformer(private val filePath: String, private val format:
         return outputText
     }
 }
-
 
 
 fun main() {
@@ -115,8 +143,13 @@ fun main() {
 
             post("/json2rdf") {
                 val json2rdfTransformer = call.receive<Json2RDFTransformer>()
-
-                call.respondText(json2rdfTransformer.mapRDF(), ContentType("text", "turtle"))
+                try {
+                    call.respondText(json2rdfTransformer.mapRDF(), ContentType("text", "turtle"))
+                } catch (e: JSONNotFoundException) {
+                    call.respondText(e.message, ContentType.Text.Plain, HttpStatusCode.BadRequest)
+                } catch (e: MappingNotDoneException) {
+                    call.respondText(e.message, ContentType.Text.Plain, HttpStatusCode.InternalServerError)
+                }
             }
         }
     }.start(wait = true)
