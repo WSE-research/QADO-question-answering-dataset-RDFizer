@@ -56,12 +56,12 @@
         rr:predicate qab:correctedQuestion;
         rr:objectMap [
             rml:reference "corrected_question";
-            rr:datatype xsd:string]];
+            rr:language "en"]];
     rr:predicateObjectMap [
         rr:predicate qab:intermediaryQuestion;
         rr:objectMap [
             rml:reference "intermediary_question";
-            rr:datatype xsd:string]];
+            rr:language "en"]];
     rr:predicateObjectMap [
         rr:predicate qab:sparqlQuery;
         rr:objectMap [

@@ -51,7 +51,7 @@
         rr:predicate qab:hasId;
         rr:objectMap [
             rml:reference "id";
-            rr:datatype xsd:string]];
+            rr:datatype xsd:nonNegativeInteger]];
     rr:predicateObjectMap [
         rr:predicate qab:hasAnswerType;
         rr:objectMap [

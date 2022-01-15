@@ -66,10 +66,16 @@ data class Json2RDFTransformer(private var filePath: String, private var format:
 
             if(response.statusCode() in 300..399) {
                 filePath = response.headers().allValues("location")[0]
+
+                if(filePath.startsWith("/")) {
+                    filePath = "${request.uri().toURL().protocol}://${request.uri().host}$filePath"
+                }
+
                 continue
             }
 
-            if(response.statusCode() == 200 && contentType != "application/json" && !contentType.contains("text/plain")) {
+            if(response.statusCode() == 200 && contentType != "application/json" &&
+                !contentType.contains("text/plain") && !contentType.contains("application/binary")) {
                 throw JSONNotFoundException(filePath)
             }
         } while (response.statusCode() != 200)
@@ -85,7 +91,7 @@ data class Json2RDFTransformer(private var filePath: String, private var format:
             // read mapping file and replace placeholder
             var newMapping = mappingFile.readText()
             newMapping = newMapping.replace("example.json", tempFile.absolutePath)
-            newMapping = newMapping.replace("URL", filePath)
+            newMapping = newMapping.replace("URL", filePath.replace("#", "%23"))
             newMapping = newMapping.replace("LABEL", label)
             newMapping = newMapping.replace("HOMEPAGE", homepage)
 
@@ -111,7 +117,7 @@ data class Json2RDFTransformer(private var filePath: String, private var format:
             // write triples to output file
             val output: OutputStream = ByteArrayOutputStream()
             val out = BufferedWriter(OutputStreamWriter(output))
-            result?.write(out, "turtle")
+            result?.write(out, "nquads")
 
             outputText = output.toString()
 
@@ -144,7 +150,8 @@ fun main() {
             post("/json2rdf") {
                 val json2rdfTransformer = call.receive<Json2RDFTransformer>()
                 try {
-                    call.respondText(json2rdfTransformer.mapRDF(), ContentType("text", "turtle"))
+                    call.respondText(json2rdfTransformer.mapRDF(), ContentType("application",
+                        "n-triples"))
                 } catch (e: JSONNotFoundException) {
                     call.respondText(e.message, ContentType.Text.Plain, HttpStatusCode.BadRequest)
                 } catch (e: MappingNotDoneException) {

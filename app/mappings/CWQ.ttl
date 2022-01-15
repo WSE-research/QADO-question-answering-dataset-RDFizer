@@ -67,12 +67,12 @@
         rr:predicate qab:machineQuestion;
         rr:objectMap [
             rml:reference "machine_question";
-            rr:datatype xsd:string]];
+            rr:language "en"]];
     rr:predicateObjectMap [
         rr:predicate qab:question;
         rr:objectMap [
             rml:reference "question";
-            rr:datatype xsd:string]];
+            rr:language "en"]];
     rr:predicateObjectMap [
         rr:predicate qab:sparql;
         rr:objectMap [
@@ -87,7 +87,7 @@
         rr:predicate qab:webqspQuestion;
         rr:objectMap [
             rml:reference "webqsp_question";
-            rr:datatype xsd:string]];
+            rr:language "en"]];
     rr:predicateObjectMap [
         rr:predicate qab:hasAnswer;
         rr:objectMap [

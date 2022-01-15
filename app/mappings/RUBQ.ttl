@@ -56,7 +56,7 @@
         rr:predicate qab:questionText;
         rr:objectMap [
             rml:reference "question_text";
-            rr:datatype xsd:string]];
+            rr:language "ru"]];
     rr:predicateObjectMap [
         rr:predicate qab:query;
         rr:objectMap [
@@ -66,21 +66,26 @@
         rr:predicate qab:answerText;
         rr:objectMap [
             rml:reference "answer_text";
-            rr:datatype xsd:string]];
+            rr:language "ru"]];
     rr:predicateObjectMap [
         rr:predicate qab:questionURI;
         rr:objectMap [
             rml:reference "question_uris.[*]";
-            rr:datatype xsd:string]];
+            rr:termType rr:IRI]];
     rr:predicateObjectMap [
         rr:predicate qab:questionProp;
         rr:objectMap [
             rml:reference "question_props.[*]";
-            rr:datatype xsd:string]];
+            rr:termType rr:IRI]];
     rr:predicateObjectMap [
         rr:predicate qab:answer;
         rr:objectMap [
             rml:reference "answers.[*].value";
+            rr:datatype xsd:string]];
+    rr:predicateObjectMap [
+        rr:predicate qab:answerType;
+        rr:objectMap [
+            rml:reference "answers.[*].type";
             rr:datatype xsd:string]];
     rr:predicateObjectMap [
         rr:predicate qab:tag;
@@ -91,4 +96,4 @@
         rr:predicate qab:questionEng;
         rr:objectMap [
             rml:reference "question_eng";
-            rr:datatype xsd:string]].
+            rr:language "en"]].
