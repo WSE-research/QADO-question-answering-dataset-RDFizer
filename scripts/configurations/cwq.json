@@ -1,17 +1,17 @@
 [{
-        "filePath": "https://www.dropbox.com/sh/7pkwkrfnwqhsnpo/AADH8beLbOUWxwvY_K38E3ADa/ComplexWebQuestions_dev.json?dl=0",
+        "filePath": "https://www.dropbox.com/sh/7pkwkrfnwqhsnpo/AADH8beLbOUWxwvY_K38E3ADa/ComplexWebQuestions_dev.json?dl=1",
         "format": "cwq",
         "label": "CWQ dev",
         "homepage": "https://www.tau-nlp.org/compwebq"
     },
     {
-        "filePath": "https://www.dropbox.com/sh/7pkwkrfnwqhsnpo/AABr4ysSy_Tg8Wfxww4i_UWda/ComplexWebQuestions_test.json?dl=0",
+        "filePath": "https://www.dropbox.com/sh/7pkwkrfnwqhsnpo/AABr4ysSy_Tg8Wfxww4i_UWda/ComplexWebQuestions_test.json?dl=1",
         "format": "cwq",
         "label": "CWQ test",
         "homepage": "https://www.tau-nlp.org/compwebq"
     },
     {
-        "filePath": "https://www.dropbox.com/sh/7pkwkrfnwqhsnpo/AAAIHeWX0cPpbpwK6w06BCxva/ComplexWebQuestions_train.json?dl=0",
+        "filePath": "https://www.dropbox.com/sh/7pkwkrfnwqhsnpo/AAAIHeWX0cPpbpwK6w06BCxva/ComplexWebQuestions_train.json?dl=1",
         "format": "cwq",
         "label": "CWQ train",
         "homepage": "https://www.tau-nlp.org/compwebq"
