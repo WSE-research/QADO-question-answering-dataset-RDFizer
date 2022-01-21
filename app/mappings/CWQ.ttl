@@ -62,7 +62,7 @@
         rr:predicate qab:createdAt;
         rr:objectMap [
             rml:reference "created";
-            rr:datatype xsd:date]];
+            rr:datatype xsd:dateTime]];
     rr:predicateObjectMap [
         rr:predicate qab:machineQuestion;
         rr:objectMap [
