@@ -35,6 +35,106 @@
             rr:datatype xsd:string]].
 
 
+<#AnswerMapping> a rr:TriplesMap;
+    rml:logicalSource [
+        rml:source "example.json";
+        rml:referenceFormulation ql:JSONPath;
+        rml:iterator "$.questions.[*]"];
+    rr:subjectMap [
+        rr:template "urn:qa:benchmark#answer-{id}";
+        rr:class qab:Answer];
+    rr:predicateObjectMap [
+        rr:predicate qab:hasAnswerBody;
+        rr:objectMap [
+            rml:reference "answers.[*].boolean";
+            rr:datatype xsd:boolean]];
+    rr:predicateObjectMap [
+        rr:predicate qab:hasAnswerBody;
+        rr:objectMap [
+            rml:reference "answers.[*].results.bindings.[?(@.uri.type == \"uri\")].uri.value";
+            rr:termType rr:IRI]];
+    rr:predicateObjectMap [
+        rr:predicate qab:hasAnswerBody;
+        rr:objectMap [
+            rml:reference "answers.[*].results.bindings.[*].num.value";
+            rr:datatype xsd:float]];
+    rr:predicateObjectMap [
+        rr:predicate qab:hasAnswerBody;
+        rr:objectMap [
+            rml:reference "answers.[*].results.bindings.[*].date.value";
+            rr:datatype xsd:string]];
+    rr:predicateObjectMap [
+        rr:predicate qab:hasAnswerBody;
+        rr:objectMap [
+            rml:reference "answers.[*].results.bindings.[*].c.value";
+            rr:datatype xsd:string]];
+    rr:predicateObjectMap [
+        rr:predicate qab:hasAnswerBody;
+        rr:objectMap [
+            rml:reference "answers.[*].results.bindings.[*].string.value";
+            rr:datatype xsd:string]];
+    rr:predicateObjectMap [
+        rr:predicate qab:hasAnswerBody;
+        rr:objectMap [
+            rml:reference "answers.[*].results.bindings.[*].height.value";
+            rr:datatype xsd:float]];
+    rr:predicateObjectMap [
+        rr:predicate qab:hasAnswerBody;
+        rr:objectMap [
+            rml:reference "answers.[*].results.bindings.[*].number.value";
+            rr:datatype xsd:float]];
+    rr:predicateObjectMap [
+        rr:predicate qab:hasAnswerBody;
+        rr:objectMap [
+            rml:reference "answers.[*].results.bindings.[*].year.value";
+            rr:datatype xsd:integer]];
+    rr:predicateObjectMap [
+        rr:predicate qab:hasAnswerBody;
+        rr:objectMap [
+            rml:reference "answers.[*].results.bindings.[*].n.value";
+            rr:datatype xsd:float]];
+    rr:predicateObjectMap [
+        rr:predicate qab:hasAnswerBody;
+        rr:objectMap [
+            rml:reference "answers.[*].results.bindings.[*].carbs.value";
+            rr:datatype xsd:float]];
+    rr:predicateObjectMap [
+        rr:predicate qab:hasAnswerBody;
+        rr:objectMap [
+            rml:reference "answers.[*].results.bindings.[*].ni.value";
+            rr:datatype xsd:float]];
+    rr:predicateObjectMap [
+        rr:predicate qab:hasAnswerBody;
+        rr:objectMap [
+            rml:reference "answers.[*].results.bindings.[*].name.value";
+            rr:datatype xsd:string]];
+    rr:predicateObjectMap [
+        rr:predicate qab:hasAnswerBody;
+        rr:objectMap [
+            rml:reference "answers.[*].results.bindings.[*].\"callret-0\".value";
+            rr:datatype xsd:float]].
+
+
+<#QueryMapping> a rr:TriplesMap;
+    rml:logicalSource [
+        rml:source "example.json";
+        rml:referenceFormulation ql:JSONPath;
+        rml:iterator "$.questions.[*]"];
+    rr:subjectMap [
+        rr:template "urn:qa:benchmark#query-{id}";
+        rr:class qab:Query];
+    rr:predicateObjectMap [
+        rr:predicate qab:queryText;
+        rr:objectMap [
+            rml:reference "query.sparql";
+            rr:datatype xsd:string]];
+    rr:predicateObjectMap [
+        rr:predicate qab:queryText;
+        rr:objectMap [
+            rml:reference "query.pseudo";
+            rr:datatype xsd:string]].
+
+
 <#QuestionMapping> a rr:TriplesMap;
     rml:logicalSource [
         rml:source "example.json";
@@ -70,8 +170,7 @@
     rr:predicateObjectMap [
         rr:predicate qab:hasSPARQLQuery;
         rr:objectMap [
-            rml:reference "query.sparql";
-            rr:datatype xsd:string]];
+            rr:template "urn:qa:benchmark#query-{id}"]];
     rr:predicateObjectMap [
         rr:predicate qab:hasQuestion;
         rr:objectMap [
@@ -195,13 +294,7 @@
     rr:predicateObjectMap [
         rr:predicate qab:hasAnswer;
         rr:objectMap [
-            rml:reference "answers.[*].boolean";
-            rr:datatype xsd:boolean]];
-    rr:predicateObjectMap [
-        rr:predicate qab:hasAnswer;
-        rr:objectMap [
-            rml:reference "answers.[*]..value";
-            rr:datatype xsd:string]];
+            rr:template "urn:qa:benchmark#answer-{id}"]];
     rr:predicateObjectMap [
         rr:predicate qab:isHybrid;
         rr:objectMap [

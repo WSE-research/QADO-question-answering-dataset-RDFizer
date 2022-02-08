@@ -143,10 +143,6 @@ fun main() {
         }
 
         routing {
-            get("/") {
-                call.respondText("Hello, world!")
-            }
-
             post("/json2rdf") {
                 val json2rdfTransformer = call.receive<Json2RDFTransformer>()
                 try {

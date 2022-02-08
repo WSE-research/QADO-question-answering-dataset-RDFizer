@@ -12,13 +12,13 @@
     },
     {
         "filePath": "https://figshare.com/ndownloader/files/15738824",
-        "format": "lc-quad",
+        "format": "lc-quad-2",
         "label": "lcquad 2.0 train",
         "homepage": "http://lc-quad.sda.tech/"
     },
     {
         "filePath": "https://figshare.com/ndownloader/files/15738818",
-        "format": "lc-quad",
+        "format": "lc-quad-2",
         "label": "lcquad 2.0 test",
         "homepage": "http://lc-quad.sda.tech/"
     }

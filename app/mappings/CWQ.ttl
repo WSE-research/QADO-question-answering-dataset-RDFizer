@@ -35,6 +35,21 @@
             rr:datatype xsd:string]].
 
 
+<#QueryMapping> a rr:TriplesMap;
+    rml:logicalSource [
+        rml:source "example.json";
+        rml:referenceFormulation ql:JSONPath;
+        rml:iterator "$.[*]"];
+    rr:subjectMap [
+        rr:template "urn:qa:benchmark#query-{ID}";
+        rr:class qab:Query];
+    rr:predicateObjectMap [
+        rr:predicate qab:queryText;
+        rr:objectMap [
+            rml:reference "sparql";
+            rr:datatype xsd:string]].
+
+
 <#QuestionMapping> a rr:TriplesMap;
     rml:logicalSource [
         rml:source "example.json";
@@ -74,10 +89,9 @@
             rml:reference "question";
             rr:language "en"]];
     rr:predicateObjectMap [
-        rr:predicate qab:sparql;
+        rr:predicate qab:hasSPARQLQuery;
         rr:objectMap [
-            rml:reference "sparql";
-            rr:datatype xsd:string]];
+            rr:template "urn:qa:benchmark-query-{ID}"]];
     rr:predicateObjectMap [
         rr:predicate qab:webqspId;
         rr:objectMap [
@@ -91,16 +105,31 @@
     rr:predicateObjectMap [
         rr:predicate qab:hasAnswer;
         rr:objectMap [
-            rr:template "urn:qa:benchmark#answer-{answers.[*].answer_id}"]].
+            rr:template "urn:qa:benchmark#answer-{ID}"]].
+
 
 <#AnswerMapping> a rr:TriplesMap;
     rml:logicalSource [
         rml:source "example.json";
         rml:referenceFormulation ql:JSONPath;
+        rml:iterator "$.[*]"];
+    rr:subjectMap [
+        rr:template "urn:qa:benchmark#answer-{ID}";
+        rr:class qab:Answer];
+    rr:predicateObjectMap [
+        rr:predicate qab:hasAnswer;
+        rr:objectMap [
+            rr:template "urn:qa:benchmark#answer-content-{answers.[*].answer_id}"]].
+
+
+<#AnswerContentMapping> a rr:TriplesMap;
+    rml:logicalSource [
+        rml:source "example.json";
+        rml:referenceFormulation ql:JSONPath;
         rml:iterator "$..answers.[*]"];
     rr:subjectMap [
-        rr:template "urn:qa:benchmark#answer-{answer_id}";
-        rr:class qab:Answer];
+        rr:template "urn:qa:benchmark#answer-content-{answer_id}";
+        rr:class qab:AnswerContent];
     rr:predicateObjectMap [
         rr:predicate qab:hasId;
         rr:objectMap [

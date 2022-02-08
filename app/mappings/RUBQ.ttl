@@ -35,6 +35,41 @@
             rr:datatype xsd:string]].
 
 
+<#AnswerMapping> a rr:TriplesMap;
+    rml:logicalSource [
+        rml:source "example.json";
+        rml:referenceFormulation ql:JSONPath;
+        rml:iterator "$.[*]"];
+    rr:subjectMap [
+        rr:template "urn:qa:benchmark#answer-{uid}";
+        rr:class qab:Answer];
+    rr:predicateObjectMap [
+        rr:predicate qab:answerText;
+        rr:objectMap [
+            rml:reference "answer_text";
+            rr:language "ru"]];
+    rr:predicateObjectMap [
+        rr:predicate qab:answerType;
+        rr:objectMap [
+            rml:reference "answers.[*].type";
+            rr:datatype xsd:string]].
+
+
+<#QueryMapping> a rr:TriplesMap;
+    rml:logicalSource [
+        rml:source "example.json";
+        rml:referenceFormulation ql:JSONPath;
+        rml:iterator "$.[*]"];
+    rr:subjectMap [
+        rr:template "urn:qa:benchmark#query-{uid}";
+        rr:class qab:Query];
+    rr:predicateObjectMap [
+        rr:predicate qab:queryText;
+        rr:objectMap [
+            rml:reference "query";
+            rr:datatype xsd:string]].
+
+
 <#QuestionMapping> a rr:TriplesMap;
     rml:logicalSource [
         rml:source "example.json";
@@ -58,15 +93,9 @@
             rml:reference "question_text";
             rr:language "ru"]];
     rr:predicateObjectMap [
-        rr:predicate qab:query;
+        rr:predicate qab:hasSPARQLQuery;
         rr:objectMap [
-            rml:reference "query";
-            rr:datatype xsd:string]];
-    rr:predicateObjectMap [
-        rr:predicate qab:answerText;
-        rr:objectMap [
-            rml:reference "answer_text";
-            rr:language "ru"]];
+            rr:template "urn:qa:benchmark-query-{uid}"]];
     rr:predicateObjectMap [
         rr:predicate qab:questionURI;
         rr:objectMap [
@@ -78,15 +107,9 @@
             rml:reference "question_props.[*]";
             rr:termType rr:IRI]];
     rr:predicateObjectMap [
-        rr:predicate qab:answer;
+        rr:predicate qab:hasAnswer;
         rr:objectMap [
-            rml:reference "answers.[*].value";
-            rr:datatype xsd:string]];
-    rr:predicateObjectMap [
-        rr:predicate qab:answerType;
-        rr:objectMap [
-            rml:reference "answers.[*].type";
-            rr:datatype xsd:string]];
+            rr:template "urn:qa:benchmark#answer-{uid}"]];
     rr:predicateObjectMap [
         rr:predicate qab:tag;
         rr:objectMap [

@@ -1,4 +1,4 @@
 FROM gradle:latest
 COPY . .
-RUN ./gradlew build
-CMD ./gradlew run
+RUN gradle build
+CMD gradle run

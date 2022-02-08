@@ -134,3 +134,4 @@ dmypy.json
 # Ignore Gradle build output directory
 build
 /app/outputs/
+scripts/tmp
