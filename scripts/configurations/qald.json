@@ -1,4 +1,11 @@
-[{
+[
+    {
+        "filePath": "https://raw.githubusercontent.com/ag-sc/QALD/master/5/data/qald-5_train.json",
+        "format": "qald",
+        "label": "QALD 5 train",
+        "homepage": "https://github.com/ag-sc/QALD"
+    },
+    {
         "filePath": "https://github.com/ag-sc/QALD/raw/master/6/data/qald-6-train-datacube.json",
         "format": "qald",
         "label": "QALD 6 train datacube",
