@@ -154,6 +154,11 @@ fun main() {
                     call.respondText(e.message, ContentType.Text.Plain, HttpStatusCode.InternalServerError)
                 }
             }
+            get("/json2rdf") {
+                call.respondText("The RDFizer service is running. Please view the documentation at " +
+                        "<a href=\"https://github.com/anbo-de/question-answering-dataset-RDFizer\">Github</a>.",
+                ContentType.Text.Html)
+            }
         }
     }.start(wait = true)
 }
