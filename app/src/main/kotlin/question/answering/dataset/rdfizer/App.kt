@@ -156,7 +156,7 @@ fun main() {
             }
             get("/json2rdf") {
                 call.respondText("The RDFizer service is running. Please view the documentation at " +
-                        "<a href=\"https://github.com/anbo-de/question-answering-dataset-RDFizer\">Github</a>.",
+                        "<a href=\"https://github.com/anbo-de/question-answering-dataset-RDFizer#readme\">Github</a>.",
                 ContentType.Text.Html)
             }
         }
