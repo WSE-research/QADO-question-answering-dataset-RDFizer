@@ -35,11 +35,11 @@
             rr:datatype xsd:string]].
 
 
-<#AnswerMapping> a rr:TriplesMap;
+<#AnswerURIMapping> a rr:TriplesMap;
     rml:logicalSource [
         rml:source "example.json";
         rml:referenceFormulation ql:JSONPath;
-        rml:iterator "$.questions.[*]"];
+        rml:iterator "$.questions.[?(@.answertype == \"resource\")]"];
     rr:subjectMap [
         rr:template "urn:qa:benchmark#answer-{id}";
         rr:class qab:Answer];
@@ -51,68 +51,87 @@
     rr:predicateObjectMap [
         rr:predicate qab:hasAnswerBody;
         rr:objectMap [
-            rml:reference "answers.[*].results.bindings.[?(@.uri.type == \"uri\")].uri.value";
-            rr:termType rr:IRI]];
+            rml:reference "answers.[*]..value";
+            rr:termType rr:IRI]].
+
+
+<#AnswerNumberMapping> a rr:TriplesMap;
+    rml:logicalSource [
+        rml:source "example.json";
+        rml:referenceFormulation ql:JSONPath;
+        rml:iterator "$.questions.[?(@.answertype == \"number\")]"];
+    rr:subjectMap [
+        rr:template "urn:qa:benchmark#answer-{id}";
+        rr:class qab:Answer];
     rr:predicateObjectMap [
         rr:predicate qab:hasAnswerBody;
         rr:objectMap [
-            rml:reference "answers.[*].results.bindings.[*].num.value";
-            rr:datatype xsd:float]];
+            rml:reference "answers.[*].boolean";
+            rr:datatype xsd:boolean]];
     rr:predicateObjectMap [
         rr:predicate qab:hasAnswerBody;
         rr:objectMap [
-            rml:reference "answers.[*].results.bindings.[*].date.value";
-            rr:datatype xsd:string]];
+            rml:reference "answers.[*]..value"]].
+
+
+<#AnswerDateMapping> a rr:TriplesMap;
+    rml:logicalSource [
+        rml:source "example.json";
+        rml:referenceFormulation ql:JSONPath;
+        rml:iterator "$.questions.[?(@.answertype == \"date\")]"];
+    rr:subjectMap [
+        rr:template "urn:qa:benchmark#answer-{id}";
+        rr:class qab:Answer];
     rr:predicateObjectMap [
         rr:predicate qab:hasAnswerBody;
         rr:objectMap [
-            rml:reference "answers.[*].results.bindings.[*].c.value";
-            rr:datatype xsd:string]];
+            rml:reference "answers.[*].boolean";
+            rr:datatype xsd:boolean]];
     rr:predicateObjectMap [
         rr:predicate qab:hasAnswerBody;
         rr:objectMap [
-            rml:reference "answers.[*].results.bindings.[*].string.value";
-            rr:datatype xsd:string]];
+            rml:reference "answers.[*]..value";
+            rr:datatype xsd:date]].
+
+
+<#AnswerStringMapping> a rr:TriplesMap;
+    rml:logicalSource [
+        rml:source "example.json";
+        rml:referenceFormulation ql:JSONPath;
+        rml:iterator "$.questions.[?(@.answertype == \"string\")]"];
+    rr:subjectMap [
+        rr:template "urn:qa:benchmark#answer-{id}";
+        rr:class qab:Answer];
     rr:predicateObjectMap [
         rr:predicate qab:hasAnswerBody;
         rr:objectMap [
-            rml:reference "answers.[*].results.bindings.[*].height.value";
-            rr:datatype xsd:float]];
+            rml:reference "answers.[*].boolean";
+            rr:datatype xsd:boolean]];
     rr:predicateObjectMap [
         rr:predicate qab:hasAnswerBody;
         rr:objectMap [
-            rml:reference "answers.[*].results.bindings.[*].number.value";
-            rr:datatype xsd:float]];
+            rml:reference "answers.[*]..value";
+            rr:datatype xsd:string]].
+
+
+<#AnswerBooleanMapping> a rr:TriplesMap;
+    rml:logicalSource [
+        rml:source "example.json";
+        rml:referenceFormulation ql:JSONPath;
+        rml:iterator "$.questions.[?(@.answertype == \"boolean\")]"];
+    rr:subjectMap [
+        rr:template "urn:qa:benchmark#answer-{id}";
+        rr:class qab:Answer];
     rr:predicateObjectMap [
         rr:predicate qab:hasAnswerBody;
         rr:objectMap [
-            rml:reference "answers.[*].results.bindings.[*].year.value";
-            rr:datatype xsd:integer]];
+            rml:reference "answers.[*].boolean";
+            rr:datatype xsd:boolean]];
     rr:predicateObjectMap [
         rr:predicate qab:hasAnswerBody;
         rr:objectMap [
-            rml:reference "answers.[*].results.bindings.[*].n.value";
-            rr:datatype xsd:float]];
-    rr:predicateObjectMap [
-        rr:predicate qab:hasAnswerBody;
-        rr:objectMap [
-            rml:reference "answers.[*].results.bindings.[*].carbs.value";
-            rr:datatype xsd:float]];
-    rr:predicateObjectMap [
-        rr:predicate qab:hasAnswerBody;
-        rr:objectMap [
-            rml:reference "answers.[*].results.bindings.[*].ni.value";
-            rr:datatype xsd:float]];
-    rr:predicateObjectMap [
-        rr:predicate qab:hasAnswerBody;
-        rr:objectMap [
-            rml:reference "answers.[*].results.bindings.[*].name.value";
-            rr:datatype xsd:string]];
-    rr:predicateObjectMap [
-        rr:predicate qab:hasAnswerBody;
-        rr:objectMap [
-            rml:reference "answers.[*].results.bindings.[*].\"callret-0\".value";
-            rr:datatype xsd:float]].
+            rml:reference "answers.[*]..value";
+            rr:datatype xsd:boolean]].
 
 
 <#QueryMapping> a rr:TriplesMap;
