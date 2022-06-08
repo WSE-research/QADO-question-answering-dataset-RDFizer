@@ -28,7 +28,14 @@ By default, the following formats are supported:
 The follow cURL command can be used to convert a JSON file of the QALD benchmark
 into RDF.
 
-`curl http://$HOST:$PORT/json2rdf -X POST -H "Content-Type: application/json" -d "{\"filePath\": \"https://raw.githubusercontent.com/ag-sc/QALD/master/9/data/qald-9-test-multilingual.json\", \"format\": \"qald\", \"label\": \"QALD 9\", \"homepage\": \"https://github.com/ag-sc/QALD\"}"`
+`curl --location --request POST 'http://$HOST:$PORT/json2rdf' \
+--header 'Content-Type: application/json' \
+--data-raw '{
+    "filePath": "https://github.com/ag-sc/QALD/raw/master/6/data/qald-6-train-multilingual-raw.json",
+    "format": "qald",
+    "label": "QALD 6 train multilingual raw",
+    "homepage": "https://github.com/ag-sc/QALD"
+}'`
 
 ## Adding additional formats
 To add new mapping rules just add a new mapping file `NAME.ttl` to `app/mappings` while `NAME` has to be in
