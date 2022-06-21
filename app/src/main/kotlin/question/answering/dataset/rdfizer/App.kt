@@ -92,7 +92,7 @@ data class Json2RDFTransformer(private var filePath: String, private var format:
             var newMapping = mappingFile.readText()
             newMapping = newMapping.replace("example.json", tempFile.absolutePath)
             newMapping = newMapping.replace("URL", filePath.replace("#", "%23"))
-            newMapping = newMapping.replace("LABEL", label)
+            newMapping = newMapping.replace("LABEL", label.replace(' ', '-'))
             newMapping = newMapping.replace("HOMEPAGE", homepage)
 
             tempRMLRules.writeText(newMapping)
