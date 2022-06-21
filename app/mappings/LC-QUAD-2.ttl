@@ -17,7 +17,7 @@
         rml:referenceFormulation ql:JSONPath;
         rml:iterator "$.[*]"];
     rr:subjectMap [
-        rr:template "urn:qa:benchmark#dataset";
+        rr:template "urn:qa:benchmark#LABEL-dataset";
         rr:class qab:Benchmark];
     rr:predicateObjectMap [
         rr:predicate void:dataDump;
@@ -41,7 +41,7 @@
         rml:referenceFormulation ql:JSONPath;
         rml:iterator "$.[*]"];
     rr:subjectMap [
-        rr:template "urn:qa:benchmark#query-{uid}";
+        rr:template "urn:qa:benchmark#LABEL-query-{uid}";
         rr:class qab:Query];
     rr:predicateObjectMap [
         rr:predicate qab:queryText;
@@ -61,7 +61,7 @@
         rml:referenceFormulation ql:JSONPath;
         rml:iterator "$.[*]"];
     rr:subjectMap [
-        rr:template "urn:qa:benchmark#answer-{uid}";
+        rr:template "urn:qa:benchmark#LABEL-answer-{uid}";
         rr:class qab:Answer].
 
 
@@ -71,7 +71,7 @@
         rml:referenceFormulation ql:JSONPath;
         rml:iterator "$.[*]"];
     rr:subjectMap [
-        rr:template "urn:qa:benchmark#question-{uid}";
+        rr:template "urn:qa:benchmark#LABEL-question-{uid}";
         rr:class qab:Question];
     rr:predicateObjectMap [
         rr:predicate qab:hasId;
@@ -101,7 +101,7 @@
     rr:predicateObjectMap [
         rr:predicate qab:hasSPARQLQuery;
         rr:objectMap [
-            rr:template "urn:qa:benchmark#query-{uid}"]];
+            rr:template "urn:qa:benchmark#LABEL-query-{uid}"]];
     rr:predicateObjectMap [
         rr:predicate qab:paraphrasedQuestion;
         rr:objectMap [
@@ -115,11 +115,11 @@
     rr:predicateObjectMap [
         rr:predicate qab:isElementOf;
         rr:objectMap[
-            rr:template "urn:qa:benchmark#dataset"]];
+            rr:template "urn:qa:benchmark#LABEL-dataset"]];
     rr:predicateObjectMap [
         rr:predicate qab:hasAnswer;
         rr:objectMap [
-            rr:template "urn:qa:benchmark#answer-{uid}"]];
+            rr:template "urn:qa:benchmark#LABEL-answer-{uid}"]];
     rr:predicateObjectMap [
         rr:predicate qab:NNQTQuestion;
         rr:objectMap [

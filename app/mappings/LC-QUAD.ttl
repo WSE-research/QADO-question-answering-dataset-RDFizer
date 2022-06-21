@@ -17,7 +17,7 @@
         rml:referenceFormulation ql:JSONPath;
         rml:iterator "$.[*]"];
     rr:subjectMap [
-        rr:template "urn:qa:benchmark-LABEL#dataset";
+        rr:template "urn:qa:benchmark#LABEL-dataset";
         rr:class qab:Benchmark];
     rr:predicateObjectMap [
         rr:predicate void:dataDump;
@@ -41,7 +41,7 @@
         rml:referenceFormulation ql:JSONPath;
         rml:iterator "$.[*]"];
     rr:subjectMap [
-        rr:template "urn:qa:benchmark-LABEL#answer-{_id}";
+        rr:template "urn:qa:benchmark#LABEL-answer-{_id}";
         rr:class qab:Answer].
 
 
@@ -51,7 +51,7 @@
         rml:referenceFormulation ql:JSONPath;
         rml:iterator "$.[*]"];
     rr:subjectMap [
-        rr:template "urn:qa:benchmark-LABEL#query-{_id}";
+        rr:template "urn:qa:benchmark#LABEL-query-{_id}";
         rr:class qab:Query];
     rr:predicateObjectMap [
         rr:predicate qab:queryText;
@@ -66,12 +66,12 @@
         rml:referenceFormulation ql:JSONPath;
         rml:iterator "$.[*]"];
     rr:subjectMap [
-        rr:template "urn:qa:benchmark-LABEL#question-{_id}";
+        rr:template "urn:qa:benchmark#LABEL-question-{_id}";
         rr:class qab:Question];
     rr:predicateObjectMap [
         rr:predicate qab:isElementOf;
         rr:objectMap[
-            rr:template "urn:qa:benchmark-LABEL#dataset"]];
+            rr:template "urn:qa:benchmark#LABEL-dataset"]];
     rr:predicateObjectMap [
         rr:predicate qab:hasId;
         rr:objectMap [
@@ -90,11 +90,11 @@
     rr:predicateObjectMap [
         rr:predicate qab:hasSPARQLQuery;
         rr:objectMap [
-            rr:template "urn:qa:benchmark-LABEL#query-{_id}"]];
+            rr:template "urn:qa:benchmark#LABEL-query-{_id}"]];
     rr:predicateObjectMap [
         rr:predicate qab:hasAnswer;
         rr:objectMap [
-            rr:template "urn:qa:benchmark-LABEL#answer-{_id}"]];
+            rr:template "urn:qa:benchmark#LABEL-answer-{_id}"]];
     rr:predicateObjectMap [
         rr:predicate qab:sparqlTemplateId;
         rr:objectMap [

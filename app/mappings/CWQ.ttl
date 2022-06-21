@@ -6,7 +6,7 @@
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
 @prefix void: <http://rdfs.org/ns/void#> .
 @prefix prov: <http://www.w3.org/ns/prov#> .
-@prefix qab: <urn:qa:benchmark-LABEL#> .
+@prefix qab: <urn:qa:benchmark#> .
 @prefix ql: <http://semweb.mmlab.be/ns/ql#>.
 @base <URL#>.
 
@@ -17,7 +17,7 @@
         rml:referenceFormulation ql:JSONPath;
         rml:iterator "$.[*]"];
     rr:subjectMap [
-        rr:template "urn:qa:benchmark-LABEL#dataset";
+        rr:template "urn:qa:benchmark#LABEL-dataset";
         rr:class qab:Benchmark];
     rr:predicateObjectMap [
         rr:predicate void:dataDump;
@@ -41,7 +41,7 @@
         rml:referenceFormulation ql:JSONPath;
         rml:iterator "$.[*]"];
     rr:subjectMap [
-        rr:template "urn:qa:benchmark-LABEL#query-{ID}";
+        rr:template "urn:qa:benchmark#LABEL-query-{ID}";
         rr:class qab:Query];
     rr:predicateObjectMap [
         rr:predicate qab:queryText;
@@ -56,7 +56,7 @@
         rml:referenceFormulation ql:JSONPath;
         rml:iterator "$.[*]"];
     rr:subjectMap [
-        rr:template "urn:qa:benchmark-LABEL#question-{ID}";
+        rr:template "urn:qa:benchmark#LABEL-question-{ID}";
         rr:class qab:Question];
     rr:predicateObjectMap [
         rr:predicate qab:hasId;
@@ -91,7 +91,7 @@
     rr:predicateObjectMap [
         rr:predicate qab:hasSPARQLQuery;
         rr:objectMap [
-            rr:template "urn:qa:benchmark-LABEL-query-{ID}"]];
+            rr:template "urn:qa:benchmark-query-{ID}"]];
     rr:predicateObjectMap [
         rr:predicate qab:webqspId;
         rr:objectMap [
@@ -105,7 +105,7 @@
     rr:predicateObjectMap [
         rr:predicate qab:hasAnswer;
         rr:objectMap [
-            rr:template "urn:qa:benchmark-LABEL#answer-{ID}"]].
+            rr:template "urn:qa:benchmark#LABEL-answer-{ID}"]].
 
 
 <#AnswerMapping> a rr:TriplesMap;
@@ -114,12 +114,12 @@
         rml:referenceFormulation ql:JSONPath;
         rml:iterator "$.[*]"];
     rr:subjectMap [
-        rr:template "urn:qa:benchmark-LABEL#answer-{ID}";
+        rr:template "urn:qa:benchmark#LABEL-answer-{ID}";
         rr:class qab:Answer];
     rr:predicateObjectMap [
         rr:predicate qab:hasAnswer;
         rr:objectMap [
-            rr:template "urn:qa:benchmark-LABEL#answer-content-{answers.[*].answer_id}"]].
+            rr:template "urn:qa:benchmark#LABEL-answer-content-{answers.[*].answer_id}"]].
 
 
 <#AnswerContentMapping> a rr:TriplesMap;
@@ -128,7 +128,7 @@
         rml:referenceFormulation ql:JSONPath;
         rml:iterator "$..answers.[*]"];
     rr:subjectMap [
-        rr:template "urn:qa:benchmark-LABEL#answer-content-{answer_id}";
+        rr:template "urn:qa:benchmark#LABEL-answer-content-{answer_id}";
         rr:class qab:AnswerContent];
     rr:predicateObjectMap [
         rr:predicate qab:hasId;

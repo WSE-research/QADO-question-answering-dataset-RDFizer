@@ -6,7 +6,7 @@
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
 @prefix void: <http://rdfs.org/ns/void#> .
 @prefix prov: <http://www.w3.org/ns/prov#> .
-@prefix qab: <urn:qa:benchmark-LABEL#> .
+@prefix qab: <urn:qa:benchmark#> .
 @prefix ql: <http://semweb.mmlab.be/ns/ql#>.
 @base <URL#>.
 
@@ -17,7 +17,7 @@
         rml:referenceFormulation ql:JSONPath;
         rml:iterator "$.questions.[*]"];
     rr:subjectMap [
-        rr:template "urn:qa:benchmark-LABEL#dataset";
+        rr:template "urn:qa:benchmark#LABEL-dataset";
         rr:class qab:Benchmark];
     rr:predicateObjectMap [
         rr:predicate void:dataDump;
@@ -41,7 +41,7 @@
         rml:referenceFormulation ql:JSONPath;
         rml:iterator "$.questions.[?(@.answertype == \"resource\")]"];
     rr:subjectMap [
-        rr:template "urn:qa:benchmark-LABEL#answer-{id}";
+        rr:template "urn:qa:benchmark#LABEL-answer-{id}";
         rr:class qab:Answer];
     rr:predicateObjectMap [
         rr:predicate qab:hasAnswerBody;
@@ -61,7 +61,7 @@
         rml:referenceFormulation ql:JSONPath;
         rml:iterator "$.questions.[?(@.answertype == \"number\")]"];
     rr:subjectMap [
-        rr:template "urn:qa:benchmark#answer-{id}";
+        rr:template "urn:qa:benchmark#LABEL-answer-{id}";
         rr:class qab:Answer];
     rr:predicateObjectMap [
         rr:predicate qab:hasAnswerBody;
@@ -80,7 +80,7 @@
         rml:referenceFormulation ql:JSONPath;
         rml:iterator "$.questions.[?(@.answertype == \"date\")]"];
     rr:subjectMap [
-        rr:template "urn:qa:benchmark#answer-{id}";
+        rr:template "urn:qa:benchmark#LABEL-answer-{id}";
         rr:class qab:Answer];
     rr:predicateObjectMap [
         rr:predicate qab:hasAnswerBody;
@@ -100,7 +100,7 @@
         rml:referenceFormulation ql:JSONPath;
         rml:iterator "$.questions.[?(@.answertype == \"string\")]"];
     rr:subjectMap [
-        rr:template "urn:qa:benchmark#answer-{id}";
+        rr:template "urn:qa:benchmark#LABEL-answer-{id}";
         rr:class qab:Answer];
     rr:predicateObjectMap [
         rr:predicate qab:hasAnswerBody;
@@ -120,7 +120,7 @@
         rml:referenceFormulation ql:JSONPath;
         rml:iterator "$.questions.[?(@.answertype == \"boolean\")]"];
     rr:subjectMap [
-        rr:template "urn:qa:benchmark#answer-{id}";
+        rr:template "urn:qa:benchmark#LABEL-answer-{id}";
         rr:class qab:Answer];
     rr:predicateObjectMap [
         rr:predicate qab:hasAnswerBody;
@@ -140,7 +140,7 @@
         rml:referenceFormulation ql:JSONPath;
         rml:iterator "$.questions.[*]"];
     rr:subjectMap [
-        rr:template "urn:qa:benchmark-LABEL#query-{id}";
+        rr:template "urn:qa:benchmark#LABEL-query-{id}";
         rr:class qab:Query];
     rr:predicateObjectMap [
         rr:predicate qab:queryText;
@@ -160,12 +160,12 @@
         rml:referenceFormulation ql:JSONPath;
         rml:iterator "$.questions.[*]"];
     rr:subjectMap [
-        rr:template "urn:qa:benchmark-LABEL#question-{id}";
+        rr:template "urn:qa:benchmark#LABEL-question-{id}";
         rr:class qab:Question];
     rr:predicateObjectMap [
         rr:predicate qab:isElementOf;
         rr:objectMap[
-            rr:template "urn:qa:benchmark-LABEL#dataset"]];
+            rr:template "urn:qa:benchmark#LABEL-dataset"]];
     rr:predicateObjectMap [
         rr:predicate qab:hasId;
         rr:objectMap [
@@ -189,7 +189,7 @@
     rr:predicateObjectMap [
         rr:predicate qab:hasSPARQLQuery;
         rr:objectMap [
-            rr:template "urn:qa:benchmark-LABEL#query-{id}"]];
+            rr:template "urn:qa:benchmark#LABEL-query-{id}"]];
     rr:predicateObjectMap [
         rr:predicate qab:hasQuestion;
         rr:objectMap [
@@ -313,7 +313,7 @@
     rr:predicateObjectMap [
         rr:predicate qab:hasAnswer;
         rr:objectMap [
-            rr:template "urn:qa:benchmark-LABEL#answer-{id}"]];
+            rr:template "urn:qa:benchmark#LABEL-answer-{id}"]];
     rr:predicateObjectMap [
         rr:predicate qab:isHybrid;
         rr:objectMap [
