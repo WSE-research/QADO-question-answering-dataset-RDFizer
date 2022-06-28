@@ -1,0 +1,14 @@
+{
+  "services": [
+    {
+      "mode": "dockerfile",
+      "port": "40177:8080",
+      "image": "bigoli98/rdfizer",
+      "tag": "latest",
+      "files": {}
+    }
+  ],
+  "ids": {
+    "0": "bigoli98-rdfizer"
+  }
+}
