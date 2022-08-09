@@ -88,7 +88,7 @@
             rml:reference "uid";
             rr:datatype xsd:nonNegativeInteger]];
     rr:predicateObjectMap [
-        rr:predicate qab:questionText;
+        rr:predicate qab:hasQuestion;
         rr:objectMap [
             rml:reference "question_text";
             rr:language "ru"]];
@@ -116,7 +116,7 @@
             rml:reference "tags.[*]";
             rr:datatype xsd:string]];
     rr:predicateObjectMap [
-        rr:predicate qab:questionEng;
+        rr:predicate qab:hasQuestion;
         rr:objectMap [
             rml:reference "question_eng";
             rr:language "en"]].

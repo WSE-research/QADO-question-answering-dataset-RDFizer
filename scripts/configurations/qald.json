@@ -36,9 +36,9 @@
         "homepage": "https://github.com/ag-sc/QALD"
     },
     {
-        "filePath": "https://github.com/ag-sc/QALD/raw/master/7/data/qald-7-train-multilingual-extended-json.json",
+        "filePath": "https://github.com/ag-sc/QALD/raw/master/7/data/qald-7-test-multilingual.json",
         "format": "qald",
-        "label": "QALD 7 train multilingual extended",
+        "label": "QALD 7 test multilingual",
         "homepage": "https://github.com/ag-sc/QALD"
     },
     {
@@ -54,15 +54,27 @@
         "homepage": "https://github.com/ag-sc/QALD"
     },
     {
-        "filePath": "https://github.com/ag-sc/QALD/raw/master/9/data/qald-9-train-multilingual.json?raw=true",
+        "filePath": "https://raw.githubusercontent.com/KGQA/QALD_9_plus/main/data/qald_9_plus_test_wikidata.json",
         "format": "qald",
-        "label": "QALD 9 train multilingual",
-        "homepage": "https://github.com/ag-sc/QALD"
+        "label": "QALD 9 plus test wikidata",
+        "homepage": "https://github.com/KGQA/QALD_9_plus"
     },
     {
-        "filePath": "https://raw.githubusercontent.com/ag-sc/QALD/master/9/data/qald-9-test-multilingual.json",
+        "filePath": "https://raw.githubusercontent.com/KGQA/QALD_9_plus/main/data/qald_9_plus_train_wikidata.json",
         "format": "qald",
-        "label": "QALD 9 test multilingual",
-        "homepage": "https://github.com/ag-sc/QALD"
+        "label": "QALD 9 plus train wikidata",
+        "homepage": "https://github.com/KGQA/QALD_9_plus"
+    },
+    {
+        "filePath": "https://raw.githubusercontent.com/KGQA/QALD_9_plus/main/data/qald_9_plus_test_dbpedia.json",
+        "format": "qald",
+        "label": "QALD 9 plus test dbpedia",
+        "homepage": "https://github.com/KGQA/QALD_9_plus"
+    },
+    {
+        "filePath": "https://raw.githubusercontent.com/KGQA/QALD_9_plus/main/data/qald_9_plus_train_dbpedia.json",
+        "format": "qald",
+        "label": "QALD 9 plus train dbpedia",
+        "homepage": "https://github.com/KGQA/QALD_9_plus"
     }
 ]

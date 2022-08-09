@@ -45,21 +45,6 @@
         rr:class qab:Answer].
 
 
-<#QueryMapping> a rr:TriplesMap;
-    rml:logicalSource [
-        rml:source "example.json";
-        rml:referenceFormulation ql:JSONPath;
-        rml:iterator "$.[*]"];
-    rr:subjectMap [
-        rr:template "urn:qa:benchmark#LABEL-query-{_id}";
-        rr:class qab:Query];
-    rr:predicateObjectMap [
-        rr:predicate qab:queryText;
-        rr:objectMap [
-            rml:reference "sparql_query";
-            rr:datatype xsd:string]].
-
-
 <#QuestionMapping> a rr:TriplesMap;
     rml:logicalSource [
         rml:source "example.json";
@@ -78,19 +63,20 @@
             rml:reference "_id";
             rr:datatype xsd:nonNegativeInteger]];
     rr:predicateObjectMap [
-        rr:predicate qab:correctedQuestion;
+        rr:predicate qab:hasQuestion;
         rr:objectMap [
-            rml:reference "corrected_question";
+            rml:reference "question_en";
             rr:language "en"]];
     rr:predicateObjectMap [
-        rr:predicate qab:intermediaryQuestion;
+        rr:predicate qab:hasQuestion;
         rr:objectMap [
-            rml:reference "intermediary_question";
-            rr:language "en"]];
+            rml:reference "question_de";
+            rr:language "de"]];
     rr:predicateObjectMap [
         rr:predicate qab:hasSPARQLQuery;
         rr:objectMap [
-            rr:template "urn:qa:benchmark#LABEL-query-{_id}"]];
+            rml:reference "sparql_query";
+            rr:datatype xsd:string]];
     rr:predicateObjectMap [
         rr:predicate qab:hasAnswer;
         rr:objectMap [

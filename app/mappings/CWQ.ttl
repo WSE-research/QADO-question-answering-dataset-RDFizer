@@ -64,6 +64,10 @@
             rml:reference "ID";
             rr:datatype xsd:string]];
     rr:predicateObjectMap [
+        rr:predicate qab:isElementOf;
+        rr:objectMap [
+            rr:template "urn:qa:benchmark#LABEL-dataset"]];
+    rr:predicateObjectMap [
         rr:predicate qab:compositionAnswer;
         rr:objectMap [
             rml:reference "composition_answer";
@@ -84,7 +88,7 @@
             rml:reference "machine_question";
             rr:language "en"]];
     rr:predicateObjectMap [
-        rr:predicate qab:question;
+        rr:predicate qab:hasQuestion;
         rr:objectMap [
             rml:reference "question";
             rr:language "en"]];
