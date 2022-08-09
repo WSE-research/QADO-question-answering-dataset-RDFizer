@@ -187,6 +187,11 @@
             rml:reference "onlydbo";
             rr:datatype xsd:boolean]];
     rr:predicateObjectMap [
+        rr:predicate qab:SPARQLResult;
+        rr:objectMap [
+            rml:reference "answers";
+            rr:datatype xsd:string]];
+    rr:predicateObjectMap [
         rr:predicate qab:hasSPARQLQuery;
         rr:objectMap [
             rr:template "urn:qa:benchmark#LABEL-query-{id}"]];
