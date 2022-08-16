@@ -39,14 +39,14 @@
     rml:logicalSource [
         rml:source "example.json";
         rml:referenceFormulation ql:JSONPath;
-        rml:iterator "$.questions.[?(@..type == \"uri\")]"];
+        rml:iterator "$.questions.[*]"];
     rr:subjectMap [
         rr:template "urn:qa:benchmark#LABEL-answer-{id}";
         rr:class qab:Answer];
     rr:predicateObjectMap [
         rr:predicate qab:hasAnswerBody;
         rr:objectMap [
-            rml:reference "answers.[*]..value";
+            rml:reference "answers.[*].results.bindings.[?(@..type contains \"uri\")]..value";
             rr:termType rr:IRI]].
 
 
@@ -54,14 +54,14 @@
     rml:logicalSource [
         rml:source "example.json";
         rml:referenceFormulation ql:JSONPath;
-        rml:iterator "$.questions.[?(@..type == \"literal\")]"];
+        rml:iterator "$.questions.[*]"];
     rr:subjectMap [
         rr:template "urn:qa:benchmark#LABEL-answer-{id}";
         rr:class qab:Answer];
     rr:predicateObjectMap [
         rr:predicate qab:hasAnswerBody;
         rr:objectMap [
-            rml:reference "answers.[*]..value";
+            rml:reference "answers.[*].results.bindings.[?(@..type contains \"literal\")]..value";
             rr:datatype xsd:string]].
 
 
