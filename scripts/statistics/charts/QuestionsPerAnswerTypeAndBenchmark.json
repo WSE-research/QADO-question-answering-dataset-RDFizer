@@ -1,0 +1,63 @@
+{
+  "spec": {
+    "title": "Questions per AnswerType and Benchmark",
+    "basicChart": {
+      "chartType": "COLUMN",
+      "axis": [
+        {
+          "position": "BOTTOM_AXIS",
+          "title": "Benchmark"
+        },
+        {
+          "position": "LEFT_AXIS",
+          "title": "Questions"
+        }
+      ],
+      "domains": [
+        {
+          "domain": {
+            "sourceRange": {
+              "sources": [
+                {
+                  "sheetId": 6,
+                  "startRowIndex": 0,
+                  "startColumnIndex": 0,
+                  "endColumnIndex": 1
+                }
+              ]
+            }
+          }
+        }
+      ],
+      "series": [
+        {
+          "series": {
+            "sourceRange": {
+              "sources": [
+                {
+                  "sheetId": 6,
+                  "startRowIndex": 0,
+                  "startColumnIndex": 2,
+                  "endColumnIndex": 3
+                }
+              ]
+            }
+          },
+          "targetAxis": "LEFT_AXIS"
+        }
+      ],
+      "headerCount": 1
+    }
+  },
+  "position": {
+    "overlayPosition": {
+      "anchorCell": {
+        "sheetId": 6,
+        "rowIndex": 1,
+        "columnIndex": 0
+      },
+      "widthPixels": 1500,
+      "heightPixels": 600
+    }
+  }
+}

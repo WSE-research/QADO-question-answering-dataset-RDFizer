@@ -1,0 +1,7 @@
+PREFIX qab: <urn:qa:benchmark#>
+
+SELECT ?benchmark (COUNT(?question) as ?questions)
+{
+    ?question a qab:Question ;
+        qab:isElementOf ?benchmark .
+} GROUP BY ?benchmark ORDER BY ?benchmark

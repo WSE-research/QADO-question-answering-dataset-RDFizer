@@ -1,0 +1,13 @@
+PREFIX qab: <urn:qa:benchmark#>
+
+SELECT ?benchmark ?lang (COUNT(DISTINCT ?question) AS ?questions) ?type (MIN(?length) AS ?minLength) (AVG(?length) AS ?avgLength) (MAX(?length) AS ?maxLength)
+{
+    ?question a qab:Question ;
+        qab:isElementOf ?benchmark ;
+        qab:hasQuestion ?questionText ;
+        qab:hasAnswer ?answer .
+    ?answer qab:answerText|qab:hasAnswerBody|(qab:hasAnswer/qab:answer) ?answerBody .
+    BIND(STRLEN(?questionText) AS ?length)
+    BIND(LANG(?questionText) AS ?lang)
+    BIND(DATATYPE(?answerBody) AS ?type)
+} GROUP BY ?benchmark ?lang ?type ORDER BY ?benchmark ?lang ?type

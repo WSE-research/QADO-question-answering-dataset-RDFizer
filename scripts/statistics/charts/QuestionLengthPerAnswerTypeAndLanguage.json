@@ -1,0 +1,93 @@
+{
+  "spec": {
+    "title": "Question length per AnswerType and Language",
+    "basicChart": {
+      "chartType": "COLUMN",
+      "axis": [
+        {
+          "position": "BOTTOM_AXIS",
+          "title": "Benchmark"
+        },
+        {
+          "position": "LEFT_AXIS",
+          "title": "Question Length"
+        }
+      ],
+      "domains": [
+        {
+          "domain": {
+            "sourceRange": {
+              "sources": [
+                {
+                  "sheetId": 4,
+                  "startRowIndex": 0,
+                  "startColumnIndex": 0,
+                  "endColumnIndex": 1
+                }
+              ]
+            }
+          }
+        }
+      ],
+      "series": [
+        {
+          "series": {
+            "sourceRange": {
+              "sources": [
+                {
+                  "sheetId": 4,
+                  "startRowIndex": 0,
+                  "startColumnIndex": 4,
+                  "endColumnIndex": 5
+                }
+              ]
+            }
+          },
+          "targetAxis": "LEFT_AXIS"
+        },
+        {
+          "series": {
+            "sourceRange": {
+              "sources": [
+                {
+                  "sheetId": 4,
+                  "startRowIndex": 0,
+                  "startColumnIndex": 5,
+                  "endColumnIndex": 6
+                }
+              ]
+            }
+          },
+          "targetAxis": "LEFT_AXIS"
+        },
+        {
+          "series": {
+            "sourceRange": {
+              "sources": [
+                {
+                  "sheetId": 4,
+                  "startRowIndex": 0,
+                  "startColumnIndex": 6,
+                  "endColumnIndex": 7
+                }
+              ]
+            }
+          },
+          "targetAxis": "LEFT_AXIS"
+        }
+      ],
+      "headerCount": 1
+    }
+  },
+  "position": {
+    "overlayPosition": {
+      "anchorCell": {
+        "sheetId": 4,
+        "rowIndex": 1,
+        "columnIndex": 0
+      },
+      "widthPixels": 1700,
+      "heightPixels": 600
+    }
+  }
+}
