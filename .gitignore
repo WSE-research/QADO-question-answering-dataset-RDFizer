@@ -135,3 +135,5 @@ dmypy.json
 build
 /app/outputs/
 scripts/tmp
+
+token.json
