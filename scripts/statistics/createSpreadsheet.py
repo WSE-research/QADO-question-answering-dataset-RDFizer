@@ -85,24 +85,23 @@ def get_sheet_config(sparql_path: str, number: int):
 
                 # foreach column
                 for head in header:
-                    # defining answer type
-                    value_key = 'stringValue' if head in non_number_values else 'numberValue'
-
                     # read value and replace URI data from benchmark names
                     value = response[head]['value'] if head in response else 'URI'
                     value = value.replace('urn:qa:benchmark#', '').replace('-dataset', '')
 
-                    # parse numbers
-                    if head not in non_number_values:
+                    try:
                         value = float(value)
+                        value_key = 'numberValue'
+                    except ValueError:
+                        value_key = 'stringValue'
 
                     next_row['values'].append({'userEnteredValue': {value_key: value}})
 
                 # add new row to data payload
                 data['rowData'].append(next_row)
-            # SPARQL query failed
-            else:
-                print(resp.text)
+        # SPARQL query failed
+        else:
+            print(resp.text)
 
     return {
         'properties': {
