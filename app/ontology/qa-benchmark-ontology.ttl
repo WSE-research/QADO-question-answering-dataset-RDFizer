@@ -1,0 +1,447 @@
+@prefix : <urn:qa:benchmark#> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix qab: <urn:qa:benchmark#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix xml: <http://www.w3.org/XML/1998/namespace> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@base <urn:qa:benchmark> .
+
+<urn:qa:benchmark> rdf:type owl:Ontology ;
+                    owl:versionIRI <urn:qa:benchmark/0.1> ;
+                    rdfs:comment "Ontology for Knowledge Graphs on Question Answering benchmarks."@en ;
+                    rdfs:label "QA benchmark Ontology"@en .
+
+#################################################################
+#    Datatypes
+#################################################################
+
+###  urn:qa:benchmark#Question
+qab:Question rdf:type rdfs:Datatype .
+
+
+#################################################################
+#    Object Properties
+#################################################################
+
+###  urn:qa:benchmark#hasAnswer
+qab:hasAnswer rdf:type owl:ObjectProperty ,
+                       owl:FunctionalProperty ;
+              rdfs:domain qab:Answer ,
+                          qab:Question ;
+              rdfs:range qab:Answer ;
+              rdfs:comment "Property linking a Question to the corresponding answer."@en ;
+              rdfs:label "Question-Answer-Linking"@en .
+
+
+###  urn:qa:benchmark#hasSPARQLQuery
+qab:hasSPARQLQuery rdf:type owl:ObjectProperty ,
+                            owl:FunctionalProperty ;
+                   rdfs:domain qab:Question ;
+                   rdfs:range qab:Query ;
+                   rdfs:comment "Property linking a Question to the corresponding SPARQL query."@en ;
+                   rdfs:label "Question-SPARQL-Query-Linking"@en .
+
+
+###  urn:qa:benchmark#isElementOf
+qab:isElementOf rdf:type owl:ObjectProperty ,
+                         owl:FunctionalProperty ;
+                rdfs:domain qab:Question ;
+                rdfs:range qab:Benchmark ;
+                rdfs:comment "Property connecting a Question to its QA benchmark."@en ;
+                rdfs:label "Question-Benchmark-Linking"@en .
+
+
+#################################################################
+#    Data properties
+#################################################################
+
+###  urn:qa:benchmark#NNQTQuestion
+qab:NNQTQuestion rdf:type owl:DatatypeProperty ,
+                          owl:FunctionalProperty ;
+                 rdfs:domain qab:Question ;
+                 rdfs:range xsd:string ;
+                 rdfs:comment "Question text in NNQT format"@en ;
+                 rdfs:label "NNQT question format"@en .
+
+
+###  urn:qa:benchmark#SPARQLResult
+qab:SPARQLResult rdf:type owl:DatatypeProperty ,
+                          owl:FunctionalProperty ;
+                 rdfs:domain qab:Question ;
+                 rdfs:range xsd:string ;
+                 rdfs:comment "Property linking a question to its SPARQL result as stringified JSON object"@en ;
+                 rdfs:label "Question SPARQL result"@en .
+
+
+###  urn:qa:benchmark#alias
+qab:alias rdf:type owl:DatatypeProperty ;
+          rdfs:domain qab:AnswerContent ;
+          rdfs:range xsd:string ;
+          rdfs:comment "Property linking an alias of the given answer."@en ;
+          rdfs:label "Answer Alias"@en .
+
+
+###  urn:qa:benchmark#answer
+qab:answer rdf:type owl:DatatypeProperty ,
+                    owl:FunctionalProperty ;
+           rdfs:domain qab:AnswerContent ;
+           rdfs:range xsd:string ;
+           rdfs:comment "The answer text of the given answer."@en ;
+           rdfs:label "Question Answer"@en .
+
+
+###  urn:qa:benchmark#answerType
+qab:answerType rdf:type owl:DatatypeProperty ;
+               owl:equivalentProperty qab:hasAnswerType ;
+               rdf:type owl:FunctionalProperty ;
+               rdfs:domain qab:Answer ;
+               rdfs:range xsd:string ;
+               rdfs:comment "Describes the answer type of a given Answer."@en ;
+               rdfs:label "Answer type"@en .
+
+
+###  urn:qa:benchmark#compositionAnswer
+qab:compositionAnswer rdf:type owl:DatatypeProperty ,
+                               owl:FunctionalProperty ;
+                      rdfs:domain qab:Question ;
+                      rdfs:range xsd:string ;
+                      rdfs:comment "Answer text of a composed question"@en ;
+                      rdfs:label "Composition Answer"@en .
+
+
+###  urn:qa:benchmark#compositionalityType
+qab:compositionalityType rdf:type owl:DatatypeProperty ,
+                                  owl:FunctionalProperty ;
+                         rdfs:domain qab:Question ;
+                         rdfs:range xsd:string ;
+                         rdfs:comment "Type of composition done in this Question"@en ;
+                         rdfs:label "Compositionality type"@en .
+
+
+###  urn:qa:benchmark#createdAt
+qab:createdAt rdf:type owl:DatatypeProperty ,
+                       owl:FunctionalProperty ;
+              rdfs:domain qab:Question ;
+              rdfs:range xsd:dateTime ;
+              rdfs:comment "Timestamp of question generation"@en ;
+              rdfs:label "Creation Time"@en .
+
+
+###  urn:qa:benchmark#hasAggregation
+qab:hasAggregation rdf:type owl:DatatypeProperty ,
+                            owl:FunctionalProperty ;
+                   rdfs:domain qab:Question ;
+                   rdfs:range xsd:boolean ;
+                   rdfs:comment "SPARQL query of the question uses aggregation functions."@en ;
+                   rdfs:label "Question has aggregations"@en .
+
+
+###  urn:qa:benchmark#hasAnswerBody
+qab:hasAnswerBody rdf:type owl:DatatypeProperty ;
+                  rdfs:domain qab:Answer ;
+                  rdfs:range xsd:anyURI ,
+                             xsd:boolean ,
+                             xsd:string ;
+                  rdfs:comment "Answer value"@en ;
+                  rdfs:label "Answer body"@en .
+
+
+###  urn:qa:benchmark#hasAnswerType
+qab:hasAnswerType rdf:type owl:DatatypeProperty ,
+                           owl:FunctionalProperty ;
+                  rdfs:domain qab:Question ;
+                  rdfs:range xsd:string ;
+                  rdfs:comment "Answer type of a given answer."@en ;
+                  rdfs:label "Answer Type"@en .
+
+
+###  urn:qa:benchmark#hasId
+qab:hasId rdf:type owl:DatatypeProperty ,
+                   owl:FunctionalProperty ;
+          rdfs:domain qab:AnswerContent ,
+                      qab:Question ;
+          rdfs:range xsd:nonNegativeInteger ,
+                     xsd:string ;
+          rdfs:comment "Property linking a question to its ID."@en ;
+          rdfs:label "Question ID"@en .
+
+
+###  urn:qa:benchmark#hasKeywords
+qab:hasKeywords rdf:type owl:DatatypeProperty ;
+                rdfs:domain qab:Question ;
+                rdfs:range xsd:string ;
+                rdfs:comment "Property linking a Question with their keywords."@en ;
+                rdfs:label "Question Keywords"@en .
+
+
+###  urn:qa:benchmark#hasQuestion
+qab:hasQuestion rdf:type owl:DatatypeProperty ,
+                         owl:FunctionalProperty ;
+                rdfs:domain qab:Question ;
+                rdfs:range xsd:string ;
+                rdfs:comment "Property linking a Question with the question text."@en ;
+                rdfs:label "Question text"@en .
+
+
+###  urn:qa:benchmark#isHybrid
+qab:isHybrid rdf:type owl:DatatypeProperty ;
+             rdfs:domain qab:Question ;
+             rdfs:range xsd:boolean ;
+             rdfs:comment "Question combines different data sources."@en ;
+             rdfs:label "Hybrid question"@en .
+
+
+###  urn:qa:benchmark#isTransferredToAnotherKnowledgeGraph
+qab:isTransferredToAnotherKnowledgeGraph rdf:type owl:DatatypeProperty ;
+                                         rdfs:domain qab:Question ;
+                                         rdfs:range qab:Question ;
+                                         rdfs:comment "Property referencing another Question answering this one on another Knowledge Graph."@en ;
+                                         rdfs:label "Multi-KG-Question"@en .
+
+
+###  urn:qa:benchmark#machineQuestion
+qab:machineQuestion rdf:type owl:DatatypeProperty ,
+                             owl:FunctionalProperty ;
+                    rdfs:domain qab:Question ;
+                    rdfs:range xsd:string ;
+                    rdfs:comment "Machine readable form of the question text"@en ;
+                    rdfs:label "Machine readable question"@en .
+
+
+###  urn:qa:benchmark#onlydbo
+qab:onlydbo rdf:type owl:DatatypeProperty ,
+                     owl:FunctionalProperty ;
+            rdfs:domain qab:Question ;
+            rdfs:range xsd:boolean ;
+            rdfs:comment "The given question works only on DBpedia."@en ;
+            rdfs:label "Only DBpedia question"@en .
+
+
+###  urn:qa:benchmark#paraphrasedQuestion
+qab:paraphrasedQuestion rdf:type owl:DatatypeProperty ,
+                                 owl:FunctionalProperty ;
+                        rdfs:domain qab:Question ;
+                        rdfs:range xsd:string ;
+                        rdfs:comment "Paraphrased question"@en ,
+                                     "Paraphrased version of question text."@en .
+
+
+###  urn:qa:benchmark#queryText
+qab:queryText rdf:type owl:DatatypeProperty ;
+              rdfs:domain qab:Question ;
+              rdfs:range xsd:string ;
+              rdfs:comment "Property linking a Question with the corresponding SPARQL query."@en ;
+              rdfs:label "SPARQL query"@en .
+
+
+###  urn:qa:benchmark#questionProp
+qab:questionProp rdf:type owl:DatatypeProperty ;
+                 rdfs:domain qab:Question ;
+                 rdfs:range xsd:string ;
+                 rdfs:comment "Property a question relates to."@en ;
+                 rdfs:label "Question Property"@en .
+
+
+###  urn:qa:benchmark#questionURI
+qab:questionURI rdf:type owl:DatatypeProperty ;
+                rdfs:domain qab:Question ;
+                rdfs:range xsd:anyURI ;
+                rdfs:comment "Entity URI the given question relates to."@en ;
+                rdfs:label "Question URI"@en .
+
+
+###  urn:qa:benchmark#sparqlTemplateId
+qab:sparqlTemplateId rdf:type owl:DatatypeProperty ,
+                              owl:FunctionalProperty ;
+                     rdfs:domain qab:Question ;
+                     rdfs:range xsd:nonNegativeInteger ;
+                     rdfs:comment "ID of the used SPARQL template"@en ;
+                     rdfs:label "SPARQL template ID"@en .
+
+
+###  urn:qa:benchmark#subgraph
+qab:subgraph rdf:type owl:DatatypeProperty ,
+                      owl:FunctionalProperty ;
+             rdfs:domain qab:Question ;
+             rdfs:range xsd:string ;
+             rdfs:comment "Type of the used subgraph"@en ;
+             rdfs:label "Subgraph type"@en .
+
+
+###  urn:qa:benchmark#tag
+qab:tag rdf:type owl:DatatypeProperty ;
+        rdfs:domain qab:Question ;
+        rdfs:range xsd:string ;
+        rdfs:comment "Optional tag of a Question."@en ;
+        rdfs:label "Question tag"@en .
+
+
+###  urn:qa:benchmark#template
+qab:template rdf:type owl:DatatypeProperty ,
+                      owl:FunctionalProperty ;
+             rdfs:domain qab:Question ;
+             rdfs:range xsd:string ;
+             rdfs:comment "SPARQL query template"@en ;
+             rdfs:label "SPARQL template"@en .
+
+
+###  urn:qa:benchmark#templateId
+qab:templateId rdf:type owl:DatatypeProperty ,
+                        owl:FunctionalProperty ;
+               rdfs:domain qab:Question ;
+               rdfs:range xsd:nonNegativeInteger ;
+               rdfs:comment "ID of the used SPARQL template"@en ;
+               rdfs:label "SPARQL template ID"@en .
+
+
+###  urn:qa:benchmark#templateIndex
+qab:templateIndex rdf:type owl:DatatypeProperty ;
+                  rdfs:subPropertyOf owl:topDataProperty ;
+                  rdf:type owl:FunctionalProperty ;
+                  rdfs:domain qab:Question ;
+                  rdfs:range xsd:nonNegativeInteger ;
+                  rdfs:comment "Index of the used SPARQL template"@en ;
+                  rdfs:label "SPARQL template index"@en .
+
+
+###  urn:qa:benchmark#webqspId
+qab:webqspId rdf:type owl:DatatypeProperty ,
+                      owl:FunctionalProperty ;
+             rdfs:domain qab:Question ;
+             rdfs:range xsd:string ;
+             rdfs:comment "ID of the used web QSP question"@en ;
+             rdfs:label "Web QSP ID"@en .
+
+
+###  urn:qa:benchmark#webqspQuestion
+qab:webqspQuestion rdf:type owl:DatatypeProperty ,
+                            owl:FunctionalProperty ;
+                   rdfs:domain qab:Question ;
+                   rdfs:range xsd:string ;
+                   rdfs:comment "Question text in web QSP format"@en ;
+                   rdfs:label "Web QSP question text"@en .
+
+
+#################################################################
+#    Classes
+#################################################################
+
+###  urn:qa:benchmark#Answer
+qab:Answer rdf:type owl:Class ;
+           rdfs:comment "Class with information about the answer of a given question."@en ;
+           rdfs:label "Answer"@en .
+
+
+###  urn:qa:benchmark#AnswerContent
+qab:AnswerContent rdf:type owl:Class ;
+                  rdfs:comment "Provides detailed information about the answer's content."@en ;
+                  rdfs:label "QA benchmark answer content"@en .
+
+
+###  urn:qa:benchmark#Benchmark
+qab:Benchmark rdf:type owl:Class ;
+              rdfs:comment "Class containing information about a QA benchmark."@en ;
+              rdfs:label "QA benchmark"@en .
+
+
+###  urn:qa:benchmark#EmptyAnswer
+qab:EmptyAnswer rdf:type owl:Class ;
+                rdfs:subClassOf qab:Answer ;
+                rdfs:comment "There is no answer for the related question."@en ;
+                rdfs:label "Empty Answer"@en .
+
+
+###  urn:qa:benchmark#FlawedQuestion
+qab:FlawedQuestion rdf:type owl:Class ;
+                   rdfs:subClassOf qab:Question ;
+                   rdfs:comment "QA benchmark question with flawed information."@en ;
+                   rdfs:label "Flawed QA benchmark Question"@en .
+
+
+###  urn:qa:benchmark#Query
+qab:Query rdf:type owl:Class ;
+          rdfs:comment "A class containing information about the used query."@en ;
+          rdfs:label "QA benchmark query"@en .
+
+
+###  urn:qa:benchmark#Question
+qab:Question rdf:type owl:Class .
+
+
+###  urn:qa:benchmark#UnanswerableQuestion
+qab:UnanswerableQuestion rdf:type owl:Class ;
+                         rdfs:subClassOf qab:Question ;
+                         rdfs:comment "A question with no answer."@en ;
+                         rdfs:label "Unanswerable question"@en .
+
+
+#################################################################
+#    Annotations
+#################################################################
+
+qab:Question rdfs:comment "Generic class of a question of a QA benchmark."@en ;
+             rdfs:label "QA benchmark question"@en .
+
+
+#################################################################
+#    General axioms
+#################################################################
+
+[ rdf:type owl:Restriction ;
+  owl:onProperty qab:hasAnswer ;
+  owl:minQualifiedCardinality "1"^^xsd:nonNegativeInteger ;
+  owl:onClass qab:Answer ;
+  rdfs:subClassOf qab:Question
+] .
+
+
+[ rdf:type owl:Restriction ;
+  owl:onProperty qab:hasAnswer ;
+  owl:minQualifiedCardinality "1"^^xsd:nonNegativeInteger ;
+  owl:onClass qab:AnswerContent ;
+  rdfs:subClassOf qab:Answer
+] .
+
+
+[ rdf:type owl:Restriction ;
+  owl:onProperty qab:hasSPARQLQuery ;
+  owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger ;
+  owl:onClass qab:Query ;
+  rdfs:subClassOf qab:Question
+] .
+
+
+[ rdf:type owl:Restriction ;
+  owl:onProperty qab:isElementOf ;
+  owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger ;
+  owl:onClass qab:Benchmark ;
+  rdfs:subClassOf qab:Question
+] .
+
+
+[ rdf:type owl:Restriction ;
+  owl:onProperty qab:hasId ;
+  owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger ;
+  owl:onDataRange xsd:nonNegativeInteger ;
+  rdfs:subClassOf [ rdf:type owl:Class ;
+                    owl:unionOf ( qab:Answer
+                                  qab:Question
+                                )
+                  ]
+] .
+
+
+[ rdf:type owl:Restriction ;
+  owl:onProperty qab:hasId ;
+  owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger ;
+  owl:onDataRange xsd:string ;
+  rdfs:subClassOf [ rdf:type owl:Class ;
+                    owl:unionOf ( qab:Answer
+                                  qab:Question
+                                )
+                  ]
+] .
+
+
+###  Generated by the OWL API (version 4.5.9.2019-02-01T07:24:44Z) https://github.com/owlcs/owlapi

@@ -41,6 +41,8 @@ class MappingNotDoneException(override val message: String): Throwable()
 data class Json2RDFTransformer(private var filePath: String, private var format: String,
                           private val label: String, private val homepage: String) {
     fun mapRDF(): String {
+        val ontology = File("ontology/qa-benchmark-ontology.ttl").readText()
+
         format = format.uppercase().replace("..", "").replace("/", "")
         format = format.replace("\\", "")
 
@@ -117,6 +119,9 @@ data class Json2RDFTransformer(private var filePath: String, private var format:
             // write triples to output file
             val output: OutputStream = ByteArrayOutputStream()
             val out = BufferedWriter(OutputStreamWriter(output))
+
+            out.write(ontology)
+
             result?.write(out, "nquads")
 
             outputText = output.toString()
