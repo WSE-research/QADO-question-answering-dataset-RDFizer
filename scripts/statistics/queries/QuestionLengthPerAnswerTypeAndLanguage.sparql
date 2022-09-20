@@ -11,7 +11,7 @@ SELECT
 {
     ?question a qab:Question ;
         qab:isElementOf ?benchmark ;
-        qab:hasQuestion ?questionText ;
+        qab:hasQuestion|qab:questionText ?questionText ;
         qab:hasAnswer ?answer .
     ?answer qab:answerText|qab:hasAnswerBody|(qab:hasAnswer/qab:answer) ?answerBody .
     BIND(STRLEN(?questionText) AS ?length)

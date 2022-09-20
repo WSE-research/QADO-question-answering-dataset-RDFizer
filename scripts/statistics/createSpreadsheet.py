@@ -119,7 +119,7 @@ def main():
     Creates a new Google Spreadsheet with Stardog data
     """
     # get all sparql queries
-    queries = os.listdir('queries')
+    queries = sorted(os.listdir('queries'))
 
     creds = None
 
