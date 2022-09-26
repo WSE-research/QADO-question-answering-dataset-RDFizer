@@ -39,10 +39,10 @@
     rml:logicalSource [
         rml:source "example.json";
         rml:referenceFormulation ql:JSONPath;
-        rml:iterator "$.questions.[*]"];
+        rml:iterator "$.questions.[?(@.answers)]"];
     rr:subjectMap [
         rr:template "urn:qa:benchmark#LABEL-answer-{id}";
-        rr:class qab:Answer];
+        rr:class qab:ValidAnswer];
     rr:predicateObjectMap [
         rr:predicate qab:hasAnswerBody;
         rr:objectMap [
@@ -54,10 +54,10 @@
     rml:logicalSource [
         rml:source "example.json";
         rml:referenceFormulation ql:JSONPath;
-        rml:iterator "$.questions.[*]"];
+        rml:iterator "$.questions.[?(@.answers)]"];
     rr:subjectMap [
         rr:template "urn:qa:benchmark#LABEL-answer-{id}";
-        rr:class qab:Answer];
+        rr:class qab:ValidAnswer];
     rr:predicateObjectMap [
         rr:predicate qab:hasAnswerBody;
         rr:objectMap [
@@ -69,15 +69,25 @@
     rml:logicalSource [
         rml:source "example.json";
         rml:referenceFormulation ql:JSONPath;
-        rml:iterator "$.questions.[?(@..boolean)]"];
+        rml:iterator "$.questions.[?(@.answers..boolean)]"];
     rr:subjectMap [
         rr:template "urn:qa:benchmark#LABEL-answer-{id}";
-        rr:class qab:Answer];
+        rr:class qab:ValidAnswer];
     rr:predicateObjectMap [
         rr:predicate qab:hasAnswerBody;
         rr:objectMap [
             rml:reference "answers.[*].boolean";
             rr:datatype xsd:boolean]].
+
+
+<#EmptyAnswerMapping> a rr:TriplesMap;
+    rml:logicalSource [
+        rml:source "example.json";
+        rml:referenceFormulation ql:JSONPath;
+        rml:iterator "$.questions.[?(!@.answers)]"];
+    rr:subjectMap [
+        rr:template "urn:qa:benchmark#LABEL-answer-{id}";
+        rr:class qab:EmptyAnswer].
 
 
 <#QueryMapping> a rr:TriplesMap;
@@ -107,7 +117,7 @@
         rml:iterator "$.questions.[*]"];
     rr:subjectMap [
         rr:template "urn:qa:benchmark#LABEL-question-{id}";
-        rr:class qab:Question];
+        rr:class qab:ValidQuestion];
     rr:predicateObjectMap [
         rr:predicate qab:isElementOf;
         rr:objectMap[

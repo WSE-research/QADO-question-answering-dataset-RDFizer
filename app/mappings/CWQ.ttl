@@ -57,7 +57,7 @@
         rml:iterator "$.[*]"];
     rr:subjectMap [
         rr:template "urn:qa:benchmark#LABEL-question-{ID}";
-        rr:class qab:Question];
+        rr:class qab:ValidQuestion];
     rr:predicateObjectMap [
         rr:predicate qab:hasId;
         rr:objectMap [
@@ -116,14 +116,24 @@
     rml:logicalSource [
         rml:source "example.json";
         rml:referenceFormulation ql:JSONPath;
-        rml:iterator "$.[*]"];
+        rml:iterator "$.[?(@.answers)]"];
     rr:subjectMap [
         rr:template "urn:qa:benchmark#LABEL-answer-{ID}";
-        rr:class qab:Answer];
+        rr:class qab:ValidAnswer];
     rr:predicateObjectMap [
         rr:predicate qab:hasAnswer;
         rr:objectMap [
             rr:template "urn:qa:benchmark#LABEL-answer-content-{answers.[*].answer_id}"]].
+
+
+<#EmptyAnswerMapping> a rr:TriplesMap;
+    rml:logicalSource [
+        rml:source "example.json";
+        rml:referenceFormulation ql:JSONPath;
+        rml:iterator "$.[?(!@.answers)]"];
+    rr:subjectMap [
+        rr:template "urn:qa:benchmark#LABEL-answer-{ID}";
+        rr:class qab:EmptyAnswer].
 
 
 <#AnswerContentMapping> a rr:TriplesMap;

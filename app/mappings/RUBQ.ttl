@@ -42,7 +42,7 @@
         rml:iterator "$.[*]"];
     rr:subjectMap [
         rr:template "urn:qa:benchmark#LABEL-answer-{uid}";
-        rr:class qab:Answer];
+        rr:class qab:ValidAnswer];
     rr:predicateObjectMap [
         rr:predicate qab:answerText;
         rr:objectMap [
@@ -77,7 +77,7 @@
         rml:iterator "$.[*]"];
     rr:subjectMap [
         rr:template "urn:qa:benchmark#LABEL-question-{uid}";
-        rr:class qab:Question];
+        rr:class qab:ValidQuestion];
     rr:predicateObjectMap [
         rr:predicate qab:isElementOf;
         rr:objectMap[

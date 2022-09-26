@@ -42,7 +42,7 @@
         rml:iterator "$.[*]"];
     rr:subjectMap [
         rr:template "urn:qa:benchmark#LABEL-answer-{_id}";
-        rr:class qab:Answer].
+        rr:class qab:EmptyAnswer].
 
 
 <#QuestionMapping> a rr:TriplesMap;
@@ -52,7 +52,7 @@
         rml:iterator "$.[*]"];
     rr:subjectMap [
         rr:template "urn:qa:benchmark#LABEL-question-{_id}";
-        rr:class qab:Question];
+        rr:class qab:ValidQuestion];
     rr:predicateObjectMap [
         rr:predicate qab:isElementOf;
         rr:objectMap[
