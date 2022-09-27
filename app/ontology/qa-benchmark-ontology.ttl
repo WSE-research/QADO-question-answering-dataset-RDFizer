@@ -376,6 +376,20 @@ qab:UnanswerableQuestion rdf:type owl:Class ;
                          rdfs:label "Unanswerable question"@en .
 
 
+###  urn:qa:benchmark#ValidAnswer
+qab:ValidAnswer rdf:type owl:Class ;
+                rdfs:subClassOf qab:Answer ;
+                rdfs:comment "Class of valid answers."@en ;
+                rdfs:label "Valid Answer"@en .
+
+
+###  urn:qa:benchmark#ValidQuestion
+qab:ValidQuestion rdf:type owl:Class ;
+                  rdfs:subClassOf qab:Question ;
+                  rdfs:comment "Class of valid questions."@en ;
+                  rdfs:label "Valid Question"@en .
+
+
 #################################################################
 #    Annotations
 #################################################################
