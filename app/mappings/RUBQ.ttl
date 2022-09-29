@@ -39,7 +39,7 @@
     rml:logicalSource [
         rml:source "example.json";
         rml:referenceFormulation ql:JSONPath;
-        rml:iterator "$.[*]"];
+        rml:iterator "$.[?(@.answers != [])]"];
     rr:subjectMap [
         rr:template "urn:qa:benchmark#LABEL-answer-{uid}";
         rr:class qab:ValidAnswer];
@@ -53,6 +53,16 @@
         rr:objectMap [
             rml:reference "answers.[*].type";
             rr:datatype xsd:string]].
+
+
+<#EmptyAnswerMapping> a rr:TriplesMap;
+    rml:logicalSource [
+        rml:source "example.json";
+        rml:referenceFormulation ql:JSONPath;
+        rml:iterator "$.[?(@.answers == [])]"];
+    rr:subjectMap [
+        rr:template "urn:qa:benchmark#LABEL-answer-{uid}";
+        rr:class qab:EmptyAnswer].
 
 
 <#QueryMapping> a rr:TriplesMap;
@@ -74,10 +84,62 @@
     rml:logicalSource [
         rml:source "example.json";
         rml:referenceFormulation ql:JSONPath;
-        rml:iterator "$.[*]"];
+        rml:iterator "$.[?(@.answers != [])]"];
     rr:subjectMap [
         rr:template "urn:qa:benchmark#LABEL-question-{uid}";
         rr:class qab:ValidQuestion];
+    rr:predicateObjectMap [
+        rr:predicate qab:isElementOf;
+        rr:objectMap[
+            rr:template "urn:qa:benchmark#LABEL-dataset"]];
+    rr:predicateObjectMap [
+        rr:predicate qab:hasId;
+        rr:objectMap [
+            rml:reference "uid";
+            rr:datatype xsd:nonNegativeInteger]];
+    rr:predicateObjectMap [
+        rr:predicate qab:hasQuestion;
+        rr:objectMap [
+            rml:reference "question_text";
+            rr:language "ru"]];
+    rr:predicateObjectMap [
+        rr:predicate qab:hasSPARQLQuery;
+        rr:objectMap [
+            rr:template "urn:qa:benchmark-query-{uid}"]];
+    rr:predicateObjectMap [
+        rr:predicate qab:questionURI;
+        rr:objectMap [
+            rml:reference "question_uris.[*]";
+            rr:termType rr:IRI]];
+    rr:predicateObjectMap [
+        rr:predicate qab:questionProp;
+        rr:objectMap [
+            rml:reference "question_props.[*]";
+            rr:termType rr:IRI]];
+    rr:predicateObjectMap [
+        rr:predicate qab:hasAnswer;
+        rr:objectMap [
+            rr:template "urn:qa:benchmark#LABEL-answer-{uid}"]];
+    rr:predicateObjectMap [
+        rr:predicate qab:tag;
+        rr:objectMap [
+            rml:reference "tags.[*]";
+            rr:datatype xsd:string]];
+    rr:predicateObjectMap [
+        rr:predicate qab:hasQuestion;
+        rr:objectMap [
+            rml:reference "question_eng";
+            rr:language "en"]].
+
+
+<#UnanswerableQuestionMapping> a rr:TriplesMap;
+    rml:logicalSource [
+        rml:source "example.json";
+        rml:referenceFormulation ql:JSONPath;
+        rml:iterator "$.[?(@.answers == [])]"];
+    rr:subjectMap [
+        rr:template "urn:qa:benchmark#LABEL-question-{uid}";
+        rr:class qab:UnanswerableQuestion];
     rr:predicateObjectMap [
         rr:predicate qab:isElementOf;
         rr:objectMap[

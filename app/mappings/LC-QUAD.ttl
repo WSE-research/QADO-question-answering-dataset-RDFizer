@@ -52,7 +52,7 @@
         rml:iterator "$.[*]"];
     rr:subjectMap [
         rr:template "urn:qa:benchmark#LABEL-question-{_id}";
-        rr:class qab:ValidQuestion];
+        rr:class qab:UnanswerableQuestion];
     rr:predicateObjectMap [
         rr:predicate qab:isElementOf;
         rr:objectMap[

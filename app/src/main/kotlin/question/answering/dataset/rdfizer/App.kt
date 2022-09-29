@@ -122,7 +122,7 @@ data class Json2RDFTransformer(private var filePath: String, private var format:
 
             out.write(ontology)
 
-            result?.write(out, "nquads")
+            result?.write(out, "turtle")
 
             outputText = output.toString()
 

@@ -54,10 +54,72 @@
     rml:logicalSource [
         rml:source "example.json";
         rml:referenceFormulation ql:JSONPath;
-        rml:iterator "$.[*]"];
+        rml:iterator "$.[?(@.answers)]"];
     rr:subjectMap [
         rr:template "urn:qa:benchmark#LABEL-question-{ID}";
         rr:class qab:ValidQuestion];
+    rr:predicateObjectMap [
+        rr:predicate qab:hasId;
+        rr:objectMap [
+            rml:reference "ID";
+            rr:datatype xsd:string]];
+    rr:predicateObjectMap [
+        rr:predicate qab:isElementOf;
+        rr:objectMap [
+            rr:template "urn:qa:benchmark#LABEL-dataset"]];
+    rr:predicateObjectMap [
+        rr:predicate qab:compositionAnswer;
+        rr:objectMap [
+            rml:reference "composition_answer";
+            rr:datatype xsd:string]];
+    rr:predicateObjectMap [
+        rr:predicate qab:compositionalityType;
+        rr:objectMap [
+            rml:reference "compositionality_type";
+            rr:datatype xsd:string]];
+    rr:predicateObjectMap [
+        rr:predicate qab:createdAt;
+        rr:objectMap [
+            rml:reference "created";
+            rr:datatype xsd:dateTime]];
+    rr:predicateObjectMap [
+        rr:predicate qab:machineQuestion;
+        rr:objectMap [
+            rml:reference "machine_question";
+            rr:language "en"]];
+    rr:predicateObjectMap [
+        rr:predicate qab:hasQuestion;
+        rr:objectMap [
+            rml:reference "question";
+            rr:language "en"]];
+    rr:predicateObjectMap [
+        rr:predicate qab:hasSPARQLQuery;
+        rr:objectMap [
+            rr:template "urn:qa:benchmark-query-{ID}"]];
+    rr:predicateObjectMap [
+        rr:predicate qab:webqspId;
+        rr:objectMap [
+            rml:reference "webqsp_ID";
+            rr:datatype xsd:string]];
+    rr:predicateObjectMap [
+        rr:predicate qab:webqspQuestion;
+        rr:objectMap [
+            rml:reference "webqsp_question";
+            rr:language "en"]];
+    rr:predicateObjectMap [
+        rr:predicate qab:hasAnswer;
+        rr:objectMap [
+            rr:template "urn:qa:benchmark#LABEL-answer-{ID}"]].
+
+
+<#UnanswerableQuestionMapping> a rr:TriplesMap;
+    rml:logicalSource [
+        rml:source "example.json";
+        rml:referenceFormulation ql:JSONPath;
+        rml:iterator "$.[?(!@.answers)]"];
+    rr:subjectMap [
+        rr:template "urn:qa:benchmark#LABEL-question-{ID}";
+        rr:class qab:UnanswerableQuestion];
     rr:predicateObjectMap [
         rr:predicate qab:hasId;
         rr:objectMap [
