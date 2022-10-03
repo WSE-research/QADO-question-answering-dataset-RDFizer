@@ -1,12 +1,12 @@
 {
   "spec": {
-    "title": "Questions per Language",
+    "title": "Questions per QuestionType and Dataset",
     "basicChart": {
       "chartType": "COLUMN",
       "axis": [
         {
           "position": "BOTTOM_AXIS",
-          "title": "Language"
+          "title": "Benchmark"
         },
         {
           "position": "LEFT_AXIS",
@@ -19,7 +19,7 @@
             "sourceRange": {
               "sources": [
                 {
-                  "sheetId": 6,
+                  "sheetId": 3,
                   "startRowIndex": 0,
                   "startColumnIndex": 0,
                   "endColumnIndex": 1
@@ -35,10 +35,10 @@
             "sourceRange": {
               "sources": [
                 {
-                  "sheetId": 6,
+                  "sheetId": 3,
                   "startRowIndex": 0,
-                  "startColumnIndex": 1,
-                  "endColumnIndex": 2
+                  "startColumnIndex": 2,
+                  "endColumnIndex": 3
                 }
               ]
             }
@@ -52,11 +52,11 @@
   "position": {
     "overlayPosition": {
       "anchorCell": {
-        "sheetId": 6,
+        "sheetId": 3,
         "rowIndex": 1,
         "columnIndex": 0
       },
-      "widthPixels": 600,
+      "widthPixels": 1500,
       "heightPixels": 600
     }
   }

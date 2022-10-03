@@ -1,0 +1,7 @@
+PREFIX qab: <urn:qa:benchmark#>
+
+SELECT ?benchmark ?questionType (COUNT(?questionType) AS ?type)
+{
+    ?question a ?questionType ;
+        qab:isElementOf ?benchmark .
+} GROUP BY ?benchmark ?questionType ORDER BY ?benchmark ?questionType
