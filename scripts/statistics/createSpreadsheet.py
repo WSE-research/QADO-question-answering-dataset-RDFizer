@@ -3,6 +3,7 @@ from datetime import date
 
 import requests
 from json import loads, load
+import numpy as np
 
 from config import *
 
@@ -67,6 +68,19 @@ def get_sheet_config(sparql_path: str, number: int):
             # load SPARQLResult
             sparql_result = loads(resp.text)
 
+            if 'concat' in sparql_result['head']['vars']:
+                box_plot_values = ['min', '25% quantile', 'median', '75% quantile', 'max']
+
+                sparql_result['head']['vars'].remove('concat')
+                sparql_result['head']['vars'] += box_plot_values
+
+                for response in sparql_result['results']['bindings']:
+                    values = loads(f'[{response["concat"]["value"]}]')
+
+                    for box_plot_value, quantile in zip(box_plot_values, [0, .25, .5, .75, 1]):
+                        response[box_plot_value] = {}
+                        response[box_plot_value]['value'] = str(np.quantile(values, quantile))
+
             # get variable names
             header = [entry for entry in sparql_result['head']['vars']]
 
@@ -105,7 +119,7 @@ def get_sheet_config(sparql_path: str, number: int):
 
     return {
         'properties': {
-            'title': sparql_path.replace('.sparql', ''),
+            'title': sparql_path.replace('.sparql', '').replace('_boxplot', ''),
             'sheetId': number
         },
         'data': [

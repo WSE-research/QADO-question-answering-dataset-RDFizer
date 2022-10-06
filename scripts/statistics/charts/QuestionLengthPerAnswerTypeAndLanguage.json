@@ -1,82 +1,81 @@
 {
   "spec": {
     "title": "Question length per AnswerType and Language",
-    "basicChart": {
-      "chartType": "COLUMN",
-      "axis": [
-        {
-          "position": "BOTTOM_AXIS",
-          "title": "Benchmark"
-        },
-        {
-          "position": "LEFT_AXIS",
-          "title": "Question Length"
+    "candlestickChart": {
+      "domain": {
+        "data": {
+          "sourceRange": {
+            "sources": [
+              {
+                "sheetId": 0,
+                "startRowIndex": 0,
+                "startColumnIndex": 0,
+                "endColumnIndex": 1
+              }
+            ]
+          }
         }
-      ],
-      "domains": [
+      },
+      "data": [
         {
-          "domain": {
-            "sourceRange": {
-              "sources": [
-                {
-                  "sheetId": 0,
-                  "startRowIndex": 0,
-                  "startColumnIndex": 0,
-                  "endColumnIndex": 1
-                }
-              ]
+          "lowSeries": {
+            "data": {
+              "sourceRange": {
+                "sources": [
+                  {
+                    "sheetId": 0,
+                    "startRowIndex": 0,
+                    "startColumnIndex": 4,
+                    "endColumnIndex": 5
+                  }
+                ]
+              }
+            }
+          },
+          "openSeries": {
+            "data": {
+              "sourceRange": {
+                "sources": [
+                  {
+                    "sheetId": 0,
+                    "startRowIndex": 0,
+                    "startColumnIndex": 5,
+                    "endColumnIndex": 6
+                  }
+                ]
+              }
+            }
+          },
+          "closeSeries": {
+            "data": {
+              "sourceRange": {
+                "sources": [
+                  {
+                    "sheetId": 0,
+                    "startRowIndex": 0,
+                    "startColumnIndex": 7,
+                    "endColumnIndex": 8
+                  }
+                ]
+              }
+            }
+          },
+          "highSeries": {
+            "data": {
+              "sourceRange": {
+                "sources": [
+                  {
+                    "sheetId": 0,
+                    "startRowIndex": 0,
+                    "startColumnIndex": 8,
+                    "endColumnIndex": 9
+                  }
+                ]
+              }
             }
           }
         }
-      ],
-      "series": [
-        {
-          "series": {
-            "sourceRange": {
-              "sources": [
-                {
-                  "sheetId": 0,
-                  "startRowIndex": 0,
-                  "startColumnIndex": 4,
-                  "endColumnIndex": 5
-                }
-              ]
-            }
-          },
-          "targetAxis": "LEFT_AXIS"
-        },
-        {
-          "series": {
-            "sourceRange": {
-              "sources": [
-                {
-                  "sheetId": 0,
-                  "startRowIndex": 0,
-                  "startColumnIndex": 5,
-                  "endColumnIndex": 6
-                }
-              ]
-            }
-          },
-          "targetAxis": "LEFT_AXIS"
-        },
-        {
-          "series": {
-            "sourceRange": {
-              "sources": [
-                {
-                  "sheetId": 0,
-                  "startRowIndex": 0,
-                  "startColumnIndex": 6,
-                  "endColumnIndex": 7
-                }
-              ]
-            }
-          },
-          "targetAxis": "LEFT_AXIS"
-        }
-      ],
-      "headerCount": 1
+      ]
     }
   },
   "position": {

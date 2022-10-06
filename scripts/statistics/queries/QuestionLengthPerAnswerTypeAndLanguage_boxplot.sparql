@@ -5,10 +5,8 @@ SELECT
     ?benchmark 
     ?lang 
     (COUNT(DISTINCT ?question) AS ?questions) 
-    ?type 
-    (MIN(?length) AS ?minLength) 
-    (AVG(?length) AS ?avgLength) 
-    (MAX(?length) AS ?maxLength)
+    ?type
+    (GROUP_CONCAT(?length; SEPARATOR = ",") AS ?concat)
 {
     ?question a ?questionType ;
         qab:isElementOf ?benchmark ;

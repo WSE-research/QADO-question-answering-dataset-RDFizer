@@ -1,7 +1,7 @@
 PREFIX qab: <urn:qa:benchmark#>
 PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
 
-SELECT ?benchmark (MIN(?length) AS ?minLength) (AVG(?length) AS ?avgLength) (MAX(?length) AS ?maxLength)
+SELECT ?benchmark (GROUP_CONCAT(?length ; SEPARATOR = ",") AS ?concat)
 {
     ?question a ?questionType ;
         qab:isElementOf ?benchmark ;
