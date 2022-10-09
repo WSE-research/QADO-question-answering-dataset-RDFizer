@@ -77,9 +77,13 @@ def get_sheet_config(sparql_path: str, number: int):
                 for response in sparql_result['results']['bindings']:
                     values = loads(f'[{response["concat"]["value"]}]')
 
-                    for box_plot_value, quantile in zip(box_plot_values, [0, .25, .5, .75, 1]):
-                        response[box_plot_value] = {}
-                        response[box_plot_value]['value'] = str(np.quantile(values, quantile))
+                    if values:
+                        for box_plot_value, quantile in zip(box_plot_values, [0, .25, .5, .75, 1]):
+                            response[box_plot_value] = {}
+                            response[box_plot_value]['value'] = str(np.quantile(values, quantile))
+                    else:
+                        for box_plot_value in box_plot_values:
+                            response[box_plot_value] = {'value': '0'}
 
             # get variable names
             header = [entry for entry in sparql_result['head']['vars']]
