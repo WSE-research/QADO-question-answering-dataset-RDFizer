@@ -1,0 +1,92 @@
+{
+  "spec": {
+    "title": "SPARQL Query length per Benchmark",
+    "candlestickChart": {
+      "domain": {
+        "data": {
+          "sourceRange": {
+            "sources": [
+              {
+                "sheetId": 0,
+                "startRowIndex": 0,
+                "startColumnIndex": 0,
+                "endColumnIndex": 1
+              }
+            ]
+          }
+        }
+      },
+      "data": [
+        {
+          "lowSeries": {
+            "data": {
+              "sourceRange": {
+                "sources": [
+                  {
+                    "sheetId": 0,
+                    "startRowIndex": 0,
+                    "startColumnIndex": 1,
+                    "endColumnIndex": 2
+                  }
+                ]
+              }
+            }
+          },
+          "openSeries": {
+            "data": {
+              "sourceRange": {
+                "sources": [
+                  {
+                    "sheetId": 0,
+                    "startRowIndex": 0,
+                    "startColumnIndex": 2,
+                    "endColumnIndex": 3
+                  }
+                ]
+              }
+            }
+          },
+          "closeSeries": {
+            "data": {
+              "sourceRange": {
+                "sources": [
+                  {
+                    "sheetId": 0,
+                    "startRowIndex": 0,
+                    "startColumnIndex": 4,
+                    "endColumnIndex": 5
+                  }
+                ]
+              }
+            }
+          },
+          "highSeries": {
+            "data": {
+              "sourceRange": {
+                "sources": [
+                  {
+                    "sheetId": 0,
+                    "startRowIndex": 0,
+                    "startColumnIndex": 5,
+                    "endColumnIndex": 6
+                  }
+                ]
+              }
+            }
+          }
+        }
+      ]
+    }
+  },
+  "position": {
+    "overlayPosition": {
+      "anchorCell": {
+        "sheetId": 0,
+        "rowIndex": 1,
+        "columnIndex": 0
+      },
+      "widthPixels": 1500,
+      "heightPixels": 600
+    }
+  }
+}
