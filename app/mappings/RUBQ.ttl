@@ -105,7 +105,7 @@
     rr:predicateObjectMap [
         rr:predicate qab:hasSPARQLQuery;
         rr:objectMap [
-            rr:template "urn:qa:benchmark-query-{uid}"]];
+            rr:template "urn:qa:benchmark#LABEL-query-{uid}"]];
     rr:predicateObjectMap [
         rr:predicate qab:questionURI;
         rr:objectMap [
@@ -157,7 +157,7 @@
     rr:predicateObjectMap [
         rr:predicate qab:hasSPARQLQuery;
         rr:objectMap [
-            rr:template "urn:qa:benchmark-query-{uid}"]];
+            rr:template "urn:qa:benchmark#LABEL-query-{uid}"]];
     rr:predicateObjectMap [
         rr:predicate qab:questionURI;
         rr:objectMap [
