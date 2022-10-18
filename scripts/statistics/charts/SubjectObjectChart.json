@@ -1,13 +1,13 @@
 {
   "spec": {
-    "title": "Question length per Language and Benchmark",
+    "title": "Number of defined subjects/objects per SPARQL query",
     "candlestickChart": {
       "domain": {
         "data": {
           "sourceRange": {
             "sources": [
               {
-                "sheetId": 4,
+                "sheetId": 10,
                 "startRowIndex": 0,
                 "startColumnIndex": 0,
                 "endColumnIndex": 1
@@ -23,10 +23,10 @@
               "sourceRange": {
                 "sources": [
                   {
-                    "sheetId": 4,
+                    "sheetId": 10,
                     "startRowIndex": 0,
-                    "startColumnIndex": 2,
-                    "endColumnIndex": 3
+                    "startColumnIndex": 1,
+                    "endColumnIndex": 2
                   }
                 ]
               }
@@ -37,10 +37,10 @@
               "sourceRange": {
                 "sources": [
                   {
-                    "sheetId": 4,
+                    "sheetId": 10,
                     "startRowIndex": 0,
-                    "startColumnIndex": 3,
-                    "endColumnIndex": 4
+                    "startColumnIndex": 2,
+                    "endColumnIndex": 3
                   }
                 ]
               }
@@ -51,10 +51,10 @@
               "sourceRange": {
                 "sources": [
                   {
-                    "sheetId": 4,
+                    "sheetId": 10,
                     "startRowIndex": 0,
-                    "startColumnIndex": 5,
-                    "endColumnIndex": 6
+                    "startColumnIndex": 4,
+                    "endColumnIndex": 5
                   }
                 ]
               }
@@ -65,10 +65,10 @@
               "sourceRange": {
                 "sources": [
                   {
-                    "sheetId": 4,
+                    "sheetId": 10,
                     "startRowIndex": 0,
-                    "startColumnIndex": 6,
-                    "endColumnIndex": 7
+                    "startColumnIndex": 5,
+                    "endColumnIndex": 6
                   }
                 ]
               }
@@ -81,12 +81,10 @@
   "position": {
     "overlayPosition": {
       "anchorCell": {
-        "sheetId": 4,
+        "sheetId": 10,
         "rowIndex": 1,
         "columnIndex": 0
-      },
-      "widthPixels": 1500,
-      "heightPixels": 600
+      }
     }
   }
 }

@@ -45,6 +45,21 @@
         rr:class qab:EmptyAnswer].
 
 
+<#QueryMapping> a rr:TriplesMap;
+    rml:logicalSource [
+        rml:source "example.json";
+        rml:referenceFormulation ql:JSONPath;
+        rml:iterator "$.[*]"];
+    rr:subjectMap [
+        rr:template "urn:qa:benchmark#LABEL-query-{_id}";
+        rr:class qab:Query];
+    rr:predicateObjectMap [
+        rr:predicate qab:queryText;
+        rr:objectMap [
+            rml:reference "sparql_query";
+            rr:datatype xsd:string]].
+
+
 <#QuestionMapping> a rr:TriplesMap;
     rml:logicalSource [
         rml:source "example.json";
@@ -75,8 +90,7 @@
     rr:predicateObjectMap [
         rr:predicate qab:hasSPARQLQuery;
         rr:objectMap [
-            rml:reference "sparql_query";
-            rr:datatype xsd:string]];
+            rr:template "urn:qa:benchmark#LABEL-query-{_id}"]];
     rr:predicateObjectMap [
         rr:predicate qab:hasAnswer;
         rr:objectMap [

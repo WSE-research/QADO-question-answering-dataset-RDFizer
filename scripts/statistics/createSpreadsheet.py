@@ -68,22 +68,94 @@ def get_sheet_config(sparql_path: str, number: int):
             # load SPARQLResult
             sparql_result = loads(resp.text)
 
-            if 'concat' in sparql_result['head']['vars']:
+            # query relates to boxplot data
+            if 'concat' in (header := sparql_result['head']['vars']):
+                # set boxplot properties
                 box_plot_values = ['min', '25% quantile', 'median', '75% quantile', 'max']
 
-                sparql_result['head']['vars'].remove('concat')
-                sparql_result['head']['vars'] += box_plot_values
+                header.remove('concat')
+                header += box_plot_values
 
+                # foreach dataset
                 for response in sparql_result['results']['bindings']:
                     values = loads(f'[{response["concat"]["value"]}]')
 
+                    # any property found to calculate quantiles
                     if values:
+                        # generate all quantiles needed for a boxplot
                         for box_plot_value, quantile in zip(box_plot_values, [0, .25, .5, .75, 1]):
                             response[box_plot_value] = {}
                             response[box_plot_value]['value'] = str(np.quantile(values, quantile))
+                    # no data provided for the dataset
                     else:
+                        # set all quantiles to 0
                         for box_plot_value in box_plot_values:
                             response[box_plot_value] = {'value': '0'}
+            # query relates to SPARQL query statistics
+            elif 'queries' in header:
+                header.remove('queries')
+
+                # generate headers for SPARQL query statistics
+                for prefix in ['so', 'p', 'spo']:
+                    box_plot_values = [f'{prefix}_min', f'{prefix}_25% quantile', f'{prefix}_median',
+                                       f'{prefix}_75% quantile', f'{prefix}_max']
+
+                    header += box_plot_values
+
+                # foreach dataset
+                for answer in sparql_result['results']['bindings']:
+                    # get SPARQL queries for the dataset
+                    queries = answer['queries']['value'].split('<||>')
+
+                    subject_object_counts = []
+                    predicate_counts = []
+                    subject_predicate_object_counts = []
+
+                    for query in queries:
+                        lines = query.split('\n')
+
+                        subject_object_set = set()
+                        predicate_set = set()
+
+                        # foreach line of a SPARQL query
+                        for line in lines:
+                            # current line contains usage of subjects/properties/objects
+                            if line.strip().endswith(('.', ',', ';')):
+                                elements = line.strip().split(' ')
+
+                                # line defines new subject, property and object
+                                if line.strip().endswith('.'):
+                                    # add them if they aren't a variable
+                                    if not elements[0].startswith('?'):
+                                        subject_object_set.add(elements[0])
+                                    if not elements[1].startswith('?'):
+                                        predicate_set.add(elements[1])
+                                    if not elements[2].startswith('?'):
+                                        subject_object_set.add(elements[2])
+                                # line defines new property and object
+                                elif line.strip().endswith(';'):
+                                    # add them if they aren't a variable
+                                    if not elements[0].startswith('?'):
+                                        predicate_set.add(elements[0])
+                                    if not elements[1].startswith('?'):
+                                        subject_object_set.add(elements[1])
+                                # line defines new object
+                                else:
+                                    # add object if it isn't a variable
+                                    if not elements[0].startswith('?'):
+                                        subject_object_set.add(elements[0])
+
+                        # count number of subjects/properties/objects
+                        subject_object_counts.append(len(subject_object_set))
+                        predicate_counts.append(len(predicate_set))
+                        subject_predicate_object_counts.append(len(subject_object_set) + len(predicate_set))
+
+                    # generate quantiles for subjects/objects, properties and all resources
+                    for prefix, entity_sets in zip(['so', 'p', 'spo'], [subject_object_counts, predicate_counts,
+                                                                        subject_predicate_object_counts]):
+                        for key, quantile in zip([f'{prefix}_min', f'{prefix}_25% quantile', f'{prefix}_median',
+                                                  f'{prefix}_75% quantile', f'{prefix}_max'], [0, .25, .5, .75, 1]):
+                            answer[key] = {'value': str(np.quantile(entity_sets, quantile))}
 
             # get variable names
             header = [entry for entry in sparql_result['head']['vars']]

@@ -1,0 +1,29 @@
+PREFIX qab: <urn:qa:benchmark#>
+
+SELECT ?benchmark
+(SUM(?limits) AS ?numLimit)
+(SUM(?groupbys) AS ?numGroupBy)
+(SUM(?asks) AS ?numAsk)
+(SUM(?orderbys) AS ?numOrderBy)
+(SUM(?filters) AS ?numFilter)
+(SUM(?unions) AS ?numUnion)
+(SUM(?offsets) AS ?numOffset)
+(SUM(?counts) AS ?numCount)
+(SUM(?havings) AS ?numHaving)
+(SUM(?years) AS ?numYear)
+(SUM(?nows) AS ?numNow)
+{
+    ?question qab:isElementOf ?benchmark ;
+    qab:hasSPARQLQuery/qab:queryText ?text .
+    BIND(IF(CONTAINS(LCASE(?text), "limit"), 1, 0) AS ?limits)
+    BIND(IF(CONTAINS(LCASE(?text), "group by"), 1, 0) AS ?groupbys)
+    BIND(IF(CONTAINS(LCASE(?text), "order by"), 1, 0) AS ?orderbys)
+    BIND(IF(CONTAINS(LCASE(?text), "filter"), 1, 0) AS ?filters)
+    BIND(IF(CONTAINS(LCASE(?text), "ask"), 1, 0) AS ?asks)
+    BIND(IF(CONTAINS(LCASE(?text), "union"), 1, 0) AS ?unions)
+    BIND(IF(CONTAINS(LCASE(?text), "offset"), 1, 0) AS ?offsets)
+    BIND(IF(CONTAINS(LCASE(?text), "count"), 1, 0) AS ?counts)
+    BIND(IF(CONTAINS(LCASE(?text), "having"), 1, 0) AS ?havings)
+    BIND(IF(CONTAINS(LCASE(?text), "year"), 1, 0) AS ?years)
+    BIND(IF(CONTAINS(LCASE(?text), "now"), 1, 0) AS ?nows)
+} GROUP BY ?benchmark ORDER BY ?benchmark

@@ -2,6 +2,6 @@ PREFIX qab: <urn:qa:benchmark#>
 
 SELECT ?benchmark (GROUP_CONCAT(?queryLength ; SEPARATOR=",") AS ?concat) {
     ?question qab:isElementOf ?benchmark ;
-    qab:hasSPARQLQuery/qab:queryText|qab:hasSPARQLQuery ?text ;
+    qab:hasSPARQLQuery/qab:queryText ?text ;
     BIND(STRLEN(?text) AS ?queryLength)
 } GROUP BY ?benchmark ORDER BY ?benchmark
