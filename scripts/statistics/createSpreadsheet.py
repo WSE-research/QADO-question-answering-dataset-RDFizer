@@ -12,6 +12,11 @@ from google.oauth2.credentials import Credentials
 from google_auth_oauthlib.flow import InstalledAppFlow
 from googleapiclient.discovery import build
 from googleapiclient.errors import HttpError
+import matplotlib.pyplot as plt
+import pandas as pd
+import seaborn as sb
+from collections import defaultdict
+import logging
 
 # API scope for Google Sheets
 scopes = ['https://www.googleapis.com/auth/spreadsheets']
@@ -30,6 +35,20 @@ def load_chart(chart_file):
 
     with open(f'charts/{chart_file}') as f:
         return load(f)
+
+
+def load_image_data(image_file) -> dict | None:
+    """
+    Read the image configuration for 'images' subdirectory
+
+    :param image_file: file name in 'images' subdirectory
+    :return: configuration as JSON object
+    """
+    image_path = f'images/{image_file}'
+
+    if os.path.exists(image_path):
+        with open(image_path) as f:
+            return load(f)
 
 
 def build_stardog_api_url():
@@ -76,12 +95,29 @@ def get_sheet_config(sparql_path: str, number: int):
                 header.remove('concat')
                 header += box_plot_values
 
+                dataframe_dump = defaultdict(list)
+
                 # foreach dataset
                 for response in sparql_result['results']['bindings']:
+                    benchmark = response['benchmark']['value'].replace('-dataset', '').replace('urn:qa:benchmark#', '')
+
+                    try:
+                        lang = response['lang']['value']
+                    except KeyError:
+                        logging.info(f'No language provided for {sparql_path} {benchmark}')
+                        lang = None
+
                     values = loads(f'[{response["concat"]["value"]}]')
 
                     # any property found to calculate quantiles
                     if values:
+                        for value in values:
+                            dataframe_dump['benchmark'].append(benchmark)
+                            dataframe_dump['value'].append(value)
+
+                            if lang:
+                                dataframe_dump['lang'].append(lang)
+
                         # generate all quantiles needed for a boxplot
                         for box_plot_value, quantile in zip(box_plot_values, [0, .25, .5, .75, 1]):
                             response[box_plot_value] = {}
@@ -91,6 +127,16 @@ def get_sheet_config(sparql_path: str, number: int):
                         # set all quantiles to 0
                         for box_plot_value in box_plot_values:
                             response[box_plot_value] = {'value': '0'}
+
+                plt.figure(figsize=(40, 10))
+                plt.title(sparql_path.replace('.sparql', ''))
+                sb.violinplot(data=pd.DataFrame(dataframe_dump), x='benchmark', y='value', hue='lang' if lang else None)
+                plt.xticks(rotation=90)
+                plt.tight_layout()
+                plt.ylabel('Question length')
+                plt.savefig(f'images/{sparql_path.replace(".sparql", ".png")}', dpi=200)
+                plt.close()
+
             # query relates to SPARQL query statistics
             elif 'queries' in header:
                 header.remove('queries')
@@ -102,10 +148,20 @@ def get_sheet_config(sparql_path: str, number: int):
 
                     header += box_plot_values
 
+                dataframe_dump = defaultdict(list)
+
                 # foreach dataset
                 for answer in sparql_result['results']['bindings']:
                     # get SPARQL queries for the dataset
                     queries = answer['queries']['value'].split('<||>')
+
+                    benchmark = answer['benchmark']['value'].replace('-dataset', '').replace('urn:qa:benchmark#', '')
+
+                    try:
+                        lang = answer['lang']['value']
+                    except KeyError:
+                        lang = None
+                        logging.info(f'No language provided for {sparql_path} {benchmark}')
 
                     subject_object_counts = []
                     predicate_counts = []
@@ -145,10 +201,22 @@ def get_sheet_config(sparql_path: str, number: int):
                                     if not elements[0].startswith('?'):
                                         subject_object_set.add(elements[0])
 
+                        number_of_subjects_objects = len(subject_object_set)
+                        number_of_predicates = len(predicate_set)
+                        number_of_resources = len(subject_object_set) + len(predicate_set)
+
                         # count number of subjects/properties/objects
-                        subject_object_counts.append(len(subject_object_set))
-                        predicate_counts.append(len(predicate_set))
-                        subject_predicate_object_counts.append(len(subject_object_set) + len(predicate_set))
+                        subject_object_counts.append(number_of_subjects_objects)
+                        predicate_counts.append(number_of_predicates)
+                        subject_predicate_object_counts.append(number_of_resources)
+
+                        dataframe_dump['benchmark'].append(benchmark)
+                        dataframe_dump['subjects/objects'].append(number_of_subjects_objects)
+                        dataframe_dump['properties'].append(number_of_predicates)
+                        dataframe_dump['resources'].append(number_of_resources)
+
+                        if lang:
+                            dataframe_dump['language'].append(lang)
 
                     # generate quantiles for subjects/objects, properties and all resources
                     for prefix, entity_sets in zip(['so', 'p', 'spo'], [subject_object_counts, predicate_counts,
@@ -156,6 +224,18 @@ def get_sheet_config(sparql_path: str, number: int):
                         for key, quantile in zip([f'{prefix}_min', f'{prefix}_25% quantile', f'{prefix}_median',
                                                   f'{prefix}_75% quantile', f'{prefix}_max'], [0, .25, .5, .75, 1]):
                             answer[key] = {'value': str(np.quantile(entity_sets, quantile))}
+
+                    dataframe = pd.DataFrame(dataframe_dump)
+
+                    for column in ['subjects/objects', 'properties', 'resources']:
+                        plt.figure(figsize=(40, 10))
+                        plt.title(sparql_path.replace('.sparql', ''))
+                        sb.violinplot(data=dataframe, x='benchmark', y=column, hue='lang' if lang else None)
+                        plt.xticks(rotation=90)
+                        plt.tight_layout()
+                        plt.savefig(f'images/{sparql_path.replace(".sparql", "")}-{column.replace("/", "-")}.png',
+                                    dpi=200)
+                        plt.close()
 
             # get variable names
             header = [entry for entry in sparql_result['head']['vars']]
