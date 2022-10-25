@@ -129,7 +129,7 @@ def get_sheet_config(sparql_path: str, number: int):
                             response[box_plot_value] = {'value': '0'}
 
                 plt.figure(figsize=(40, 10))
-                plt.title(sparql_path.replace('.sparql', ''))
+                plt.title(sparql_path.replace('.sparql', '').replace('_boxplot', ''))
                 sb.violinplot(data=pd.DataFrame(dataframe_dump), x='benchmark', y='value', hue='lang' if lang else None)
                 plt.xticks(rotation=90)
                 plt.tight_layout()
@@ -229,7 +229,7 @@ def get_sheet_config(sparql_path: str, number: int):
 
                     for column in ['subjects/objects', 'properties', 'resources']:
                         plt.figure(figsize=(40, 10))
-                        plt.title(sparql_path.replace('.sparql', ''))
+                        plt.title(sparql_path.replace('.sparql', '').replace('_boxplot', ''))
                         sb.violinplot(data=dataframe, x='benchmark', y=column, hue='lang' if lang else None)
                         plt.xticks(rotation=90)
                         plt.tight_layout()
