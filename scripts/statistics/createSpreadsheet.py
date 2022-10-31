@@ -12,6 +12,7 @@ from google.oauth2.credentials import Credentials
 from google_auth_oauthlib.flow import InstalledAppFlow
 from googleapiclient.discovery import build
 from googleapiclient.errors import HttpError
+from googleapiclient.http import MediaFileUpload
 import matplotlib.pyplot as plt
 import pandas as pd
 import seaborn as sb
@@ -19,7 +20,7 @@ from collections import defaultdict
 import logging
 
 # API scope for Google Sheets
-scopes = ['https://www.googleapis.com/auth/spreadsheets']
+scopes = ['https://www.googleapis.com/auth/spreadsheets', 'https://www.googleapis.com/auth/drive']
 
 
 def load_chart(chart_file):
@@ -128,13 +129,14 @@ def get_sheet_config(sparql_path: str, number: int):
                         for box_plot_value in box_plot_values:
                             response[box_plot_value] = {'value': '0'}
 
+                # create violin plot
                 plt.figure(figsize=(40, 10))
                 plt.title(sparql_path.replace('.sparql', '').replace('_boxplot', ''))
                 sb.violinplot(data=pd.DataFrame(dataframe_dump), x='benchmark', y='value', hue='lang' if lang else None)
                 plt.xticks(rotation=90)
                 plt.tight_layout()
                 plt.ylabel('Question length')
-                plt.savefig(f'images/{sparql_path.replace(".sparql", ".png")}', dpi=200)
+                plt.savefig(f'images/{sparql_path.replace(".sparql", ".png").replace("_boxplot", "")}', dpi=200)
                 plt.close()
 
             # query relates to SPARQL query statistics
@@ -290,6 +292,7 @@ def main():
     """
     # get all sparql queries
     queries = sorted(os.listdir('queries'))
+    sheets = len(queries)
 
     creds = None
 
@@ -317,6 +320,7 @@ def main():
     try:
         # connect to API
         service = build('sheets', 'v4', credentials=creds)
+        drive_service = build('drive', 'v3', credentials=creds)
 
         # creating new Spreadsheet with Stardog data
         print('Creating sheets...')
@@ -330,28 +334,150 @@ def main():
 
         spread_sheet_id = spread_sheet.get('spreadsheetId')
 
-        # resize all columns based on content
-        print('Reformatting sheets...')
-        service.spreadsheets().batchUpdate(spreadsheetId=spread_sheet_id, body={
-            'requests': [
-                {
-                    'autoResizeDimensions': {
-                        'dimensions': {
-                            'sheetId': i,
-                            'dimension': 'COLUMNS',
-                            'startIndex': 0,
-                            'endIndex': 100
-                        }
-                    }
-                } for i in range(len(queries))
-            ]
-        }).execute()
-
         # add all charts to spreadsheet
         print('Adding charts...')
         service.spreadsheets().batchUpdate(spreadsheetId=spread_sheet_id, body={
             'requests': [{'addChart': {'chart': load_chart(chart_file)}} for chart_file in os.listdir('charts')]
         }).execute()
+
+        # folder for storing the data and images
+        stats_folder = {
+            'name': f'SPARQL Statistics {today}',
+            'mimeType': 'application/vnd.google-apps.folder'
+        }
+
+        print('Creating folder...')
+        # create folder and move spreadsheet
+        folder_id = drive_service.files().create(body=stats_folder, fields='id').execute().get('id')
+        spread_sheet_parents = drive_service.files().get(fileId=spread_sheet_id,
+                                                         fields='parents').execute().get('parents')
+        drive_service.files().update(fileId=spread_sheet_id, addParents=folder_id,
+                                     removeParents=','.join(spread_sheet_parents)).execute()
+
+        # add new worksheet for violin plots
+        image_update_batch = [{
+            'addSheet': {
+                'properties': {
+                    'sheetId': sheets,
+                    'title': 'Violin charts'
+                }
+            }
+        }]
+
+        # request template for image insertion
+        cell_content = {
+            'updateCells': {
+                'rows': [],
+                'fields': '*',
+                'start': {
+                    'sheetId': sheets,
+                    'rowIndex': 0,
+                    'columnIndex': 0
+                }
+            }
+        }
+
+        print('Upload images...')
+
+        image_share_batch = drive_service.new_batch_http_request()
+
+        images = 0
+
+        # upload images
+        for image in os.listdir('images'):
+            if '.png' in image:
+                images += 1
+
+                file_data = {
+                    'name': image,
+                    'parents': [folder_id]
+                }
+
+                file = MediaFileUpload(f'images/{image}', mimetype='image/png', resumable=True)
+
+                # upload image and get Google Drive ID
+                image_id = drive_service.files().create(body=file_data, media_body=file).execute().get('id')
+
+                # create formula for image insertion
+                cell_content['updateCells']['rows'].append({
+                    'values': [
+                        {
+                            'userEnteredValue': {
+                                'formulaValue': f'=IMAGE("https://drive.google.com/uc?export=download&id={image_id}",4,'
+                                                f'{custom_image_height},{custom_image_width})'
+                            }
+                        }
+                    ]
+                })
+
+                # make images readonly accessible for anyone
+                image_share_batch.add(drive_service.permissions().create(fileId=image_id, fields='id',
+                                                                         body={'type': 'anyone', 'role': 'reader'}))
+
+        # update share configuration
+        image_share_batch.execute()
+
+        print('Insert images to sheet...')
+
+        # create new sheet and insert images
+        image_update_batch.append(cell_content)
+
+        service.spreadsheets().batchUpdate(spreadsheetId=spread_sheet_id, body={
+            'requests': image_update_batch
+        }).execute()
+
+        # resize all cell depending on content
+        resizes: list = [
+            {
+                'autoResizeDimensions': {
+                    'dimensions': {
+                        'sheetId': i,
+                        'dimension': 'COLUMNS',
+                        'startIndex': 0,
+                        'endIndex': 100
+                    }
+                }
+            } for i in range(sheets)
+        ]
+
+        # resize width of cells for violin plots
+        resizes.append({
+            "updateDimensionProperties": {
+                "range": {
+                    "sheetId": sheets,
+                    "dimension": "COLUMNS",
+                    "startIndex": 0,
+                    "endIndex": 1
+                },
+                "properties": {
+                    "pixelSize": custom_image_width
+                },
+                "fields": "pixelSize"
+            }
+        })
+
+        # resize height of cells for violin plots
+        resizes.append({
+            "updateDimensionProperties": {
+                "range": {
+                    "sheetId": sheets,
+                    "dimension": "ROWS",
+                    "startIndex": 0,
+                    "endIndex": images
+                },
+                "properties": {
+                    "pixelSize": custom_image_height
+                },
+                "fields": "pixelSize"
+            }
+        })
+
+        # resize all columns based on content
+        print('Reformatting sheets...')
+        service.spreadsheets().batchUpdate(spreadsheetId=spread_sheet_id, body={
+            'requests': resizes
+        }).execute()
+
     # any API call fails
     except HttpError as err:
         print(err)
