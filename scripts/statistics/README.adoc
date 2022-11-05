@@ -1,6 +1,6 @@
 # SPARQL dataset statistics
 
-This project address the need of a good understanding of the characteristics of Knowledge Graph Question Answering benchmark datasets.
+This sub-project address the need of a good understanding of the characteristics of Knowledge Graph Question Answering benchmark datasets.
 For this purpose, a tool is provided here to create a Google Spreadsheet with statistics from a triplestore, currently the [Stardog triplestore](https://www.stardog.com/) is supported.
 **Python 3.8** or newer is required for the current implementation.
 To install all required packages, run `pip install -r requirements.txt`. 
