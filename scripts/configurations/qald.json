@@ -76,5 +76,11 @@
         "format": "qald",
         "label": "QALD 9 plus train dbpedia",
         "homepage": "https://github.com/KGQA/QALD_9_plus"
+    },
+    {
+        "filePath": "https://raw.githubusercontent.com/KGQA/QALD_10/main/data/qald_10/qald_10.json",
+        "format": "qald",
+        "label": "QALD 10",
+        "homepage": "https://github.com/KGQA/QALD_10"
     }
 ]
