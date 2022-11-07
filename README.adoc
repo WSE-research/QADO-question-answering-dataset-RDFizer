@@ -1,52 +1,58 @@
-# question-answering-dataset-RDFizer
+= question-answering-dataset-RDFizer
 
 This tool provides a webservice to convert structured data into RDF.
 
-## Setup service
+== Setup service
 
-### Using Gradle
+=== Using Gradle
 
-To run the service locally run `./gradlew run`. 
+To run the service locally run `./gradlew run`.
 
-### Using Docker
+=== Using Docker
 
-Otherwise, you can set up a Docker image running the service by executing the folllowing command:
+Otherwise, you can set up a Docker image running the service by pulling the following
+image:
 
-```bash
-docker build -t rdfizer:latest .
-```
+[source,bash]
+----
+docker pull bigoli98/rdfizer:latest
+----
 
+Alternatively you can build the Docker image from source.
 To start a Docker container use the following command:
 
-```shell
-docker run -d -p "$EXTERNAL_PORT:8080" rdfizer:latest
-```
+[source,shell]
+----
+docker run -d -p "$EXTERNAL_PORT:8080" bigoli98/rdfizer:latest
+----
 
-## Accessing the service
+== Accessing the service
 
-To transform a JSON file to RDF perform a `POST`-Request at `$HOST:$PORT/json2rdf` with a JSON
-payload of the following structure:
+To transform a JSON file to RDF perform a `POST`-Request at `$HOST:$PORT/json2rdf`
+with a JSON payload of the following structure:
 
-```json
+[source,json]
+----
 {
   "format": "Mapping file name",
   "label": "Name for the generated RDF triples",
   "filePath": "URL of the JSON file",
   "homepage": "URL of the data publisher"
 }
-```
+----
 
 By default, the following formats are supported:
 
-* https://github.com/ag-sc/QALD[QALD], supported versions 5, 6, 8, and 9  (`qald`) 
+* https://github.com/ag-sc/QALD[QALD], supported versions 5, 6, 8, 9 and 10  (`qald`)
 * https://github.com/AskNowQA/LC-QuAD[LC-QuAD], supported version 1 (`lc-quad`) and 2 (`lc-quad-2`)
 * https://github.com/vladislavneon/RuBQ[RuBQ], supported versions 1 and 2 (`rubq`)
 * https://www.tau-nlp.sites.tau.ac.il/compwebq[CWQ] (`cwq`)
 
-The follow cURL command can be used to convert a JSON file of the QALD benchmark
+The following cURL command can be used to convert a JSON file of the QALD benchmark
 into RDF.
 
-```bash
+[source,bash]
+----
 curl --location --request POST 'http://$HOST:$PORT/json2rdf' \
 --header 'Content-Type: application/json' \
 --data-raw '{
@@ -55,9 +61,9 @@ curl --location --request POST 'http://$HOST:$PORT/json2rdf' \
     "label": "QALD 6 train multilingual raw",
     "homepage": "https://github.com/ag-sc/QALD"
 }'
-```
+----
 
-## Adding additional formats
+== Adding additional formats
 
 To add new mapping rules just add a new mapping file `NAME.ttl` to `app/mappings` while `NAME` has to be in all caps. 
 The mapping language is https://rml.io/specs/rml/[RML]. 
