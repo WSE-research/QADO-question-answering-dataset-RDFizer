@@ -1,0 +1,318 @@
+@prefix rml: <http://semweb.mmlab.be/ns/rml#> .
+@prefix rr: <http://www.w3.org/ns/r2rml#> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+@prefix void: <http://rdfs.org/ns/void#> .
+@prefix prov: <http://www.w3.org/ns/prov#> .
+@prefix qab: <urn:qa:benchmark#> .
+@prefix ql: <http://semweb.mmlab.be/ns/ql#> .
+@prefix wd: <http://www.wikidata.org/entity/> .
+@base <URL#>.
+
+
+<#DatasetMapping> a rr:TriplesMap;
+    rml:logicalSource [
+        rml:source "example.json";
+        rml:referenceFormulation ql:JSONPath;
+        rml:iterator "$.[*]"];
+    rr:subjectMap [
+        rr:template "urn:qa:benchmark#LABEL-dataset";
+        rr:class qab:Benchmark];
+    rr:predicateObjectMap [
+        rr:predicate void:dataDump;
+        rr:objectMap [
+            rr:template "URL"]];
+    rr:predicateObjectMap [
+        rr:predicate rdfs:label;
+        rr:objectMap [
+            rr:template "LABEL";
+            rr:datatype xsd:string]];
+    rr:predicateObjectMap [
+        rr:predicate foaf:homepage;
+        rr:objectMap [
+            rr:template "HOMEPAGE";
+            rr:datatype xsd:string]].
+
+
+<#AnswerURIMapping> a rr:TriplesMap;
+    rml:logicalSource [
+        rml:source "example.json";
+        rml:referenceFormulation ql:JSONPath;
+        rml:iterator "$.[?(@..answerType contains \"entity\")]"];
+    rr:subjectMap [
+        rr:template "urn:qa:benchmark#LABEL-answer-{id}";
+        rr:class qab:ValidAnswer];
+    rr:predicateObjectMap [
+        rr:predicate qab:hasAnswerBody;
+        rr:objectMap [
+            rr:template "http://www.wikidata.org/entity/{answer..name}";
+            rr:termType rr:IRI]];
+    rr:predicateObjectMap [
+        rr:predicate qab:hasAnswerBodyLabel;
+        rr:objectMap [
+            rml:reference "answer.answer.[*].label.ar";
+            rr:language "ar"]];
+    rr:predicateObjectMap [
+        rr:predicate qab:hasAnswerBodyLabel;
+        rr:objectMap [
+            rml:reference "answer.answer.[*].label.de";
+            rr:language "de"]];
+    rr:predicateObjectMap [
+        rr:predicate qab:hasAnswerBodyLabel;
+        rr:objectMap [
+            rml:reference "answer.answer.[*].label.en";
+            rr:language "en"]];
+    rr:predicateObjectMap [
+        rr:predicate qab:hasAnswerBodyLabel;
+        rr:objectMap [
+            rml:reference "answer.answer.[*].label.hi";
+            rr:language "hi-IN"]];
+    rr:predicateObjectMap [
+        rr:predicate qab:hasAnswerBodyLabel;
+        rr:objectMap [
+            rml:reference "answer.answer.[*].label.ja";
+            rr:language "ja"]];
+    rr:predicateObjectMap [
+        rr:predicate qab:hasAnswerBodyLabel;
+        rr:objectMap [
+            rml:reference "answer.answer.[*].label.pt";
+            rr:language "pt"]];
+    rr:predicateObjectMap [
+        rr:predicate qab:hasAnswerBodyLabel;
+        rr:objectMap [
+            rml:reference "answer.answer.[*].label.es";
+            rr:language "es"]];
+    rr:predicateObjectMap [
+        rr:predicate qab:hasAnswerBodyLabel;
+        rr:objectMap [
+            rml:reference "answer.answer.[*].label.it";
+            rr:language "it"]];
+    rr:predicateObjectMap [
+        rr:predicate qab:hasAnswerBodyLabel;
+        rr:objectMap [
+            rml:reference "answer.answer.[*].label.fr";
+            rr:language "fr"]];
+    rr:predicateObjectMap [
+        rr:predicate qab:mention;
+        rr:objectMap [
+            rml:reference "answer.mention";
+            rr:datatype xsd:string]].
+
+
+<#AnswerSupportingEntMapping> a rr:TriplesMap;
+    rml:logicalSource [
+        rml:source "example.json";
+        rml:referenceFormulation ql:JSONPath;
+        rml:iterator "$.[*]"];
+    rr:subjectMap [
+        rr:template "urn:qa:benchmark#LABEL-answer-{id}";
+        rr:class qab:ValidAnswer];
+    rr:predicateObjectMap [
+        rr:predicate qab:supportingEnt;
+        rr:objectMap [
+            rr:template "http://www.wikidata.org/entity/{answer.supportingEnt..name}";
+            rr:termType rr:IRI]].
+
+
+<#AnswerSupportingNumMapping> a rr:TriplesMap;
+    rml:logicalSource [
+        rml:source "example.json";
+        rml:referenceFormulation ql:JSONPath;
+        rml:iterator "$.[*]"];
+    rr:subjectMap [
+        rr:template "urn:qa:benchmark#LABEL-answer-{id}";
+        rr:class qab:ValidAnswer];
+    rr:predicateObjectMap [
+        rr:predicate qab:supportingNum;
+        rr:objectMap [
+            rml:reference "answer.supportingNum";
+            rr:datatype xsd:string]].
+
+
+<#AnswerBooleanMapping> a rr:TriplesMap;
+    rml:logicalSource [
+        rml:source "example.json";
+        rml:referenceFormulation ql:JSONPath;
+        rml:iterator "$.[?(@..answerType contains \"boolean\")]"];
+    rr:subjectMap [
+        rr:template "urn:qa:benchmark#LABEL-answer-{id}";
+        rr:class qab:ValidAnswer];
+    rr:predicateObjectMap [
+        rr:predicate qab:hasAnswerBody;
+        rr:objectMap [
+            rml:reference "answer.answer.[*]";
+            rr:datatype xsd:boolean]];
+    rr:predicateObjectMap [
+        rr:predicate qab:mention;
+        rr:objectMap [
+            rml:reference "answer.mention";
+            rr:datatype xsd:string]].
+
+
+<#AnswerNumberMapping> a rr:TriplesMap;
+    rml:logicalSource [
+        rml:source "example.json";
+        rml:referenceFormulation ql:JSONPath;
+        rml:iterator "$.[?(@..answerType contains \"numerical\")]"];
+    rr:subjectMap [
+        rr:template "urn:qa:benchmark#LABEL-answer-{id}";
+        rr:class qab:ValidAnswer];
+    rr:predicateObjectMap [
+        rr:predicate qab:hasAnswerBody;
+        rr:objectMap [
+            rml:reference "answer.answer.[*]";
+            rr:datatype xsd:string]];
+    rr:predicateObjectMap [
+        rr:predicate qab:mention;
+        rr:objectMap [
+            rml:reference "answer.mention";
+            rr:datatype xsd:string]].
+
+
+<#AnswerDateMapping> a rr:TriplesMap;
+    rml:logicalSource [
+        rml:source "example.json";
+        rml:referenceFormulation ql:JSONPath;
+        rml:iterator "$.[?(@..answerType contains \"date\")]"];
+    rr:subjectMap [
+        rr:template "urn:qa:benchmark#LABEL-answer-{id}";
+        rr:class qab:ValidAnswer];
+    rr:predicateObjectMap [
+        rr:predicate qab:hasAnswerBody;
+        rr:objectMap [
+            rml:reference "answer.answer.[*]";
+            rr:datatype xsd:string]];
+    rr:predicateObjectMap [
+        rr:predicate qab:mention;
+        rr:objectMap [
+            rml:reference "answer.mention";
+            rr:datatype xsd:string]].
+
+
+<#AnswerStringMapping> a rr:TriplesMap;
+    rml:logicalSource [
+        rml:source "example.json";
+        rml:referenceFormulation ql:JSONPath;
+        rml:iterator "$.[?(@..answerType contains \"string\")]"];
+    rr:subjectMap [
+        rr:template "urn:qa:benchmark#LABEL-answer-{id}";
+        rr:class qab:ValidAnswer];
+    rr:predicateObjectMap [
+        rr:predicate qab:hasAnswerBody;
+        rr:objectMap [
+            rml:reference "answer.answer.[*]";
+            rr:datatype xsd:string]];
+    rr:predicateObjectMap [
+        rr:predicate qab:mention;
+        rr:objectMap [
+            rml:reference "answer.mention";
+            rr:datatype xsd:string]].
+
+
+<#QueryMapping> a rr:TriplesMap;
+    rml:logicalSource [
+        rml:source "example.json";
+        rml:referenceFormulation ql:JSONPath;
+        rml:iterator "$.[*]"];
+    rr:subjectMap [
+        rr:template "urn:qa:benchmark#LABEL-query-{id}";
+        rr:class qab:Query];
+    rr:predicateObjectMap [
+        rr:predicate qab:queryText;
+        rr:objectMap [
+            rr:template "";
+            rr:datatype xsd:string]].
+
+
+<#QuestionMapping> a rr:TriplesMap;
+    rml:logicalSource [
+        rml:source "example.json";
+        rml:referenceFormulation ql:JSONPath;
+        rml:iterator "$.[*]"];
+    rr:subjectMap [
+        rr:template "urn:qa:benchmark#LABEL-question-{id}";
+        rr:class qab:ValidQuestion];
+    rr:predicateObjectMap [
+        rr:predicate qab:isElementOf;
+        rr:objectMap[
+            rr:template "urn:qa:benchmark#LABEL-dataset"]];
+    rr:predicateObjectMap [
+        rr:predicate qab:hasId;
+        rr:objectMap [
+            rml:reference "id";
+            rr:datatype xsd:string]];
+    rr:predicateObjectMap [
+        rr:predicate qab:hasSPARQLQuery;
+        rr:objectMap [
+            rr:template "urn:qa:benchmark#LABEL-query-{id}"]];
+    rr:predicateObjectMap [
+        rr:predicate qab:questionEntity;
+        rr:objectMap [
+            rr:template "http://www.wikidata.org/entity/{questionEntity.[?(@.entityType contains \"entity\")].name}";
+            rr:termType rr:IRI]];
+    rr:predicateObjectMap [
+        rr:predicate qab:questionEntity;
+        rr:objectMap [
+            rml:reference "questionEntity.[?(!(@.entityType contains \"entity\"))].name";
+            rr:datatype xsd:string]];
+    rr:predicateObjectMap [
+        rr:predicate qab:hasQuestion;
+        rr:objectMap [
+            rml:reference "translations.de";
+            rr:language "de"]];
+    rr:predicateObjectMap [
+        rr:predicate qab:hasQuestion;
+        rr:objectMap [
+            rml:reference "translations.ar";
+            rr:language "ar"]];
+    rr:predicateObjectMap [
+        rr:predicate qab:hasQuestion;
+        rr:objectMap [
+            rml:reference "translations.pt";
+            rr:language "pt"]];
+    rr:predicateObjectMap [
+        rr:predicate qab:hasQuestion;
+        rr:objectMap [
+            rml:reference "question";
+            rr:language "en"]];
+    rr:predicateObjectMap [
+        rr:predicate qab:hasQuestion;
+        rr:objectMap [
+            rml:reference "translations.hi";
+            rr:language "hi"]];
+    rr:predicateObjectMap [
+        rr:predicate qab:hasQuestion;
+        rr:objectMap [
+            rml:reference "translations.ja";
+            rr:language "ja"]];
+    rr:predicateObjectMap [
+        rr:predicate qab:hasQuestion;
+        rr:objectMap [
+            rml:reference "translations.es";
+            rr:language "es"]];
+    rr:predicateObjectMap [
+        rr:predicate qab:hasQuestion;
+        rr:objectMap [
+            rml:reference "translations.it";
+            rr:language "it"]];
+    rr:predicateObjectMap [
+        rr:predicate qab:hasQuestion;
+        rr:objectMap [
+            rml:reference "translations.fr";
+            rr:language "fr"]];
+    rr:predicateObjectMap [
+        rr:predicate qab:hasAnswer;
+        rr:objectMap [
+            rr:template "urn:qa:benchmark#LABEL-answer-{id}"]];
+    rr:predicateObjectMap [
+        rr:predicate qab:category;
+        rr:objectMap [
+            rml:reference "category";
+            rr:datatype xsd:string]];
+    rr:predicateObjectMap [
+        rr:predicate qab:complexityType;
+        rr:objectMap [
+            rml:reference "complexityType";
+            rr:datatype xsd:string]].

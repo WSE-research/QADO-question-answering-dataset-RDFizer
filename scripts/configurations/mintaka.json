@@ -1,0 +1,19 @@
+[{
+  "filePath": "https://raw.githubusercontent.com/amazon-science/mintaka/main/data/mintaka_dev.json",
+  "format": "mintaka",
+  "label": "Mintaka dev",
+  "homepage": "https://www.amazon.science/publications/mintaka-a-complex-natural-and-multilingual-dataset-for-end-to-end-question-answering"
+},
+  {
+    "filePath": "https://raw.githubusercontent.com/amazon-science/mintaka/main/data/mintaka_test.json",
+    "format": "mintaka",
+    "label": "Mintaka test",
+    "homepage": "https://www.amazon.science/publications/mintaka-a-complex-natural-and-multilingual-dataset-for-end-to-end-question-answering"
+  },
+  {
+    "filePath": "https://raw.githubusercontent.com/amazon-science/mintaka/main/data/mintaka_train.json",
+    "format": "mintaka",
+    "label": "Mintaka train",
+    "homepage": "https://www.amazon.science/publications/mintaka-a-complex-natural-and-multilingual-dataset-for-end-to-end-question-answering"
+  }
+]
