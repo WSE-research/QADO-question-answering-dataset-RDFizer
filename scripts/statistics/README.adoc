@@ -37,7 +37,7 @@ This plot is stored locally inside the `images` directory and uploaded to Google
 
 ### Charts
 
-Adding charts is possible by creating an [EmbeddedChart JSON object](https://developers.google.com/sheets/api/reference/rest/v4/spreadsheets/charts#embeddedchart) and storing it inside the `charts` folder. You can create multiple charts per worksheet.
+Adding charts is possible by creating an https://developers.google.com/sheets/api/reference/rest/v4/spreadsheets/charts#embeddedchart[EmbeddedChart JSON object] and storing it inside the `charts` folder. You can create multiple charts per worksheet.
 
 ## Default statistics
 
