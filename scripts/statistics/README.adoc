@@ -3,7 +3,12 @@
 This sub-project address the need of a good understanding of the characteristics of Knowledge Graph Question Answering benchmark datasets.
 For this purpose, a tool is provided here to create a Google Spreadsheet with statistics from a triplestore, currently the https://www.stardog.com/[Stardog triplestore] is supported.
 **Python 3.8** or newer is required for the current implementation.
-To install all required packages, run `pip install -r requirements.txt`. 
+To install all required packages, run:
+
+```
+pip install -r requirements.txt --no-dependencies
+```
+
 Run `python createSpreadsheet.py` to generate your statistics. 
 In your Google Drive, a new subdirectory `SPARQL Statistics CURRENT_DATE`.
 In this directory, a spreadsheet file and optional violin plots are stored reflecting the collected statistics from your dataset.
