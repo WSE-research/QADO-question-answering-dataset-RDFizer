@@ -250,12 +250,7 @@
     rr:predicateObjectMap [
         rr:predicate qab:questionEntity;
         rr:objectMap [
-            rr:template "http://www.wikidata.org/entity/{questionEntity.[?(@.entityType contains \"entity\")].name}";
-            rr:termType rr:IRI]];
-    rr:predicateObjectMap [
-        rr:predicate qab:questionEntity;
-        rr:objectMap [
-            rml:reference "questionEntity.[?(!(@.entityType contains \"entity\"))].name";
+            rml:reference "questionEntity.[*]";
             rr:datatype xsd:string]];
     rr:predicateObjectMap [
         rr:predicate qab:hasQuestion;
