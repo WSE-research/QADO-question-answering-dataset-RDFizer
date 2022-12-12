@@ -25,8 +25,8 @@
                   {
                     "sheetId": 0,
                     "startRowIndex": 0,
-                    "startColumnIndex": 1,
-                    "endColumnIndex": 2
+                    "startColumnIndex": 2,
+                    "endColumnIndex": 3
                   }
                 ]
               }
@@ -39,8 +39,8 @@
                   {
                     "sheetId": 0,
                     "startRowIndex": 0,
-                    "startColumnIndex": 2,
-                    "endColumnIndex": 3
+                    "startColumnIndex": 3,
+                    "endColumnIndex": 4
                   }
                 ]
               }
@@ -53,8 +53,8 @@
                   {
                     "sheetId": 0,
                     "startRowIndex": 0,
-                    "startColumnIndex": 4,
-                    "endColumnIndex": 5
+                    "startColumnIndex": 5,
+                    "endColumnIndex": 6
                   }
                 ]
               }
@@ -67,8 +67,8 @@
                   {
                     "sheetId": 0,
                     "startRowIndex": 0,
-                    "startColumnIndex": 5,
-                    "endColumnIndex": 6
+                    "startColumnIndex": 6,
+                    "endColumnIndex": 7
                   }
                 ]
               }
