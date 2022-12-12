@@ -1,9 +1,14 @@
 # SPARQL dataset statistics
 
 This sub-project address the need of a good understanding of the characteristics of Knowledge Graph Question Answering benchmark datasets.
-For this purpose, a tool is provided here to create a Google Spreadsheet with statistics from a triplestore, currently the [Stardog triplestore](https://www.stardog.com/) is supported.
+For this purpose, a tool is provided here to create a Google Spreadsheet with statistics from a triplestore, currently the https://www.stardog.com/[Stardog triplestore] is supported.
 **Python 3.8** or newer is required for the current implementation.
-To install all required packages, run `pip install -r requirements.txt`. 
+To install all required packages, run:
+
+```
+pip install -r requirements.txt --no-dependencies
+```
+
 Run `python createSpreadsheet.py` to generate your statistics. 
 In your Google Drive, a new subdirectory `SPARQL Statistics CURRENT_DATE`.
 In this directory, a spreadsheet file and optional violin plots are stored reflecting the collected statistics from your dataset.
@@ -14,7 +19,7 @@ In this directory, a spreadsheet file and optional violin plots are stored refle
 
 To use the tool, it is required to configure a Google Cloud Console project. 
 You can use the preconfigured credentials, but therefore it is currently necessary to ask the the maintainers of this project to grant access. 
-Hence, it is recommended, to [create your own Google Cloud Console project](https://developers.google.com/workspace/guides/get-started?hl=en) and replace the `credentials.json` with your private setup. 
+Hence, it is recommended, to https://developers.google.com/workspace/guides/get-started?hl=en[create your own Google Cloud Console project] and replace the `credentials.json` with your private setup. 
 The tool needs read-and-write-permissions for the *Google Sheets API* and the *Google Drive API*.
 
 ### Script configuration
@@ -37,7 +42,7 @@ This plot is stored locally inside the `images` directory and uploaded to Google
 
 ### Charts
 
-Adding charts is possible by creating an [EmbeddedChart JSON object](https://developers.google.com/sheets/api/reference/rest/v4/spreadsheets/charts#embeddedchart) and storing it inside the `charts` folder. You can create multiple charts per worksheet.
+Adding charts is possible by creating an https://developers.google.com/sheets/api/reference/rest/v4/spreadsheets/charts#embeddedchart[EmbeddedChart JSON object] and storing it inside the `charts` folder. You can create multiple charts per worksheet.
 
 ## Default statistics
 
