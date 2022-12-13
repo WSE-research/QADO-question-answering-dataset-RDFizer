@@ -129,115 +129,18 @@ def get_sheet_config(sparql_path: str, number: int):
                         for box_plot_value in box_plot_values:
                             response[box_plot_value] = {'value': '0'}
 
+                description = sparql_path.replace('.sparql', '').replace('_boxplot', '')
+
                 # create violin plot
                 plt.figure(figsize=(40, 10))
-                plt.title(sparql_path.replace('.sparql', '').replace('_boxplot', ''))
-                sb.violinplot(data=pd.DataFrame(dataframe_dump), x='benchmark', y='value', hue='lang' if lang else None, scale='width')
+                plt.title(description)
+                sb.violinplot(data=pd.DataFrame(dataframe_dump), x='benchmark', y='value', hue='lang' if lang else None,
+                              scale='width')
                 plt.xticks(rotation=90)
                 plt.tight_layout()
-                plt.ylabel('Question length')
+                plt.ylabel(description)
                 plt.savefig(f'images/{sparql_path.replace(".sparql", ".png").replace("_boxplot", "")}', dpi=200)
                 plt.close()
-
-            # query relates to SPARQL query statistics
-            elif 'queries' in header:
-                header.remove('queries')
-
-                # generate headers for SPARQL query statistics
-                for prefix in ['so', 'p', 'spo']:
-                    box_plot_values = [f'{prefix}_min', f'{prefix}_25% quantile', f'{prefix}_median',
-                                       f'{prefix}_75% quantile', f'{prefix}_max']
-
-                    header += box_plot_values
-
-                dataframe_dump = defaultdict(list)
-
-                # foreach dataset
-                for answer in sparql_result['results']['bindings']:
-                    # get SPARQL queries for the dataset
-                    queries = answer['queries']['value'].split('<||>')
-
-                    benchmark = answer['benchmark']['value'].replace('-dataset', '').replace('urn:qa:benchmark#', '')
-
-                    try:
-                        lang = answer['lang']['value']
-                    except KeyError:
-                        lang = None
-                        logging.info(f'No language provided for {sparql_path} {benchmark}')
-
-                    subject_object_counts = []
-                    predicate_counts = []
-                    subject_predicate_object_counts = []
-
-                    for query in queries:
-                        lines = query.split('\n')
-
-                        subject_object_set = set()
-                        predicate_set = set()
-
-                        # foreach line of a SPARQL query
-                        for line in lines:
-                            # current line contains usage of subjects/properties/objects
-                            if line.strip().endswith(('.', ',', ';')):
-                                elements = line.strip().split(' ')
-
-                                # line defines new subject, property and object
-                                if line.strip().endswith('.'):
-                                    # add them if they aren't a variable
-                                    if not elements[0].startswith('?'):
-                                        subject_object_set.add(elements[0])
-                                    if not elements[1].startswith('?'):
-                                        predicate_set.add(elements[1])
-                                    if not elements[2].startswith('?'):
-                                        subject_object_set.add(elements[2])
-                                # line defines new property and object
-                                elif line.strip().endswith(';'):
-                                    # add them if they aren't a variable
-                                    if not elements[0].startswith('?'):
-                                        predicate_set.add(elements[0])
-                                    if not elements[1].startswith('?'):
-                                        subject_object_set.add(elements[1])
-                                # line defines new object
-                                else:
-                                    # add object if it isn't a variable
-                                    if not elements[0].startswith('?'):
-                                        subject_object_set.add(elements[0])
-
-                        number_of_subjects_objects = len(subject_object_set)
-                        number_of_predicates = len(predicate_set)
-                        number_of_resources = len(subject_object_set) + len(predicate_set)
-
-                        # count number of subjects/properties/objects
-                        subject_object_counts.append(number_of_subjects_objects)
-                        predicate_counts.append(number_of_predicates)
-                        subject_predicate_object_counts.append(number_of_resources)
-
-                        dataframe_dump['benchmark'].append(benchmark)
-                        dataframe_dump['subjects/objects'].append(number_of_subjects_objects)
-                        dataframe_dump['properties'].append(number_of_predicates)
-                        dataframe_dump['resources'].append(number_of_resources)
-
-                        if lang:
-                            dataframe_dump['language'].append(lang)
-
-                    # generate quantiles for subjects/objects, properties and all resources
-                    for prefix, entity_sets in zip(['so', 'p', 'spo'], [subject_object_counts, predicate_counts,
-                                                                        subject_predicate_object_counts]):
-                        for key, quantile in zip([f'{prefix}_min', f'{prefix}_25% quantile', f'{prefix}_median',
-                                                  f'{prefix}_75% quantile', f'{prefix}_max'], [0, .25, .5, .75, 1]):
-                            answer[key] = {'value': str(np.quantile(entity_sets, quantile))}
-
-                    dataframe = pd.DataFrame(dataframe_dump)
-
-                    for column in ['subjects/objects', 'properties', 'resources']:
-                        plt.figure(figsize=(40, 10))
-                        plt.title(sparql_path.replace('.sparql', '').replace('_boxplot', ''))
-                        sb.violinplot(data=dataframe, x='benchmark', y=column, hue='lang' if lang else None)
-                        plt.xticks(rotation=90)
-                        plt.tight_layout()
-                        plt.savefig(f'images/{sparql_path.replace(".sparql", "")}-{column.replace("/", "-")}.png',
-                                    dpi=200)
-                        plt.close()
 
             # get variable names
             header = [entry for entry in sparql_result['head']['vars']]
@@ -310,7 +213,7 @@ def main():
             creds.refresh(Request())
         # request new token
         else:
-            flow = InstalledAppFlow.from_client_secrets_file('credentials.json', scopes)
+            flow = InstalledAppFlow.from_client_secrets_file('credentials.json', scopes, redirect_uri='http://localhost:60000')
             creds = flow.run_local_server(port=0)
 
         # Save the credentials for the next run
