@@ -132,7 +132,7 @@ def get_sheet_config(sparql_path: str, number: int):
                 # create violin plot
                 plt.figure(figsize=(40, 10))
                 plt.title(sparql_path.replace('.sparql', '').replace('_boxplot', ''))
-                sb.violinplot(data=pd.DataFrame(dataframe_dump), x='benchmark', y='value', hue='lang' if lang else None)
+                sb.violinplot(data=pd.DataFrame(dataframe_dump), x='benchmark', y='value', hue='lang' if lang else None, scale='width')
                 plt.xticks(rotation=90)
                 plt.tight_layout()
                 plt.ylabel('Question length')
