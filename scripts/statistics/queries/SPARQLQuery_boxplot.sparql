@@ -1,0 +1,6 @@
+PREFIX qab: <urn:qa:benchmark#>
+
+SELECT ?benchmark (GROUP_CONCAT(?resources; SEPARATOR=",") as ?concat) {
+    ?question qab:isElementOf ?benchmark;
+    qab:numberOfResources ?resources .
+} GROUP BY ?benchmark ORDER BY ?benchmark

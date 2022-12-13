@@ -1,6 +1,6 @@
 {
   "spec": {
-    "title": "Number of defined subjects/objects per SPARQL query",
+    "title": "Number of defined resources per SPARQL query",
     "candlestickChart": {
       "domain": {
         "data": {
