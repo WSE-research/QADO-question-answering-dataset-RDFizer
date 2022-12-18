@@ -100,7 +100,7 @@ def get_sheet_config(sparql_path: str, number: int):
 
                 # foreach dataset
                 for response in sparql_result['results']['bindings']:
-                    benchmark = response['benchmark']['value'].replace('-dataset', '').replace('urn:qa:benchmark#', '')
+                    benchmark = response['benchmark']['value'].replace('-dataset', '').replace('urn:qado#', '')
 
                     try:
                         lang = response['lang']['value']
@@ -162,7 +162,7 @@ def get_sheet_config(sparql_path: str, number: int):
                 for head in header:
                     # read value and replace URI data from benchmark names
                     value = response[head]['value'] if head in response else 'URI'
-                    value = value.replace('urn:qa:benchmark#', '').replace('-dataset', '')
+                    value = value.replace('urn:qado#', '').replace('-dataset', '')
 
                     try:
                         value = float(value)

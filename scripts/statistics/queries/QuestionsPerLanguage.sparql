@@ -1,8 +1,8 @@
-PREFIX qab: <urn:qa:benchmark#>
+PREFIX qado: <urn:qado#>
 
 SELECT ?language (COUNT(?language) AS ?questions)
 {
-    ?s qab:hasQuestion ?question .
+    ?s qado:hasQuestion ?question .
     BIND(LANG(?question) AS ?language)
 }
 GROUP BY ?language ORDER BY ?language

@@ -6,7 +6,7 @@
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
 @prefix void: <http://rdfs.org/ns/void#> .
 @prefix prov: <http://www.w3.org/ns/prov#> .
-@prefix qab: <urn:qa:benchmark#> .
+@prefix qado: <urn:qado#> .
 @prefix ql: <http://semweb.mmlab.be/ns/ql#>.
 @base <URL#>.
 
@@ -17,8 +17,8 @@
         rml:referenceFormulation ql:JSONPath;
         rml:iterator "$.[*]"];
     rr:subjectMap [
-        rr:template "urn:qa:benchmark#LABEL-dataset";
-        rr:class qab:Benchmark];
+        rr:template "urn:qado#LABEL-dataset";
+        rr:class qado:Dataset];
     rr:predicateObjectMap [
         rr:predicate void:dataDump;
         rr:objectMap [
@@ -41,8 +41,8 @@
         rml:referenceFormulation ql:JSONPath;
         rml:iterator "$.[*]"];
     rr:subjectMap [
-        rr:template "urn:qa:benchmark#LABEL-answer-{_id}";
-        rr:class qab:EmptyAnswer].
+        rr:template "urn:qado#LABEL-answer-{_id}";
+        rr:class qado:EmptyAnswer].
 
 
 <#QueryMapping> a rr:TriplesMap;
@@ -51,10 +51,10 @@
         rml:referenceFormulation ql:JSONPath;
         rml:iterator "$.[*]"];
     rr:subjectMap [
-        rr:template "urn:qa:benchmark#LABEL-query-{_id}";
-        rr:class qab:Query];
+        rr:template "urn:qado#LABEL-query-{_id}";
+        rr:class qado:Query];
     rr:predicateObjectMap [
-        rr:predicate qab:queryText;
+        rr:predicate qado:hasQueryText;
         rr:objectMap [
             rml:reference "sparql_query";
             rr:datatype xsd:string]].
@@ -66,37 +66,37 @@
         rml:referenceFormulation ql:JSONPath;
         rml:iterator "$.[*]"];
     rr:subjectMap [
-        rr:template "urn:qa:benchmark#LABEL-question-{_id}";
-        rr:class qab:UnanswerableQuestion];
+        rr:template "urn:qado#LABEL-question-{_id}";
+        rr:class qado:UnanswerableQuestion];
     rr:predicateObjectMap [
-        rr:predicate qab:isElementOf;
+        rr:predicate qado:isElementOf;
         rr:objectMap[
-            rr:template "urn:qa:benchmark#LABEL-dataset"]];
+            rr:template "urn:qado#LABEL-dataset"]];
     rr:predicateObjectMap [
-        rr:predicate qab:hasId;
+        rr:predicate qado:hasId;
         rr:objectMap [
             rml:reference "_id";
             rr:datatype xsd:nonNegativeInteger]];
     rr:predicateObjectMap [
-        rr:predicate qab:hasQuestion;
+        rr:predicate qado:hasQuestion;
         rr:objectMap [
             rml:reference "question_en";
             rr:language "en"]];
     rr:predicateObjectMap [
-        rr:predicate qab:hasQuestion;
+        rr:predicate qado:hasQuestion;
         rr:objectMap [
             rml:reference "question_de";
             rr:language "de"]];
     rr:predicateObjectMap [
-        rr:predicate qab:hasSPARQLQuery;
+        rr:predicate qado:hasSparqlQuery;
         rr:objectMap [
-            rr:template "urn:qa:benchmark#LABEL-query-{_id}"]];
+            rr:template "urn:qado#LABEL-query-{_id}"]];
     rr:predicateObjectMap [
-        rr:predicate qab:hasAnswer;
+        rr:predicate qado:hasAnswer;
         rr:objectMap [
-            rr:template "urn:qa:benchmark#LABEL-answer-{_id}"]];
+            rr:template "urn:qado#LABEL-answer-{_id}"]];
     rr:predicateObjectMap [
-        rr:predicate qab:sparqlTemplateId;
+        rr:predicate qado:hasSparqlTemplateId;
         rr:objectMap [
             rml:reference "sparql_template_id";
             rr:datatype xsd:nonNegativeInteger]].

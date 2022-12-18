@@ -6,7 +6,7 @@
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
 @prefix void: <http://rdfs.org/ns/void#> .
 @prefix prov: <http://www.w3.org/ns/prov#> .
-@prefix qab: <urn:qa:benchmark#> .
+@prefix qado: <urn:qado#> .
 @prefix ql: <http://semweb.mmlab.be/ns/ql#>.
 @base <URL#>.
 
@@ -17,8 +17,8 @@
         rml:referenceFormulation ql:JSONPath;
         rml:iterator "$.[*]"];
     rr:subjectMap [
-        rr:template "urn:qa:benchmark#LABEL-dataset";
-        rr:class qab:Benchmark];
+        rr:template "urn:qado#LABEL-dataset";
+        rr:class qado:Dataset];
     rr:predicateObjectMap [
         rr:predicate void:dataDump;
         rr:objectMap [
@@ -41,15 +41,15 @@
         rml:referenceFormulation ql:JSONPath;
         rml:iterator "$.[?(@.answers != [])]"];
     rr:subjectMap [
-        rr:template "urn:qa:benchmark#LABEL-answer-{uid}";
-        rr:class qab:ValidAnswer];
+        rr:template "urn:qado#LABEL-answer-{uid}";
+        rr:class qado:ValidAnswer];
     rr:predicateObjectMap [
-        rr:predicate qab:answerText;
+        rr:predicate qado:answerText;
         rr:objectMap [
             rml:reference "answer_text";
             rr:language "ru"]];
     rr:predicateObjectMap [
-        rr:predicate qab:answerType;
+        rr:predicate qado:hasAnswerType;
         rr:objectMap [
             rml:reference "answers.[*].type";
             rr:datatype xsd:string]].
@@ -61,8 +61,8 @@
         rml:referenceFormulation ql:JSONPath;
         rml:iterator "$.[?(@.answers == [])]"];
     rr:subjectMap [
-        rr:template "urn:qa:benchmark#LABEL-answer-{uid}";
-        rr:class qab:EmptyAnswer].
+        rr:template "urn:qado#LABEL-answer-{uid}";
+        rr:class qado:EmptyAnswer].
 
 
 <#QueryMapping> a rr:TriplesMap;
@@ -71,10 +71,10 @@
         rml:referenceFormulation ql:JSONPath;
         rml:iterator "$.[*]"];
     rr:subjectMap [
-        rr:template "urn:qa:benchmark#LABEL-query-{uid}";
-        rr:class qab:Query];
+        rr:template "urn:qado#LABEL-query-{uid}";
+        rr:class qado:Query];
     rr:predicateObjectMap [
-        rr:predicate qab:queryText;
+        rr:predicate qado:hasQueryText;
         rr:objectMap [
             rml:reference "query";
             rr:datatype xsd:string]].
@@ -86,47 +86,47 @@
         rml:referenceFormulation ql:JSONPath;
         rml:iterator "$.[?(@.answers != [])]"];
     rr:subjectMap [
-        rr:template "urn:qa:benchmark#LABEL-question-{uid}";
-        rr:class qab:ValidQuestion];
+        rr:template "urn:qado#LABEL-question-{uid}";
+        rr:class qado:ValidQuestion];
     rr:predicateObjectMap [
-        rr:predicate qab:isElementOf;
+        rr:predicate qado:isElementOf;
         rr:objectMap[
-            rr:template "urn:qa:benchmark#LABEL-dataset"]];
+            rr:template "urn:qado#LABEL-dataset"]];
     rr:predicateObjectMap [
-        rr:predicate qab:hasId;
+        rr:predicate qado:hasId;
         rr:objectMap [
             rml:reference "uid";
             rr:datatype xsd:nonNegativeInteger]];
     rr:predicateObjectMap [
-        rr:predicate qab:hasQuestion;
+        rr:predicate qado:hasQuestion;
         rr:objectMap [
             rml:reference "question_text";
             rr:language "ru"]];
     rr:predicateObjectMap [
-        rr:predicate qab:hasSPARQLQuery;
+        rr:predicate qado:hasSparqlQuery;
         rr:objectMap [
-            rr:template "urn:qa:benchmark#LABEL-query-{uid}"]];
+            rr:template "urn:qado#LABEL-query-{uid}"]];
     rr:predicateObjectMap [
-        rr:predicate qab:questionURI;
+        rr:predicate qado:hasEntityUriInQuestion;
         rr:objectMap [
             rml:reference "question_uris.[*]";
             rr:termType rr:IRI]];
     rr:predicateObjectMap [
-        rr:predicate qab:questionProp;
+        rr:predicate qado:hasQuestionProperty;
         rr:objectMap [
             rml:reference "question_props.[*]";
             rr:termType rr:IRI]];
     rr:predicateObjectMap [
-        rr:predicate qab:hasAnswer;
+        rr:predicate qado:hasAnswer;
         rr:objectMap [
-            rr:template "urn:qa:benchmark#LABEL-answer-{uid}"]];
+            rr:template "urn:qado#LABEL-answer-{uid}"]];
     rr:predicateObjectMap [
-        rr:predicate qab:tag;
+        rr:predicate qado:hasTag;
         rr:objectMap [
             rml:reference "tags.[*]";
             rr:datatype xsd:string]];
     rr:predicateObjectMap [
-        rr:predicate qab:hasQuestion;
+        rr:predicate qado:hasQuestion;
         rr:objectMap [
             rml:reference "question_eng";
             rr:language "en"]].
@@ -138,47 +138,47 @@
         rml:referenceFormulation ql:JSONPath;
         rml:iterator "$.[?(@.answers == [])]"];
     rr:subjectMap [
-        rr:template "urn:qa:benchmark#LABEL-question-{uid}";
-        rr:class qab:UnanswerableQuestion];
+        rr:template "urn:qado#LABEL-question-{uid}";
+        rr:class qado:UnanswerableQuestion];
     rr:predicateObjectMap [
-        rr:predicate qab:isElementOf;
+        rr:predicate qado:isElementOf;
         rr:objectMap[
-            rr:template "urn:qa:benchmark#LABEL-dataset"]];
+            rr:template "urn:qado#LABEL-dataset"]];
     rr:predicateObjectMap [
-        rr:predicate qab:hasId;
+        rr:predicate qado:hasId;
         rr:objectMap [
             rml:reference "uid";
             rr:datatype xsd:nonNegativeInteger]];
     rr:predicateObjectMap [
-        rr:predicate qab:hasQuestion;
+        rr:predicate qado:hasQuestion;
         rr:objectMap [
             rml:reference "question_text";
             rr:language "ru"]];
     rr:predicateObjectMap [
-        rr:predicate qab:hasSPARQLQuery;
+        rr:predicate qado:hasSparqlQuery;
         rr:objectMap [
-            rr:template "urn:qa:benchmark#LABEL-query-{uid}"]];
+            rr:template "urn:qado#LABEL-query-{uid}"]];
     rr:predicateObjectMap [
-        rr:predicate qab:questionURI;
+        rr:predicate qado:hasEntityUriInQuestion;
         rr:objectMap [
             rml:reference "question_uris.[*]";
             rr:termType rr:IRI]];
     rr:predicateObjectMap [
-        rr:predicate qab:questionProp;
+        rr:predicate qado:hasQuestionProperty;
         rr:objectMap [
             rml:reference "question_props.[*]";
             rr:termType rr:IRI]];
     rr:predicateObjectMap [
-        rr:predicate qab:hasAnswer;
+        rr:predicate qado:hasAnswer;
         rr:objectMap [
-            rr:template "urn:qa:benchmark#LABEL-answer-{uid}"]];
+            rr:template "urn:qado#LABEL-answer-{uid}"]];
     rr:predicateObjectMap [
-        rr:predicate qab:tag;
+        rr:predicate qado:hasTag;
         rr:objectMap [
             rml:reference "tags.[*]";
             rr:datatype xsd:string]];
     rr:predicateObjectMap [
-        rr:predicate qab:hasQuestion;
+        rr:predicate qado:hasQuestion;
         rr:objectMap [
             rml:reference "question_eng";
             rr:language "en"]].

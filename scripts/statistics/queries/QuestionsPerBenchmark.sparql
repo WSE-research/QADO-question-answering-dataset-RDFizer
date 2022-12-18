@@ -1,9 +1,9 @@
-PREFIX qab: <urn:qa:benchmark#>
+PREFIX qado: <urn:qado#>
 PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
 
 SELECT ?benchmark (COUNT(?question) as ?questions)
 {
     ?question a ?questionType ;
-        qab:isElementOf ?benchmark .
-    ?questionType rdfs:subClassOf qab:Question .
+        qado:isElementOf ?benchmark .
+    ?questionType rdfs:subClassOf qado:Question .
 } GROUP BY ?benchmark ORDER BY ?benchmark

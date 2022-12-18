@@ -1,22 +1,22 @@
-PREFIX qab: <urn:qa:benchmark#>
+PREFIX qado: <urn:qado#>
 PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
 
-SELECT 
-    ?benchmark 
-    ?lang 
-    (COUNT(DISTINCT ?question) AS ?questions) 
-    ?type
-    (GROUP_CONCAT(?length; SEPARATOR = ",") AS ?concat)
+SELECT
+?benchmark
+?lang
+(COUNT(DISTINCT ?question) AS ?questions)
+?type
+(GROUP_CONCAT(?length; SEPARATOR = ",") AS ?concat)
 {
     ?question a ?questionType ;
-        qab:isElementOf ?benchmark ;
-        qab:hasQuestion|qab:questionText ?questionText ;
-        qab:hasAnswer ?answer .
-    ?answer qab:answerText|qab:hasAnswerBody|(qab:hasAnswer/qab:answer) ?answerBody .
-    ?questionType rdfs:subClassOf qab:Question .
+    qado:isElementOf ?benchmark ;
+    qado:hasQuestion ?questionText ;
+    qado:hasAnswer ?answer .
+    ?answer qado:answerText|qado:hasAnswerBody|(qado:hasAnswer/qado:answer) ?answerBody .
+    ?questionType rdfs:subClassOf qado:Question .
     BIND(STRLEN(?questionText) AS ?length)
     BIND(LANG(?questionText) AS ?lang)
     BIND(DATATYPE(?answerBody) AS ?type)
-} 
-GROUP BY ?benchmark ?lang ?type 
+}
+GROUP BY ?benchmark ?lang ?type
 ORDER BY ?benchmark ?lang ?type

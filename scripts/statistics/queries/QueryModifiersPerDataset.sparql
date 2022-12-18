@@ -1,4 +1,4 @@
-PREFIX qab: <urn:qa:benchmark#>
+PREFIX qado: <urn:qado#>
 
 SELECT ?benchmark
 (SUM(?limits) AS ?numLimit)
@@ -13,8 +13,8 @@ SELECT ?benchmark
 (SUM(?years) AS ?numYear)
 (SUM(?nows) AS ?numNow)
 {
-    ?question qab:isElementOf ?benchmark ;
-    qab:hasSPARQLQuery/qab:queryText ?text .
+    ?question qado:isElementOf ?benchmark ;
+    qado:hasSparqlQuery/qado:hasQueryText ?text .
     BIND(IF(CONTAINS(LCASE(?text), "limit"), 1, 0) AS ?limits)
     BIND(IF(CONTAINS(LCASE(?text), "group by"), 1, 0) AS ?groupbys)
     BIND(IF(CONTAINS(LCASE(?text), "order by"), 1, 0) AS ?orderbys)

@@ -1,7 +1,8 @@
-PREFIX qab: <urn:qa:benchmark#>
+PREFIX qado: <urn:qado#>
 
 SELECT ?benchmark (GROUP_CONCAT(?queryLength ; SEPARATOR=",") AS ?concat) (GROUP_CONCAT(DISTINCT ?prefix ; SEPARATOR=" ") AS ?prefixes) {
-    ?question qab:isElementOf ?benchmark ;
-    qab:normalizedQueryLength ?queryLength .
-    ?benchmark qab:hasPrefix ?prefix .
+    ?question qado:isElementOf ?benchmark ;
+    qado:hasSparqlQuery ?query .
+    ?query qado:normalizedQueryLength ?queryLength .
+    ?benchmark qado:hasPrefix ?prefix .
 } GROUP BY ?benchmark ORDER BY ?benchmark

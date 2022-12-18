@@ -1,9 +1,9 @@
-PREFIX qab: <urn:qa:benchmark#>
+PREFIX qado: <urn:qado#>
 
 SELECT ?type ?benchmark (COUNT(DISTINCT ?question) as ?questions)
 {
-    ?question qab:isElementOf ?benchmark ;
-        qab:hasAnswer ?answer .
-    ?answer qab:answerText|qab:hasAnswerBody|(qab:hasAnswer/qab:answer) ?body .
+    ?question qado:isElementOf ?benchmark ;
+    qado:hasAnswer ?answer .
+    ?answer qado:answerText|qado:hasAnswerBody|(qado:hasAnswer/qado:answer) ?body .
     BIND(DATATYPE(?body) AS ?type)
 } GROUP BY ?benchmark ?type ORDER BY ?type ?benchmark
