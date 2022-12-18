@@ -380,7 +380,7 @@ qado:UnanswerableQuestion rdf:type owl:Class ;
 qado:ValidAnswer rdf:type owl:Class ;
                 rdfs:subClassOf qado:Answer ;
                 rdfs:comment "Class of valid answers."@en ;
-                rdfs:label "Valid aswer"@en .
+                rdfs:label "Valid answer"@en .
 
 
 ###  urn:qa:benchmark#ValidQuestion
