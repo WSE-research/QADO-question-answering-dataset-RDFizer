@@ -12,7 +12,7 @@ SELECT
     qado:isElementOf ?benchmark ;
     qado:hasQuestion ?questionText ;
     qado:hasAnswer ?answer .
-    ?answer qado:answerText|qado:hasAnswerBody|(qado:hasAnswer/qado:answer) ?answerBody .
+    ?answer qado:answerText|qado:hasAnswerBody|(qado:hasAnswer/qado:hasAnswerText) ?answerBody .
     ?questionType rdfs:subClassOf qado:Question .
     BIND(STRLEN(?questionText) AS ?length)
     BIND(LANG(?questionText) AS ?lang)

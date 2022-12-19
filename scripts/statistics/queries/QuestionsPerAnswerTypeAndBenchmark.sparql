@@ -4,6 +4,6 @@ SELECT ?type ?benchmark (COUNT(DISTINCT ?question) as ?questions)
 {
     ?question qado:isElementOf ?benchmark ;
     qado:hasAnswer ?answer .
-    ?answer qado:answerText|qado:hasAnswerBody|(qado:hasAnswer/qado:answer) ?body .
+    ?answer qado:answerText|qado:hasAnswerBody|(qado:hasAnswer/qado:hasAnswerText) ?body .
     BIND(DATATYPE(?body) AS ?type)
 } GROUP BY ?benchmark ?type ORDER BY ?type ?benchmark

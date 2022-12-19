@@ -4,9 +4,7 @@ from datetime import date
 import requests
 from json import loads, load
 import numpy as np
-
 from config import *
-
 from google.auth.transport.requests import Request
 from google.oauth2.credentials import Credentials
 from google_auth_oauthlib.flow import InstalledAppFlow
@@ -18,6 +16,8 @@ import pandas as pd
 import seaborn as sb
 from collections import defaultdict
 import logging
+
+plt.rc('font', size=24)
 
 # API scope for Google Sheets
 scopes = ['https://www.googleapis.com/auth/spreadsheets', 'https://www.googleapis.com/auth/drive']
@@ -113,7 +113,7 @@ def get_sheet_config(sparql_path: str, number: int):
                     # any property found to calculate quantiles
                     if values:
                         for value in values:
-                            dataframe_dump['benchmark'].append(benchmark)
+                            dataframe_dump['benchmark'].append(benchmark.lower())
                             dataframe_dump['value'].append(value)
 
                             if lang:
@@ -132,7 +132,7 @@ def get_sheet_config(sparql_path: str, number: int):
                 description = sparql_path.replace('.sparql', '').replace('_boxplot', '')
 
                 # create violin plot
-                plt.figure(figsize=(40, 10))
+                plt.figure(figsize=(40, 15))
                 plt.title(description)
                 sb.violinplot(data=pd.DataFrame(dataframe_dump), x='benchmark', y='value', hue='lang' if lang else None,
                               scale='width')
@@ -213,7 +213,7 @@ def main():
             creds.refresh(Request())
         # request new token
         else:
-            flow = InstalledAppFlow.from_client_secrets_file('credentials.json', scopes, redirect_uri='http://localhost:60000')
+            flow = InstalledAppFlow.from_client_secrets_file('credentials.json', scopes)
             creds = flow.run_local_server(port=0)
 
         # Save the credentials for the next run

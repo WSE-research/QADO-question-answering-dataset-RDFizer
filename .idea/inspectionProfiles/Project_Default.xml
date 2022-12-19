@@ -31,6 +31,7 @@
           <option value="http://tiles.apache.org/" />
           <option value="http://www.wikidata.org" />
           <option value="http://example.com" />
+          <option value="http://demos.swe.htwk-leipzig.de" />
         </list>
       </option>
     </inspection_tool>
