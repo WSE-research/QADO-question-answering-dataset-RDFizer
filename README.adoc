@@ -1,6 +1,20 @@
+:toc:
+:toclevels: 5
+:toc-placement!:
+:source-highlighter: highlight.js
+ifdef::env-github[]
+:tip-caption: :bulb:
+:note-caption: :information_source:
+:important-caption: :heavy_exclamation_mark:
+:caution-caption: :fire:
+:warning-caption: :warning:
+endif::[]
+
 = question-answering-dataset-RDFizer
 
-This tool provides a webservice to convert structured data into RDF.
+This tool provides a web service to convert particular question answering datasets (represented in JSON format) into RDF Turtle.
+
+toc::[]
 
 == Setup service
 
@@ -34,19 +48,20 @@ with a JSON payload of the following structure:
 [source,json]
 ----
 {
+  "filePath": "URL of the JSON file",
   "format": "Mapping file name",
   "label": "Name for the generated RDF triples",
-  "filePath": "URL of the JSON file",
   "homepage": "URL of the data publisher"
 }
 ----
 
-By default, the following formats are supported:
+By default, the following formats are supported (recognize the format `key`):
 
-* https://github.com/ag-sc/QALD[QALD], supported versions 5, 6, 8, 9 and 10  (`qald`)
-* https://github.com/AskNowQA/LC-QuAD[LC-QuAD], supported version 1 (`lc-quad`) and 2 (`lc-quad-2`)
-* https://github.com/vladislavneon/RuBQ[RuBQ], supported versions 1 and 2 (`rubq`)
-* https://www.tau-nlp.sites.tau.ac.il/compwebq[CWQ] (`cwq`)
+* https://github.com/ag-sc/QALD[*QALD:* Question Answering over Linked Data], supported versions 5, 6, 8, 9 and 10  (`qald`)
+* https://github.com/AskNowQA/LC-QuAD[*LC-QuAD:* Largescale Complex Question Answering Dataset], supported version 1 (`lc-quad`) and 2 (`lc-quad-2`)
+* https://github.com/vladislavneon/RuBQ[*RuBQ:* A Russian Knowledge Base Question Answering and Machine Reading Comprehension Data Set], supported versions 1 and 2 (`rubq`)
+* https://www.amazon.science/publications/mintaka-a-complex-natural-and-multilingual-dataset-for-end-to-end-question-answering[*Mintaka:* A complex, natural, and multilingual dataset for end-to-end question answering] 
+* https://www.tau-nlp.sites.tau.ac.il/compwebq[*ComplexWebQuestions:* A dataset for answering complex questions that require reasoning over multiple web snippets.] (`cwq`)
 
 The following cURL command can be used to convert a JSON file of the QALD benchmark
 into RDF.
