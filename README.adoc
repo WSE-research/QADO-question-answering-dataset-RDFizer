@@ -10,7 +10,7 @@ ifdef::env-github[]
 :warning-caption: :warning:
 endif::[]
 
-= QADO 
+= QADO Question Answering Dataset RDFizer
 
 This tool provides a web service to convert particular question answering datasets (represented in JSON format) into https://www.w3.org/TR/turtle/[RDF Turtle]. 
 It uses the link:/blob/main/app/ontology/qa-benchmark-ontology.ttl[Question Answering Dataset Ontology (QADO)] to represent the data in RDF.
