@@ -75,6 +75,8 @@ By default, the following datasets/formats are supported:
 * https://www.tau-nlp.sites.tau.ac.il/compwebq[*ComplexWebQuestions:* A dataset for answering complex questions that require reasoning over multiple web snippets]
 ** format identifier: `cwq`
 
+== Web Service Usage
+
 The following cURL command can be used to convert a JSON file of the QALD benchmark into RDF.
 
 [source,bash]
