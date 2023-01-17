@@ -49,12 +49,17 @@ with a JSON payload of the following structure:
 [source,json]
 ----
 {
-  "filePath": "URL of the JSON file",
+  "json": "JSON content as string (optional)",
+  "filePath": "URL of the JSON file (required, if 'json' not set)",
   "format": "Mapping file name",
+  "rml": "RML rules, if format set to 'custom' (optional)",
   "label": "Name for the generated RDF triples",
   "homepage": "URL of the data publisher"
 }
 ----
+
+You need to provide either the JSON data as plain text for the property `json` or a URL where
+to download the JSON file as `filePath`.
 
 == Supported Datasets
 
@@ -74,6 +79,9 @@ By default, the following datasets/formats are supported:
 ** format identifier: `mintaka`
 * https://www.tau-nlp.sites.tau.ac.il/compwebq[*ComplexWebQuestions:* A dataset for answering complex questions that require reasoning over multiple web snippets]
 ** format identifier: `cwq`
+* `Custom mapping rules`: You can provide your own RML mapping rules by setting the property `rml` of the JSON payload.
+You insert the content of your mapping file as plain text.
+** format identifier: `custom`
 
 == Web Service Usage
 
