@@ -45,6 +45,8 @@ class RmlApplicatorData(val data: String, val rml: String)
 data class Json2RDFTransformer(private var filePath: String, private var format: String,
                           private val label: String, private val homepage: String) {
     fun mapRDF(rmlContentType: String?): io.ktor.client.statement.HttpResponse {
+        val acceptType: String = rmlContentType ?: "text/turtle"
+
         format = format.uppercase().replace("..", "").replace("/", "")
         format = format.replace("\\", "")
 
@@ -106,9 +108,8 @@ data class Json2RDFTransformer(private var filePath: String, private var format:
                 response = rmlClient.post("$rmlApplicatorHost/data2rdf") {
                     contentType(ContentType.Application.Json)
                     setBody(RmlApplicatorData(jsonObject, newMapping))
-                    if (rmlContentType != null) {
-                        val contentTypeParams = rmlContentType.split("/")
-                        accept(ContentType(contentTypeParams[0], contentTypeParams[1]))
+                    headers {
+                        append(HttpHeaders.Accept, acceptType)
                     }
                 }
             }
@@ -143,9 +144,7 @@ fun Application.rdfizerApplication() {
                     call.respondText(response.bodyAsText(), response.contentType(), response.status)
                 }
                 else {
-                    call.respondText(
-                        ontology + response.bodyAsText(), response.contentType()
-                    )
+                    call.respondText(response.bodyAsText(), response.contentType())
                 }
             } catch (e: JSONNotFoundException) {
                 call.respondText(e.message, ContentType.Text.Plain, HttpStatusCode.BadRequest)
@@ -163,6 +162,9 @@ fun Application.rdfizerApplication() {
                         "<a href=\"https://github.com/anbo-de/question-answering-dataset-RDFizer#readme\">Github</a>.",
                 ContentType.Text.Html
             )
+        }
+        get("/ontology") {
+            call.respondText(ontology, ContentType("text", "turtle"))
         }
     }
 }
