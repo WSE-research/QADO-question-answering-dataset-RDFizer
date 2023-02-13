@@ -49,17 +49,12 @@ with a JSON payload of the following structure:
 [source,json]
 ----
 {
-  "json": "JSON content as string (optional)",
-  "filePath": "URL of the JSON file (required, if 'json' not set)",
+  "filePath": "URL of the JSON file",
   "format": "Mapping file name",
-  "rml": "RML rules, if format set to 'custom' (optional)",
   "label": "Name for the generated RDF triples",
   "homepage": "URL of the data publisher"
 }
 ----
-
-You need to provide either the JSON data as plain text for the property `json` or a URL where
-to download the JSON file as `filePath`.
 
 == Supported Datasets
 
@@ -79,13 +74,19 @@ By default, the following datasets/formats are supported:
 ** format identifier: `mintaka`
 * https://www.tau-nlp.sites.tau.ac.il/compwebq[*ComplexWebQuestions:* A dataset for answering complex questions that require reasoning over multiple web snippets]
 ** format identifier: `cwq`
-* `Custom mapping rules`: You can provide your own RML mapping rules by setting the property `rml` of the JSON payload.
-You insert the content of your mapping file as plain text.
-** format identifier: `custom`
+
+== Supported output formats
+You can choose the output format of the service by providing
+an `Accept Header`. The following `Content-Types` are supported:
+
+* `text/turtle` (https://en.wikipedia.org/wiki/Turtle_(syntax)[Turtle], default)
+* `text/xml` (https://en.wikipedia.org/wiki/TriX_(serialization_format)[TriX])
+* `application/ld+json` (https://en.wikipedia.org/wiki/JSON-LD[JSON-LD])
+* `application/n-triples` (https://en.wikipedia.org/wiki/N-Triples[N-Triples])
 
 == Web Service Usage
 
-The following cURL command can be used to convert a JSON file of the QALD benchmark into RDF.
+The following cURL command can be used to convert a JSON file of the QALD benchmark into RDF using Turtle as the output format.
 
 [source,bash]
 ----
