@@ -8,7 +8,7 @@
 @base <urn:qado:vocabulary> .
 
 <urn:qado:vocabulary> rdf:type owl:Ontology ;
-                       owl:versionIRI <urn:qado:dataset/0.1> ;
+                       owl:versionIRI <urn:qado:dataset/0.2> ;
                        rdfs:comment "Ontology for Datasets representing Knowledge Graphs on Question Answering benchmarks."@en ;
                        rdfs:label "QADO - Question Answering Dataset Ontology"@en .
 
@@ -16,8 +16,8 @@
 #    Datatypes
 #################################################################
 
-###  urn:qado#Question
-qado:Question rdf:type rdfs:Datatype .
+###  urn:qado:vocabulary#Question
+:Question rdf:type rdfs:Datatype .
 
 
 #################################################################
@@ -27,8 +27,11 @@ qado:Question rdf:type rdfs:Datatype .
 ###  urn:qado#hasAnswer
 qado:hasAnswer rdf:type owl:ObjectProperty ,
                         owl:FunctionalProperty ;
-               rdfs:domain qado:Answer ,
-                           qado:Question ;
+               rdfs:domain [ rdf:type owl:Class ;
+                             owl:unionOf ( qado:Answer
+                                           qado:Question
+                                         )
+                           ] ;
                rdfs:range qado:Answer ;
                rdfs:comment "Property linking a question to the corresponding answer."@en ;
                rdfs:label "Question-Answer-Linking"@en .
@@ -47,6 +50,7 @@ qado:hasSparqlQuery rdf:type owl:ObjectProperty ,
 qado:isElementOf rdf:type owl:ObjectProperty ,
                           owl:FunctionalProperty ;
                  rdfs:domain qado:Question ;
+                 rdfs:range qado:Dataset ;
                  rdfs:comment "Property connecting a question to its QA dataset."@en ;
                  rdfs:label "Question-Benchmark-Linking"@en .
 
@@ -84,9 +88,12 @@ qado:hasAlias rdf:type owl:DatatypeProperty ;
 ###  urn:qado#hasAnswerBody
 qado:hasAnswerBody rdf:type owl:DatatypeProperty ;
                    rdfs:domain qado:Answer ;
-                   rdfs:range xsd:anyURI ,
-                              xsd:boolean ,
-                              xsd:string ;
+                   rdfs:range [ rdf:type rdfs:Datatype ;
+                                owl:unionOf ( xsd:anyURI
+                                              xsd:boolean
+                                              xsd:string
+                                            )
+                              ] ;
                    rdfs:comment "Answer value"@en ;
                    rdfs:label "has answer body"@en .
 
@@ -103,8 +110,11 @@ qado:hasAnswerText rdf:type owl:DatatypeProperty ,
 ###  urn:qado#hasAnswerType
 qado:hasAnswerType rdf:type owl:DatatypeProperty ,
                             owl:FunctionalProperty ;
-                   rdfs:domain qado:Answer ,
-                               qado:Question ;
+                   rdfs:domain [ rdf:type owl:Class ;
+                                 owl:unionOf ( qado:Answer
+                                               qado:Question
+                                             )
+                               ] ;
                    rdfs:range xsd:string ;
                    rdfs:comment "Answer type of a given answer."@en ,
                                 "Describes the answer type of a given answer."@en ;
@@ -140,10 +150,16 @@ qado:hasEntityUriInQuestion rdf:type owl:DatatypeProperty ;
 ###  urn:qado#hasId
 qado:hasId rdf:type owl:DatatypeProperty ,
                     owl:FunctionalProperty ;
-           rdfs:domain qado:AnswerContent ,
-                       qado:Question ;
-           rdfs:range xsd:nonNegativeInteger ,
-                      xsd:string ;
+           rdfs:domain [ rdf:type owl:Class ;
+                         owl:unionOf ( qado:AnswerContent
+                                       qado:Question
+                                     )
+                       ] ;
+           rdfs:range [ rdf:type rdfs:Datatype ;
+                        owl:unionOf ( xsd:nonNegativeInteger
+                                      xsd:string
+                                    )
+                      ] ;
            rdfs:comment "Property linking a question to its ID."@en ;
            rdfs:label "has question ID"@en .
 
@@ -292,7 +308,6 @@ qado:hasWebqspQuestion rdf:type owl:DatatypeProperty ,
 ###  urn:qado#hasbeenTransferredToAnotherKnowledgeGraph
 qado:hasbeenTransferredToAnotherKnowledgeGraph rdf:type owl:DatatypeProperty ;
                                                rdfs:domain qado:Question ;
-                                               rdfs:range qado:Question ;
                                                rdfs:comment "Property referencing another question answering this one on another Knowledge Graph."@en ;
                                                rdfs:label "has multi KG question"@en .
 
@@ -314,7 +329,7 @@ qado:isOnlyDBpediaCompatible rdf:type owl:DatatypeProperty ,
                              rdfs:label "is only compatible to DBpedia"@en .
 
 
-###  urn:qado:vocabulary#category
+###  urn:qado:dataset#category
 :category rdf:type owl:DatatypeProperty ;
           rdfs:domain qado:Question ;
           rdfs:range xsd:string ;
@@ -322,7 +337,7 @@ qado:isOnlyDBpediaCompatible rdf:type owl:DatatypeProperty ,
           rdfs:label "Question category"@en .
 
 
-###  urn:qado:vocabulary#complexityType
+###  urn:qado:dataset#complexityType
 :complexityType rdf:type owl:DatatypeProperty ;
                 rdfs:domain qado:Question ;
                 rdfs:range xsd:string ;
@@ -330,7 +345,7 @@ qado:isOnlyDBpediaCompatible rdf:type owl:DatatypeProperty ,
                 rdfs:label "Complexity type"@en .
 
 
-###  urn:qado:vocabulary#hasAnswerBodyLabel
+###  urn:qado:dataset#hasAnswerBodyLabel
 :hasAnswerBodyLabel rdf:type owl:DatatypeProperty ;
                     rdfs:domain qado:ValidAnswer ;
                     rdfs:range xsd:string ;
@@ -338,14 +353,15 @@ qado:isOnlyDBpediaCompatible rdf:type owl:DatatypeProperty ,
                     rdfs:label "Answer body label"@en .
 
 
-###  urn:qado:vocabulary#hasPrefix
+###  urn:qado:dataset#hasPrefix
 :hasPrefix rdf:type owl:DatatypeProperty ;
            rdfs:domain qado:Dataset ;
+           rdfs:range xsd:string ;
            rdfs:comment "The URI that has been replaced by a prefix."@en ;
            rdfs:label "Has prefix"@en .
 
 
-###  urn:qado:vocabulary#mention
+###  urn:qado:dataset#mention
 :mention rdf:type owl:DatatypeProperty ;
          rdfs:domain qado:ValidAnswer ;
          rdfs:range xsd:string ;
@@ -353,7 +369,7 @@ qado:isOnlyDBpediaCompatible rdf:type owl:DatatypeProperty ,
          rdfs:label "Answer mention"@en .
 
 
-###  urn:qado:vocabulary#normalizedQueryLength
+###  urn:qado:dataset#normalizedQueryLength
 :normalizedQueryLength rdf:type owl:DatatypeProperty ;
                        rdfs:domain qado:Query ;
                        rdfs:range xsd:nonNegativeInteger ;
@@ -361,7 +377,7 @@ qado:isOnlyDBpediaCompatible rdf:type owl:DatatypeProperty ,
                        rdfs:label "Normalized SPARQL query length"@en .
 
 
-###  urn:qado:vocabulary#numberOfFilters
+###  urn:qado:dataset#numberOfFilters
 :numberOfFilters rdf:type owl:DatatypeProperty ;
                  rdfs:domain qado:Query ;
                  rdfs:range xsd:nonNegativeInteger ;
@@ -369,7 +385,7 @@ qado:isOnlyDBpediaCompatible rdf:type owl:DatatypeProperty ,
                  rdfs:label "Number of FILTER statements"@en .
 
 
-###  urn:qado:vocabulary#numberOfModifierGroupBy
+###  urn:qado:dataset#numberOfModifierGroupBy
 :numberOfModifierGroupBy rdf:type owl:DatatypeProperty ;
                          rdfs:domain qado:Query ;
                          rdfs:range xsd:nonNegativeInteger ;
@@ -377,7 +393,7 @@ qado:isOnlyDBpediaCompatible rdf:type owl:DatatypeProperty ,
                          rdfs:label "Number of GROUP BY modifiers"@en .
 
 
-###  urn:qado:vocabulary#numberOfModifierHaving
+###  urn:qado:dataset#numberOfModifierHaving
 :numberOfModifierHaving rdf:type owl:DatatypeProperty ;
                         rdfs:domain qado:Query ;
                         rdfs:range xsd:nonNegativeInteger ;
@@ -385,7 +401,7 @@ qado:isOnlyDBpediaCompatible rdf:type owl:DatatypeProperty ,
                         rdfs:label "Number of HAVING modifiers"@en .
 
 
-###  urn:qado:vocabulary#numberOfModifierLimit
+###  urn:qado:dataset#numberOfModifierLimit
 :numberOfModifierLimit rdf:type owl:DatatypeProperty ;
                        rdfs:domain qado:Query ;
                        rdfs:range xsd:nonNegativeInteger ;
@@ -393,7 +409,7 @@ qado:isOnlyDBpediaCompatible rdf:type owl:DatatypeProperty ,
                        rdfs:label "Number of LIMIT modifiers"@en .
 
 
-###  urn:qado:vocabulary#numberOfModifierOffset
+###  urn:qado:dataset#numberOfModifierOffset
 :numberOfModifierOffset rdf:type owl:DatatypeProperty ;
                         rdfs:domain qado:Query ;
                         rdfs:range xsd:nonNegativeInteger ;
@@ -401,7 +417,7 @@ qado:isOnlyDBpediaCompatible rdf:type owl:DatatypeProperty ,
                         rdfs:label "Number of OFFSET modifiers"@en .
 
 
-###  urn:qado:vocabulary#numberOfModifierOrderBy
+###  urn:qado:dataset#numberOfModifierOrderBy
 :numberOfModifierOrderBy rdf:type owl:DatatypeProperty ;
                          rdfs:domain qado:Query ;
                          rdfs:range xsd:nonNegativeInteger ;
@@ -409,7 +425,7 @@ qado:isOnlyDBpediaCompatible rdf:type owl:DatatypeProperty ,
                          rdfs:label "Number of ORDER BY modifiers"@en .
 
 
-###  urn:qado:vocabulary#numberOfModifiers
+###  urn:qado:dataset#numberOfModifiers
 :numberOfModifiers rdf:type owl:DatatypeProperty ;
                    rdfs:domain qado:Query ;
                    rdfs:range xsd:nonNegativeInteger ;
@@ -417,7 +433,7 @@ qado:isOnlyDBpediaCompatible rdf:type owl:DatatypeProperty ,
                    rdfs:label "Number of modifiers"@en .
 
 
-###  urn:qado:vocabulary#numberOfResources
+###  urn:qado:dataset#numberOfResources
 :numberOfResources rdf:type owl:DatatypeProperty ;
                    rdfs:domain qado:Query ;
                    rdfs:range xsd:nonNegativeInteger ;
@@ -425,7 +441,7 @@ qado:isOnlyDBpediaCompatible rdf:type owl:DatatypeProperty ,
                    rdfs:label "Number of resources"@en .
 
 
-###  urn:qado:vocabulary#numberOfResourcesPredicates
+###  urn:qado:dataset#numberOfResourcesPredicates
 :numberOfResourcesPredicates rdf:type owl:DatatypeProperty ;
                              rdfs:domain qado:Query ;
                              rdfs:range xsd:nonNegativeInteger ;
@@ -433,7 +449,7 @@ qado:isOnlyDBpediaCompatible rdf:type owl:DatatypeProperty ,
                              rdfs:label "Number of resources as predicates"@en .
 
 
-###  urn:qado:vocabulary#numberOfResourcesSubjectsObjects
+###  urn:qado:dataset#numberOfResourcesSubjectsObjects
 :numberOfResourcesSubjectsObjects rdf:type owl:DatatypeProperty ;
                                   rdfs:domain qado:Query ;
                                   rdfs:range xsd:nonNegativeInteger ;
@@ -441,7 +457,7 @@ qado:isOnlyDBpediaCompatible rdf:type owl:DatatypeProperty ,
                                   rdfs:label "Number of resources as subjects or objects"@en .
 
 
-###  urn:qado:vocabulary#numberOfTriples
+###  urn:qado:dataset#numberOfTriples
 :numberOfTriples rdf:type owl:DatatypeProperty ;
                  rdfs:domain qado:Query ;
                  rdfs:range xsd:nonNegativeInteger ;
@@ -449,7 +465,7 @@ qado:isOnlyDBpediaCompatible rdf:type owl:DatatypeProperty ,
                  rdfs:label "Number of triples"@en .
 
 
-###  urn:qado:vocabulary#numberOfVariables
+###  urn:qado:dataset#numberOfVariables
 :numberOfVariables rdf:type owl:DatatypeProperty ;
                    rdfs:domain qado:Query ;
                    rdfs:range xsd:nonNegativeInteger ;
@@ -457,7 +473,7 @@ qado:isOnlyDBpediaCompatible rdf:type owl:DatatypeProperty ,
                    rdfs:label "Number of variables"@en .
 
 
-###  urn:qado:vocabulary#queryType
+###  urn:qado:dataset#queryType
 :queryType rdf:type owl:DatatypeProperty ;
            rdfs:domain qado:Query ;
            rdfs:range xsd:string ;
@@ -465,7 +481,7 @@ qado:isOnlyDBpediaCompatible rdf:type owl:DatatypeProperty ,
            rdfs:label "SPARQL query type"@en .
 
 
-###  urn:qado:vocabulary#questionEntity
+###  urn:qado:dataset#questionEntity
 :questionEntity rdf:type owl:DatatypeProperty ;
                 rdfs:domain qado:Question ;
                 rdfs:range xsd:string ;
@@ -473,7 +489,7 @@ qado:isOnlyDBpediaCompatible rdf:type owl:DatatypeProperty ,
                 rdfs:label "Question entity"@en .
 
 
-###  urn:qado:vocabulary#supportingEnt
+###  urn:qado:dataset#supportingEnt
 :supportingEnt rdf:type owl:DatatypeProperty ;
                rdfs:domain qado:ValidAnswer ;
                rdfs:range xsd:anyURI ;
@@ -481,7 +497,7 @@ qado:isOnlyDBpediaCompatible rdf:type owl:DatatypeProperty ,
                rdfs:label "Supporting entity"@en .
 
 
-###  urn:qado:vocabulary#supportingNum
+###  urn:qado:dataset#supportingNum
 :supportingNum rdf:type owl:DatatypeProperty ;
                rdfs:domain qado:ValidAnswer ;
                rdfs:range xsd:string ;
@@ -557,14 +573,6 @@ qado:ValidQuestion rdf:type owl:Class ;
 
 
 #################################################################
-#    Annotations
-#################################################################
-
-qado:Question rdfs:label "QA benchmark question"@en ;
-              rdfs:comment "Generic class of a question of a QA benchmark."@en .
-
-
-#################################################################
 #    General axioms
 #################################################################
 
@@ -603,19 +611,11 @@ qado:Question rdfs:label "QA benchmark question"@en ;
 [ rdf:type owl:Restriction ;
   owl:onProperty qado:hasId ;
   owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger ;
-  owl:onDataRange xsd:nonNegativeInteger ;
-  rdfs:subClassOf [ rdf:type owl:Class ;
-                    owl:unionOf ( qado:Answer
-                                  qado:Question
+  owl:onDataRange [ rdf:type rdfs:Datatype ;
+                    owl:unionOf ( xsd:nonNegativeInteger
+                                  xsd:string
                                 )
-                  ]
-] .
-
-
-[ rdf:type owl:Restriction ;
-  owl:onProperty qado:hasId ;
-  owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger ;
-  owl:onDataRange xsd:string ;
+                  ] ;
   rdfs:subClassOf [ rdf:type owl:Class ;
                     owl:unionOf ( qado:Answer
                                   qado:Question
