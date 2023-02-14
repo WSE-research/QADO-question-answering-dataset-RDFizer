@@ -19,6 +19,12 @@ toc::[]
 
 == Setup service
 
+=== Configuration
+This service needs a running instance of https://github.com/WSE-research/QADO-RML-Applicator[QADO RML Applicator].
+The host of a instance, e. g. http://localhost:8000, has to be
+provided by setting the environment variable
+`RML_APPLICATOR_HOST`.
+
 === Using Gradle
 
 To run the service locally run `./gradlew run`.
@@ -38,11 +44,16 @@ To start a Docker container use the following command:
 
 [source,shell]
 ----
-docker run -d -p "$EXTERNAL_PORT:8080" bigoli98/rdfizer:latest
+docker run -d --env RML_APPLICATOR_HOST="YOUR RML APPLICATOR HOST" -p "$EXTERNAL_PORT:8080" bigoli98/rdfizer:latest
 ----
 
 == Accessing the service
+=== Basic UI
+This service provides a basic UI at `$HOST:$PORT/` where you can
+transform a dataset and view the results directly in the
+web browser.
 
+=== API endpoint
 To transform a JSON file to RDF perform a `POST`-Request at `$HOST:$PORT/json2rdf`
 with a JSON payload of the following structure:
 

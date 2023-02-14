@@ -13,7 +13,9 @@ import io.ktor.client.*
 import io.ktor.client.engine.cio.*
 import io.ktor.client.request.*
 import io.ktor.client.statement.*
+import io.ktor.server.html.*
 import kotlinx.coroutines.runBlocking
+import kotlinx.html.*
 
 import java.net.URI
 import java.net.http.HttpClient
@@ -29,15 +31,9 @@ class JSONNotFoundException(url: String): Throwable() {
     override val message = "$url not found"
 }
 
-class MissingCustomRMLException: Throwable() {
-    override val message = "RML rules required for mode \"custom\""
-}
-
 
 class MappingNotDoneException(override val message: String): Throwable()
 
-
-class MissingJsonDataException(override val message: String): Throwable()
 
 class RmlApplicatorData(val data: String, val rml: String)
 
@@ -82,7 +78,6 @@ data class Json2RDFTransformer(private var filePath: String, private var format:
         } while (response.statusCode() != 200)
 
         try {
-
             var newMapping = run {
                 // select mapping file
                 val mapPath = "mappings/${format}.ttl"
@@ -150,10 +145,8 @@ fun Application.rdfizerApplication() {
                 call.respondText(e.message, ContentType.Text.Plain, HttpStatusCode.BadRequest)
             } catch (e: MappingNotDoneException) {
                 call.respondText(e.message, ContentType.Text.Plain, HttpStatusCode.InternalServerError)
-            } catch (e: MissingCustomRMLException) {
-                call.respondText(e.message, ContentType.Text.Plain, HttpStatusCode.BadRequest)
-            } catch (e: MissingJsonDataException) {
-                call.respondText(e.message, ContentType.Text.Plain, HttpStatusCode.BadRequest)
+            } catch (e: Exception) {
+                call.respondText(e.message ?: "An unknown error occurred", ContentType.Text.Plain, HttpStatusCode.InternalServerError)
             }
         }
         get("/json2rdf") {
@@ -165,6 +158,89 @@ fun Application.rdfizerApplication() {
         }
         get("/ontology") {
             call.respondText(ontology, ContentType("text", "turtle"))
+        }
+        get("/") {
+            val callHost = call.request.host()
+            var formats= mutableListOf<String>()
+
+            File("mappings/").walk().forEach {
+                if (it.name.contains(".ttl")) {
+                    formats.add(it.name.replace(".ttl", "").lowercase())
+                }
+            }
+            formats = formats.sorted().toMutableList()
+
+            call.respondHtml(HttpStatusCode.OK) {
+                head {
+                    title {
+                        +"QADO dataset RDFizer"
+                    }
+                    link("/style", "stylesheet", "text/css")
+                }
+                body {
+                    header {
+                        h1 {
+                            +"QADO dataset RDFizer"
+                        }
+                    }
+                    main {
+                        p {
+                            +"This instance is running at $callHost."
+                        }
+                        p {
+                            +"Dataset URL: "
+                            textInput(name = "filePath")
+                        }
+                        p {
+                            +"Format: "
+                            select {
+                                name = "format"
+                                formats.forEach {
+                                    option {
+                                        +it
+                                    }
+                                }
+                            }
+                        }
+                        p {
+                            +"Project homepage: "
+                            textInput(name = "homepage")
+                        }
+                        p {
+                            +"Dataset label: "
+                            textInput(name = "label")
+                        }
+                        p {
+                            +"Output format: "
+                            select {
+                                name = "output"
+                                option { +"text/turtle" }
+                                option { +"text/xml" }
+                                option { +"application/ld+json" }
+                                option { +"application/n-triples" }
+                            }
+                        }
+                        p {
+                            button(name = "callApi") {
+                                +"Transform dataset"
+                            }
+                        }
+                        p {
+                            id = "api_response"
+                        }
+                        textArea(rows = "20") {
+                            id = "api_body"
+                        }
+                        script(type = "text/javascript", src = "/script") {}
+                    }
+                }
+            }
+        }
+        get("/script") {
+            call.respondText(File("api_call.js").readText(), ContentType.Text.JavaScript)
+        }
+        get("/style") {
+            call.respondText(File("styles.css").readText(), ContentType.Text.CSS)
         }
     }
 }
