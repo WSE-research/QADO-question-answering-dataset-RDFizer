@@ -24,7 +24,11 @@ import java.net.http.HttpResponse
 import java.io.*
 
 val rmlApplicatorHost: String? = System.getenv("RML_APPLICATOR_HOST")
+val qadoDatasetPreprocessor: String? = System.getenv("DATASET_PREPROCESSOR_HOST")
+
 val ontology = File("ontology/qa-benchmark-ontology.ttl").readText()
+
+val preprocessFormats = listOf("compositional_wikidata")
 
 
 class JSONNotFoundException(url: String): Throwable() {
@@ -35,47 +39,79 @@ class JSONNotFoundException(url: String): Throwable() {
 class MappingNotDoneException(override val message: String): Throwable()
 
 
+class MissingPreprocessingParameters(override val message: String): Throwable()
+
+
 class RmlApplicatorData(val data: String, val rml: String)
+
+class PreprocessingData(val fetch_url: String, val language: String)
 
 
 data class Json2RDFTransformer(private var filePath: String, private var format: String,
-                          private val label: String, private val homepage: String) {
+                          private val label: String, private val homepage: String, private val language: String?) {
     fun mapRDF(rmlContentType: String?): io.ktor.client.statement.HttpResponse {
         val acceptType: String = rmlContentType ?: "text/turtle"
 
         format = format.uppercase().replace("..", "").replace("/", "")
         format = format.replace("\\", "")
+        val checkFormat = format.lowercase()
 
         var jsonObject: String
 
-        // fetch JSON file
-        do {
-            val client: HttpClient = HttpClient.newBuilder().build()
-            val request: HttpRequest = HttpRequest.newBuilder().uri(URI.create(filePath)).build()
-            val response: HttpResponse<*> = client.send(request, HttpResponse.BodyHandlers.ofString())
-            val contentType = response.headers().allValues("content-type")[0]
-
-            if(response.statusCode() >= 400) {
-                throw JSONNotFoundException(filePath)
+        if (preprocessFormats.contains(checkFormat)) {
+            if (language == null) {
+                throw MissingPreprocessingParameters("Parameter \"language\" required")
             }
 
-            jsonObject = response.body().toString()
-
-            if(response.statusCode() in 300..399) {
-                filePath = response.headers().allValues("location")[0]
-
-                if(filePath.startsWith("/")) {
-                    filePath = "${request.uri().toURL().protocol}://${request.uri().host}$filePath"
+            runBlocking {
+                val rmlClient = HttpClient(CIO) {
+                    install(io.ktor.client.plugins.contentnegotiation.ContentNegotiation) {
+                        gson()
+                    }
                 }
 
-                continue
-            }
+                val processResponse = rmlClient.post("$qadoDatasetPreprocessor/process/$checkFormat") {
+                    contentType(ContentType.Application.Json)
+                    setBody(PreprocessingData(filePath, language))
+                }
 
-            if(response.statusCode() == 200 && contentType != "application/json" &&
-                !contentType.contains("text/plain") && !contentType.contains("application/binary")) {
-                throw JSONNotFoundException(filePath)
+                jsonObject = processResponse.bodyAsText()
+
+                if (!processResponse.status.isSuccess()) {
+                    throw MappingNotDoneException("Preprocessing failed! $jsonObject")
+                }
             }
-        } while (response.statusCode() != 200)
+        }
+        else {
+            // fetch JSON file
+            do {
+                val client: HttpClient = HttpClient.newBuilder().build()
+                val request: HttpRequest = HttpRequest.newBuilder().uri(URI.create(filePath)).build()
+                val response: HttpResponse<*> = client.send(request, HttpResponse.BodyHandlers.ofString())
+                val contentType = response.headers().allValues("content-type")[0]
+
+                if(response.statusCode() >= 400) {
+                    throw JSONNotFoundException(filePath)
+                }
+
+                jsonObject = response.body().toString()
+
+                if(response.statusCode() in 300..399) {
+                    filePath = response.headers().allValues("location")[0]
+
+                    if(filePath.startsWith("/")) {
+                        filePath = "${request.uri().toURL().protocol}://${request.uri().host}$filePath"
+                    }
+
+                    continue
+                }
+
+                if(response.statusCode() == 200 && contentType != "application/json" &&
+                    !contentType.contains("text/plain") && !contentType.contains("application/binary")) {
+                    throw JSONNotFoundException(filePath)
+                }
+            } while (response.statusCode() != 200)
+        }
 
         try {
             var newMapping = run {
@@ -120,6 +156,7 @@ data class Json2RDFTransformer(private var filePath: String, private var format:
 
 fun main() {
     assert(rmlApplicatorHost != null) { "Environment variable \"RML_APPLICATOR_HOST\" not set!" }
+    assert(qadoDatasetPreprocessor != null) { "Environment variable \"DATASET_PREPROCESSOR_HOST\" not set!" }
     embeddedServer(Netty, port = 8080, module = Application::rdfizerApplication).start(wait = true)
 }
 

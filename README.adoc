@@ -23,7 +23,7 @@ toc::[]
 This service needs a running instance of https://github.com/WSE-research/QADO-RML-Applicator[QADO RML Applicator].
 The host of a instance, e. g. http://localhost:8000, has to be
 provided by setting the environment variable
-`RML_APPLICATOR_HOST`.
+`RML_APPLICATOR_HOST`. Additionally, an instance of
 
 === Using Gradle
 
@@ -63,7 +63,8 @@ with a JSON payload of the following structure:
   "filePath": "URL of the JSON file",
   "format": "Mapping file name",
   "label": "Name for the generated RDF triples",
-  "homepage": "URL of the data publisher"
+  "homepage": "URL of the data publisher",
+  "language": "Language tag of the questions (required only for 'compositional_wikidata' format)"
 }
 ----
 
@@ -85,6 +86,8 @@ By default, the following datasets/formats are supported:
 ** format identifier: `mintaka`
 * https://www.tau-nlp.sites.tau.ac.il/compwebq[*ComplexWebQuestions:* A dataset for answering complex questions that require reasoning over multiple web snippets]
 ** format identifier: `cwq`
+* https://github.com/coastalcph/seq2sparql[Compositional Wikidata Questions]
+** format identifier: `compositional_wikidata`
 
 == Supported output formats
 You can choose the output format of the service by providing

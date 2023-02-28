@@ -1,0 +1,69 @@
+@prefix rml: <http://semweb.mmlab.be/ns/rml#> .
+@prefix rr: <http://www.w3.org/ns/r2rml#> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+@prefix void: <http://rdfs.org/ns/void#> .
+@prefix prov: <http://www.w3.org/ns/prov#> .
+@prefix qado: <urn:qado#> .
+@prefix ql: <http://semweb.mmlab.be/ns/ql#>.
+@base <URL#>.
+
+
+<#DatasetMapping> a rr:TriplesMap;
+    rml:logicalSource [
+        rml:source "example.json";
+        rml:referenceFormulation ql:JSONPath;
+        rml:iterator "$.[*]"];
+    rr:subjectMap [
+        rr:template "urn:qado#LABEL-dataset";
+        rr:class qado:Dataset];
+    rr:predicateObjectMap [
+        rr:predicate void:dataDump;
+        rr:objectMap [
+            rr:template "URL"]];
+    rr:predicateObjectMap [
+        rr:predicate rdfs:label;
+        rr:objectMap [
+            rr:template "LABEL";
+            rr:datatype xsd:string]];
+    rr:predicateObjectMap [
+        rr:predicate foaf:homepage;
+        rr:objectMap [
+            rr:template "HOMEPAGE";
+            rr:datatype xsd:string]].
+
+<#QueryMapping> a rr:TriplesMap;
+    rml:logicalSource [
+        rml:source "example.json";
+        rml:referenceFormulation ql:JSONPath;
+        rml:iterator "$.[*]"];
+    rr:subjectMap [
+        rr:template "urn:qado#LABEL-query-{id}";
+        rr:class qado:Query];
+    rr:predicateObjectMap [
+        rr:predicate qado:hasQueryText;
+        rr:objectMap [
+            rml:reference "query";
+            rr:datatype xsd:string]].
+
+<#QuestionMapping> a rr:TripleMap;
+    rml:logicalSource [
+        rml:source "example.json";
+        rml:referenceFormulation ql:JSONPath;
+        rml:iterator "$.[*]"];
+    rr:subjectMap [
+        rr:template "urn:qado#LABEL-question-{id}";
+        rr:class qado:UnanswerableQuestion];
+    rr:predicateObjectMap [
+        rr:predicate qado:hasQuestion;
+        rr:objectMap [
+            rml:reference "question";
+            rml:languageMap [
+                rml:reference "lang"
+            ]]];
+    rr:predicateObjectMap [
+        rr:predicate qado:hasSparqlQuery;
+        rr:objectMap [
+            rr:template "urn:qado#LABEL-query-{id}"]].
