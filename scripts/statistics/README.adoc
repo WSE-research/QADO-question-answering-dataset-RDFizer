@@ -11,7 +11,7 @@ and run the following command.
 ----
 
 This script creates new CSV files with all statistics
-and stores it at `~/QADO-statistics/QADO-statistics$+{statistic_name}+-$+{current_date}+.xlsx`.
+and stores it at `~/QADO-statistics/QADO-statistics-$+{statistic_name}+-$+{current_date}+.xlsx`.
 
 == Configuration
 === Script configuration
