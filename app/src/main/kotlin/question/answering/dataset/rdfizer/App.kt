@@ -157,7 +157,9 @@ data class Json2RDFTransformer(private var filePath: String, private var format:
 fun main() {
     assert(rmlApplicatorHost != null) { "Environment variable \"RML_APPLICATOR_HOST\" not set!" }
     assert(qadoDatasetPreprocessor != null) { "Environment variable \"DATASET_PREPROCESSOR_HOST\" not set!" }
-    embeddedServer(Netty, port = 8080, module = Application::rdfizerApplication).start(wait = true)
+    embeddedServer(Netty, port = 8080, module = Application::rdfizerApplication, configure = {
+        responseWriteTimeoutSeconds = 0
+    }).start(wait = true)
 }
 
 fun Application.rdfizerApplication() {
