@@ -1,11 +1,11 @@
 import os.path
 from datetime import date
-import xlsxwriter
 import requests
 from json import loads, load
 import numpy as np
 from config import *
-from typing import Any
+from collections import defaultdict
+import pandas as pd
 
 
 def load_chart(chart_file):
@@ -97,17 +97,17 @@ def get_sheet_config(sparql_path: str):
             # get variable names
             header = [entry for entry in sparql_result['head']['vars']]
 
-            data: list[Any] = [[head] for head in header]
+            data = defaultdict(list)
 
             # add results as new rows
             for response in sparql_result['results']['bindings']:
                 # foreach column
-                for i, head in enumerate(header):
+                for head in header:
                     # read value and replace URI data from benchmark names
                     value = response[head]['value'] if head in response else 'URI'
                     value = value.replace('urn:qado#', '').replace('-dataset', '')
 
-                    data[i].append(value)
+                    data[head].append(value)
         # SPARQL query failed
         else:
             print(resp.text)
@@ -126,22 +126,12 @@ def main():
     if 'output' not in os.listdir():
         os.mkdir('output')
 
-    workbook = xlsxwriter.Workbook(f'output/QADO-statistics-{today}.xlsx')
-
     print('Creating sheets...')
     sheets = [get_sheet_config(sparql_query) for sparql_query in queries]
 
     for title, sheet in sheets:
-        worksheet = workbook.add_worksheet(title[:31])
-        worksheet.write(0, 0, title)
-
-        for col, col_values in enumerate(sheet):
-            for row, row_value in enumerate(col_values):
-                worksheet.write(row + 1, col, row_value)
-
-        worksheet.autofit()
-
-    workbook.close()
+        statistic = pd.DataFrame(sheet)
+        statistic.to_csv(f'output/QADO-statistics-{title}-{today}.csv', index=False)
 
 
 if __name__ == '__main__':
