@@ -1,50 +1,35 @@
-# SPARQL dataset statistics
+= SPARQL dataset statistics
 
-This sub-project address the need of a good understanding of the characteristics of Knowledge Graph Question Answering benchmark datasets.
-For this purpose, a tool is provided here to create a Google Spreadsheet with statistics from a triplestore, currently the https://www.stardog.com/[Stardog triplestore] is supported.
-**Python 3.8** or newer is required for the current implementation.
-To install all required packages, run:
+This subproject address the need of a good understanding of the characteristics of Knowledge Graph Question Answering benchmark datasets.
+For this purpose, a tool is provided here to create a Excel Spreadsheet with statistics from a triplestore, currently the https://www.stardog.com/[Stardog triplestore] is supported.
+You need to install https://docs.docker.com/get-docker/[Docker]
+and run the following command.
 
-```
-pip install -r requirements.txt --no-dependencies
-```
+[source]
+----
+./createSpreadsheet.sh
+----
 
-Run `python createSpreadsheet.py` to generate your statistics. 
-In your Google Drive, a new subdirectory `SPARQL Statistics CURRENT_DATE`.
-In this directory, a spreadsheet file and optional violin plots are stored reflecting the collected statistics from your dataset.
+This script creates a new Excel worksheet with all statistics
+and stores it at `~/QADO-statistics/QADO-statistics -${current_date}.xlsx`.
 
-## Configuration
+== Configuration
+=== Script configuration
 
-### Google Cloud Console
+You might edit the `config.py` to select your triplestore.
 
-To use the tool, it is required to configure a Google Cloud Console project. 
-You can use the preconfigured credentials, but therefore it is currently necessary to ask the the maintainers of this project to grant access. 
-Hence, it is recommended, to https://developers.google.com/workspace/guides/get-started?hl=en[create your own Google Cloud Console project] and replace the `credentials.json` with your private setup. 
-The tool needs read-and-write-permissions for the *Google Sheets API* and the *Google Drive API*.
-
-### Script configuration
-
-You might edit the `config.py` to select your triplestore and configure the display size of the violin plots in your spreadsheet.
-
-### Statistics
+=== Statistics
 
 Create your SPARQL queries and store them into the `queries` directory. 
 The tool creates a new worksheet for each SPARQL query file.
 
-#### Boxplot data
+==== Boxplot data
 
 If you want to generate a boxplot, you need to store your query with the file ending `_boxplot.sparql`. 
 Additionally, the data for the boxplot needs to be selected via `(GROUP_CONCAT(?YOUR_VARIABLE ; SEPARATOR = ",") AS ?concat)`.
-The tool also generates a violin plot and inserts it in the `Violin charts` worksheet.
-This plot is stored locally inside the `images` directory and uploaded to Google Drive.
 
-**Attention!** The violin plots are configured to grant read-only access via a share link by default.
 
-### Charts
-
-Adding charts is possible by creating an https://developers.google.com/sheets/api/reference/rest/v4/spreadsheets/charts#embeddedchart[EmbeddedChart JSON object] and storing it inside the `charts` folder. You can create multiple charts per worksheet.
-
-## Default statistics
+== Default statistics
 
 The tool generates per default the following statistics for RDFized QA benchmarks:
 
