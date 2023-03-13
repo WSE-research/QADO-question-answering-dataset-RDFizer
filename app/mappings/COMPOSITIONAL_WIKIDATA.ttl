@@ -57,6 +57,11 @@
         rr:template "urn:qado#LABEL-question-{id}";
         rr:class qado:UnanswerableQuestion];
     rr:predicateObjectMap [
+        rr:predicate qado:hasId;
+        rr:objectMap [
+            rml:reference "id";
+            rr:datatype xsd:string]];
+    rr:predicateObjectMap [
         rr:predicate qado:hasQuestion;
         rr:objectMap [
             rml:reference "question";

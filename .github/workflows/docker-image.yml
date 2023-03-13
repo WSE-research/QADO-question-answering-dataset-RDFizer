@@ -18,16 +18,16 @@ jobs:
         password: ${{ secrets.DOCKER_PASSWORD }}
     - name: Tag latest docker image
       if: startsWith(github.ref, 'refs/tags/')
-      run: docker tag rdfizer:latest wseresearch/rdfizer:latest
+      run: docker tag rdfizer:latest wseresearch/qado-rdfizer:latest
     - name: Tag docker image version
       if: startsWith(github.ref, 'refs/tags/')
-      run: docker tag rdfizer:latest "wseresearch/rdfizer:${{ github.ref_name }}"
+      run: docker tag rdfizer:latest "wseresearch/qado-rdfizer:${{ github.ref_name }}"
     - name: Push latest docker image
       if: startsWith(github.ref, 'refs/tags/')
-      run: docker push wseresearch/rdfizer:latest
+      run: docker push wseresearch/qado-rdfizer:latest
     - name: Push docker image version
       if: startsWith(github.ref, 'refs/tags/')
-      run: docker push "wseresearch/rdfizer:${{ github.ref_name }}"
+      run: docker push "wseresearch/qado-rdfizer:${{ github.ref_name }}"
     - name: Init update
       if: startsWith(github.ref, 'refs/tags/')
       uses: MindMaster98/docker-service-updater@v0.1.5

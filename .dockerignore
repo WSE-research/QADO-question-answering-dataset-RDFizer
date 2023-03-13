@@ -1,8 +1,9 @@
 venv/
-build
+build/
 .idea
 .gradle
 .github
 scripts/
 service_config/
 out/
+app/build/

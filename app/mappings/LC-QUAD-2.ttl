@@ -89,7 +89,7 @@
             rml:reference "template_index";
             rr:datatype xsd:nonNegativeInteger]];
     rr:predicateObjectMap [
-        rr:predicate qado:hasTemplateId;
+        rr:predicate qado:hasSparqlTemplateId;
         rr:objectMap [
             rml:reference "template_id";
             rr:datatype xsd:string]];
