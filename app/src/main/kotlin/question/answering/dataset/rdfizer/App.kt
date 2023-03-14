@@ -138,7 +138,7 @@ data class Json2RDFTransformer(private var filePath: String, private var format:
                 }
 
                 response = rmlClient.post("$rmlApplicatorHost/data2rdf") {
-                    timeout { requestTimeoutMillis = 0 }
+                    timeout { requestTimeoutMillis = HttpTimeout.INFINITE_TIMEOUT_MS }
                     contentType(ContentType.Application.Json)
                     setBody(RmlApplicatorData(jsonObject, newMapping))
                     headers {
