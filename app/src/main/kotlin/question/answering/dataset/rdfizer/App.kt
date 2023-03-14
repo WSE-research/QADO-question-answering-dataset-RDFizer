@@ -11,6 +11,7 @@ import io.ktor.server.engine.*
 import io.ktor.server.netty.*
 import io.ktor.client.*
 import io.ktor.client.engine.cio.*
+import io.ktor.client.plugins.*
 import io.ktor.client.request.*
 import io.ktor.client.statement.*
 import io.ktor.server.html.*
@@ -137,6 +138,7 @@ data class Json2RDFTransformer(private var filePath: String, private var format:
                 }
 
                 response = rmlClient.post("$rmlApplicatorHost/data2rdf") {
+                    timeout { requestTimeoutMillis = 0 }
                     contentType(ContentType.Application.Json)
                     setBody(RmlApplicatorData(jsonObject, newMapping))
                     headers {
