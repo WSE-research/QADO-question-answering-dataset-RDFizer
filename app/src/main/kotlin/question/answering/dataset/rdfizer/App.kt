@@ -1,28 +1,27 @@
 package question.answering.dataset.rdfizer
 
-import io.ktor.server.application.*
-import io.ktor.serialization.gson.*
-import io.ktor.server.plugins.contentnegotiation.*
-import io.ktor.http.*
-import io.ktor.server.request.*
-import io.ktor.server.response.*
-import io.ktor.server.routing.*
-import io.ktor.server.engine.*
-import io.ktor.server.netty.*
 import io.ktor.client.*
 import io.ktor.client.engine.cio.*
 import io.ktor.client.plugins.*
 import io.ktor.client.request.*
 import io.ktor.client.statement.*
+import io.ktor.http.*
+import io.ktor.serialization.gson.*
+import io.ktor.server.application.*
+import io.ktor.server.engine.*
 import io.ktor.server.html.*
+import io.ktor.server.netty.*
+import io.ktor.server.plugins.contentnegotiation.*
+import io.ktor.server.request.*
+import io.ktor.server.response.*
+import io.ktor.server.routing.*
 import kotlinx.coroutines.runBlocking
 import kotlinx.html.*
-
+import java.io.File
 import java.net.URI
 import java.net.http.HttpClient
 import java.net.http.HttpRequest
 import java.net.http.HttpResponse
-import java.io.*
 
 val rmlApplicatorHost: String? = System.getenv("RML_APPLICATOR_HOST")
 val qadoDatasetPreprocessor: String? = System.getenv("DATASET_PREPROCESSOR_HOST")
@@ -32,15 +31,15 @@ val ontology = File("ontology/qa-benchmark-ontology.ttl").readText()
 val preprocessFormats = listOf("compositional_wikidata")
 
 
-class JSONNotFoundException(url: String): Throwable() {
+class JSONNotFoundException(url: String) : Throwable() {
     override val message = "$url not found"
 }
 
 
-class MappingNotDoneException(override val message: String): Throwable()
+class MappingNotDoneException(override val message: String) : Throwable()
 
 
-class MissingPreprocessingParameters(override val message: String): Throwable()
+class MissingPreprocessingParameters(override val message: String) : Throwable()
 
 
 class RmlApplicatorData(val data: String, val rml: String)
@@ -48,8 +47,10 @@ class RmlApplicatorData(val data: String, val rml: String)
 class PreprocessingData(val fetch_url: String, val language: String)
 
 
-data class Json2RDFTransformer(private var filePath: String, private var format: String,
-                          private val label: String, private val homepage: String, private val language: String?) {
+data class Json2RDFTransformer(
+    private var filePath: String, private var format: String,
+    private val label: String, private val homepage: String, private val language: String?
+) {
     fun mapRDF(rmlContentType: String?): io.ktor.client.statement.HttpResponse {
         val acceptType: String = rmlContentType ?: "text/turtle"
 
@@ -82,8 +83,7 @@ data class Json2RDFTransformer(private var filePath: String, private var format:
                     throw MappingNotDoneException("Preprocessing failed! $jsonObject")
                 }
             }
-        }
-        else {
+        } else {
             // fetch JSON file
             do {
                 val client: HttpClient = HttpClient.newBuilder().build()
@@ -91,24 +91,25 @@ data class Json2RDFTransformer(private var filePath: String, private var format:
                 val response: HttpResponse<*> = client.send(request, HttpResponse.BodyHandlers.ofString())
                 val contentType = response.headers().allValues("content-type")[0]
 
-                if(response.statusCode() >= 400) {
+                if (response.statusCode() >= 400) {
                     throw JSONNotFoundException(filePath)
                 }
 
                 jsonObject = response.body().toString()
 
-                if(response.statusCode() in 300..399) {
+                if (response.statusCode() in 300..399) {
                     filePath = response.headers().allValues("location")[0]
 
-                    if(filePath.startsWith("/")) {
+                    if (filePath.startsWith("/")) {
                         filePath = "${request.uri().toURL().protocol}://${request.uri().host}$filePath"
                     }
 
                     continue
                 }
 
-                if(response.statusCode() == 200 && contentType != "application/json" &&
-                    !contentType.contains("text/plain") && !contentType.contains("application/binary")) {
+                if (response.statusCode() == 200 && contentType != "application/json" &&
+                    !contentType.contains("text/plain") && !contentType.contains("application/binary")
+                ) {
                     throw JSONNotFoundException(filePath)
                 }
             } while (response.statusCode() != 200)
@@ -135,10 +136,12 @@ data class Json2RDFTransformer(private var filePath: String, private var format:
                     install(io.ktor.client.plugins.contentnegotiation.ContentNegotiation) {
                         gson()
                     }
+                    install(HttpTimeout) {
+                        requestTimeoutMillis = HttpTimeout.INFINITE_TIMEOUT_MS
+                    }
                 }
 
                 response = rmlClient.post("$rmlApplicatorHost/data2rdf") {
-                    timeout { requestTimeoutMillis = HttpTimeout.INFINITE_TIMEOUT_MS }
                     contentType(ContentType.Application.Json)
                     setBody(RmlApplicatorData(jsonObject, newMapping))
                     headers {
@@ -150,7 +153,7 @@ data class Json2RDFTransformer(private var filePath: String, private var format:
             return response
         } catch (e: Exception) {
             e.printStackTrace()
-            throw MappingNotDoneException(e.message?: "Unknown error occurred")
+            throw MappingNotDoneException(e.message ?: "Unknown error occurred")
         }
     }
 }
@@ -178,8 +181,7 @@ fun Application.rdfizerApplication() {
 
                 if (!response.status.isSuccess()) {
                     call.respondText(response.bodyAsText(), response.contentType(), response.status)
-                }
-                else {
+                } else {
                     call.respondText(response.bodyAsText(), response.contentType())
                 }
             } catch (e: JSONNotFoundException) {
@@ -187,7 +189,11 @@ fun Application.rdfizerApplication() {
             } catch (e: MappingNotDoneException) {
                 call.respondText(e.message, ContentType.Text.Plain, HttpStatusCode.InternalServerError)
             } catch (e: Exception) {
-                call.respondText(e.message ?: "An unknown error occurred", ContentType.Text.Plain, HttpStatusCode.InternalServerError)
+                call.respondText(
+                    e.message ?: "An unknown error occurred",
+                    ContentType.Text.Plain,
+                    HttpStatusCode.InternalServerError
+                )
             }
         }
         get("/json2rdf") {
@@ -202,7 +208,7 @@ fun Application.rdfizerApplication() {
         }
         get("/") {
             val callHost = call.request.host()
-            var formats= mutableListOf<String>()
+            var formats = mutableListOf<String>()
 
             File("mappings/").walk().forEach {
                 if (it.name.contains(".ttl")) {
