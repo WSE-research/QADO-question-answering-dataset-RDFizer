@@ -71,4 +71,17 @@
     rr:predicateObjectMap [
         rr:predicate qado:hasSparqlQuery;
         rr:objectMap [
-            rr:template "urn:qado#LABEL-query-{id}"]].
+            rr:template "urn:qado#LABEL-query-{id}"]];
+    rr:predicateObjectMap [
+        rr:predicate qado:hasAnswer;
+        rr:objectMap [
+            rr:template "urn:qado#LABEL-answer-{id}"]].
+
+<#AnswerMapping> a rr:TripleMap;
+    rml:logicalSource [
+        rml:source "example.json";
+        rml:referenceFormulation ql:JSONPath;
+        rml:iterator "$.[*]"];
+    rr:subjectMap [
+        rr:template "urn:qado#LABEL-answer-{id}";
+        rr:class qado:EmptyAnswer].
