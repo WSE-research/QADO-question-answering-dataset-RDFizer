@@ -1,5 +1,2 @@
-stardog_host = 'http://demos.swe.htwk-leipzig.de'
-stardog_port = 40100
-stardog_username = 'admin'
-stardog_password = 'admin'
-stardog_db = 'RDFized-datasets'
+# URL needed to access your triplestore data
+triplestore_endpoint = 'http://admin:admin@localhost:5820/RDFized-datasets'
