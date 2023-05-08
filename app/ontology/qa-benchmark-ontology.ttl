@@ -9,7 +9,7 @@
 
 <urn:qado:vocabulary> rdf:type owl:Ontology ;
                        owl:versionIRI <urn:qado:dataset/0.2.0> ;
-                       rdfs:comment "Ontology for Datasets representing Knowledge Graphs on Question Answering benchmarks."@en ;
+                       rdfs:comment "Ontology for datasets representing Knowledge Graphs on Question Answering (KGQA) benchmarks."@en ;
                        rdfs:label "QADO - Question Answering Dataset Ontology"@en .
 
 #################################################################
@@ -34,7 +34,7 @@ qado:hasAnswer rdf:type owl:ObjectProperty ,
                            ] ;
                rdfs:range qado:Answer ;
                rdfs:comment "Property linking a question to the corresponding answer."@en ;
-               rdfs:label "Question-Answer-Linking"@en .
+               rdfs:label "has answer"@en .
 
 
 ###  urn:qado#hasSparqlQuery
@@ -43,7 +43,7 @@ qado:hasSparqlQuery rdf:type owl:ObjectProperty ,
                     rdfs:domain qado:Question ;
                     rdfs:range qado:Query ;
                     rdfs:comment "Property linking a question to the corresponding SPARQL query."@en ;
-                    rdfs:label "Question-SPARQL-Query-Linking"@en .
+                    rdfs:label "has SPARQL query"@en .
 
 
 ###  urn:qado#isElementOf
@@ -52,7 +52,7 @@ qado:isElementOf rdf:type owl:ObjectProperty ,
                  rdfs:domain qado:Question ;
                  rdfs:range qado:Dataset ;
                  rdfs:comment "Property connecting a question to its QA dataset."@en ;
-                 rdfs:label "Question-Benchmark-Linking"@en .
+                 rdfs:label "is element of"@en .
 
 
 #################################################################
@@ -75,8 +75,8 @@ qado:hasAggregation rdf:type owl:DatatypeProperty ;
                     rdf:type owl:FunctionalProperty ;
                     rdfs:domain qado:Question ;
                     rdfs:range xsd:boolean ;
-                    rdfs:comment "SPARQL query of the question uses aggregation functions."@en ;
-                    rdfs:label "has question has aggregations"@en .
+                    rdfs:comment "SPARQL query of the question uses one or more aggregation functions."@en ;
+                    rdfs:label "is containing aggregations"@en .
 
 
 ###  urn:qado#hasAlias
@@ -153,8 +153,8 @@ qado:hasEntityUriInQuestion rdf:type owl:DatatypeProperty ;
                             rdfs:subPropertyOf :rubqProperty ;
                             rdfs:domain qado:Question ;
                             rdfs:range xsd:anyURI ;
-                            rdfs:comment "Entity URI the given question relates to."@en ;
-                            rdfs:label "has question URI"@en .
+                            rdfs:comment "The given question contains an entity with the given URI."@en ;
+                            rdfs:label "has entity"@en .
 
 
 ###  urn:qado#hasId
@@ -180,8 +180,8 @@ qado:hasKeyword rdf:type owl:DatatypeProperty ;
                 rdfs:subPropertyOf :qaldProperty ;
                 rdfs:domain qado:Question ;
                 rdfs:range xsd:string ;
-                rdfs:comment "Property linking a Question with their keywords."@en ;
-                rdfs:label "has question keywords"@en .
+                rdfs:comment "Property linking a question with a keyword."@en ;
+                rdfs:label "has question keyword"@en .
 
 
 ###  urn:qado#hasMachineReadableQuestion
@@ -258,7 +258,7 @@ qado:hasSparqlTemplate rdf:type owl:DatatypeProperty ;
                        rdf:type owl:FunctionalProperty ;
                        rdfs:domain qado:Question ;
                        rdfs:range xsd:string ;
-                       rdfs:comment "SPARQL query template"@en ;
+                       rdfs:comment "Question has a SPARQL query template."@en ;
                        rdfs:label "has SPARQL template"@en .
 
 
@@ -269,7 +269,7 @@ qado:hasSparqlTemplateId rdf:type owl:DatatypeProperty ;
                          rdf:type owl:FunctionalProperty ;
                          rdfs:domain qado:Question ;
                          rdfs:range xsd:nonNegativeInteger ;
-                         rdfs:comment "ID of the used SPARQL template"@en ;
+                         rdfs:comment "points to the ID of the used SPARQL template"@en ;
                          rdfs:label "has SPARQL template ID"@en .
 
 
@@ -279,7 +279,7 @@ qado:hasSubgraphType rdf:type owl:DatatypeProperty ;
                      rdf:type owl:FunctionalProperty ;
                      rdfs:domain qado:Question ;
                      rdfs:range xsd:string ;
-                     rdfs:comment "Type of the used subgraph"@en ;
+                     rdfs:comment "points to the type of the used subgraph"@en ;
                      rdfs:label "has subgraph type"@en .
 
 
@@ -326,8 +326,8 @@ qado:hasWebqspQuestion rdf:type owl:DatatypeProperty ;
 qado:hasbeenTransferredToAnotherKnowledgeGraph rdf:type owl:DatatypeProperty ;
                                                rdfs:subPropertyOf :basicQADOProperty ;
                                                rdfs:domain qado:Question ;
-                                               rdfs:comment "Property referencing another question answering this one on another Knowledge Graph."@en ;
-                                               rdfs:label "has multi KG question"@en .
+                                               rdfs:comment "Property referencing another question instance that is representing the same question text for another Knowledge Graph."@en ;
+                                               rdfs:label "has a question equivalent that was transferred to another Knowledge Graph"@en .
 
 
 ###  urn:qado#isHybrid
@@ -336,7 +336,7 @@ qado:isHybrid rdf:type owl:DatatypeProperty ;
               rdfs:domain qado:Question ;
               rdfs:range xsd:boolean ;
               rdfs:comment "Question combines different data sources."@en ;
-              rdfs:label "has qybrid question"@en .
+              rdfs:label "is hybrid question"@en .
 
 
 ###  urn:qado#isOnlyDBpediaCompatible
@@ -346,7 +346,7 @@ qado:isOnlyDBpediaCompatible rdf:type owl:DatatypeProperty ;
                              rdfs:domain qado:Question ;
                              rdfs:range xsd:boolean ;
                              rdfs:comment "The given question works only on DBpedia."@en ;
-                             rdfs:label "is only compatible to DBpedia"@en .
+                             rdfs:label "is only compatible with DBpedia"@en .
 
 
 ###  urn:qado:dataset#basicQADOProperty
@@ -395,7 +395,7 @@ qado:isOnlyDBpediaCompatible rdf:type owl:DatatypeProperty ;
                     rdfs:domain qado:ValidAnswer ;
                     rdfs:range xsd:string ;
                     rdfs:comment "The label of an answer body."@en ;
-                    rdfs:label "Answer body label"@en .
+                    rdfs:label "has answer body label"@en .
 
 
 ###  urn:qado:dataset#hasPrefix
@@ -404,7 +404,7 @@ qado:isOnlyDBpediaCompatible rdf:type owl:DatatypeProperty ;
            rdfs:domain qado:Dataset ;
            rdfs:range xsd:string ;
            rdfs:comment "The URI that has been replaced by a prefix."@en ;
-           rdfs:label "Has prefix"@en .
+           rdfs:label "has prefix"@en .
 
 
 ###  urn:qado:dataset#lcquadProperty
@@ -646,7 +646,7 @@ qado:EmptyAnswer rdf:type owl:Class ;
                  rdfs:subClassOf qado:Answer ;
                  owl:disjointWith qado:ValidAnswer ;
                  rdfs:comment "There is no answer for the related question."@en ;
-                 rdfs:label "Empty Answer"@en .
+                 rdfs:label "Empty answer"@en .
 
 
 ###  urn:qado#FlawedQuestion
