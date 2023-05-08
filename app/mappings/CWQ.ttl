@@ -109,7 +109,7 @@
     rr:predicateObjectMap [
         rr:predicate qado:hasAnswer;
         rr:objectMap [
-            rr:template "http://purl.com/qado/ontology.ttl#LABEL-answer-{ID}"]].
+            rr:template "http://purl.com/qado/ontology.ttl#LABEL-answer-{answer..answer_id}"]].
 
 
 <#UnanswerableQuestionMapping> a rr:TriplesMap;
@@ -178,14 +178,25 @@
     rml:logicalSource [
         rml:source "example.json";
         rml:referenceFormulation ql:JSONPath;
-        rml:iterator "$.[?(@.answers)]"];
+        rml:iterator "$.[?(@.answers)].answers.[*]"];
     rr:subjectMap [
-        rr:template "http://purl.com/qado/ontology.ttl#LABEL-answer-{ID}";
+        rr:template "http://purl.com/qado/ontology.ttl#LABEL-answer-{answer_id}";
         rr:class qado:ValidAnswer];
     rr:predicateObjectMap [
-        rr:predicate qado:hasAnswerContent;
+        rr:predicate qado:hasId;
         rr:objectMap [
-            rr:template "http://purl.com/qado/ontology.ttl#LABEL-answer-content-{answers.[*].answer_id}"]].
+            rml:reference "answer_id";
+            rr:datatype xsd:string]];
+    rr:predicateObjectMap [
+        rr:predicate qado:hasAnswerText;
+        rr:objectMap [
+            rml:reference "answer";
+                rr:datatype xsd:string]];
+    rr:predicateObjectMap [
+        rr:predicate qado:hasAlias;
+        rr:objectMap [
+            rml:reference "aliases.[*]";
+            rr:datatype xsd:string]].
 
 
 <#EmptyAnswerMapping> a rr:TriplesMap;
@@ -196,28 +207,3 @@
     rr:subjectMap [
         rr:template "http://purl.com/qado/ontology.ttl#LABEL-answer-{ID}";
         rr:class qado:EmptyAnswer].
-
-
-<#AnswerContentMapping> a rr:TriplesMap;
-    rml:logicalSource [
-        rml:source "example.json";
-        rml:referenceFormulation ql:JSONPath;
-        rml:iterator "$..answers.[*]"];
-    rr:subjectMap [
-        rr:template "http://purl.com/qado/ontology.ttl#LABEL-answer-content-{answer_id}";
-        rr:class qado:AnswerContent];
-    rr:predicateObjectMap [
-        rr:predicate qado:hasId;
-        rr:objectMap [
-            rml:reference "answer_id";
-            rr:datatype xsd:string]];
-    rr:predicateObjectMap [
-        rr:predicate qado:hasAnswerText;
-        rr:objectMap [
-            rml:reference "answer";
-            rr:datatype xsd:string]];
-    rr:predicateObjectMap [
-        rr:predicate qado:hasAlias;
-        rr:objectMap [
-            rml:reference "aliases.[*]";
-            rr:datatype xsd:string]].
