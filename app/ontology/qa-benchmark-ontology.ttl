@@ -3,14 +3,14 @@
 @prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
 @prefix xml: <http://www.w3.org/XML/1998/namespace> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
-@prefix qado: <urn:qado#> .
+@prefix qado: <http://purl.com/qado/ontology.ttl#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
-@base <urn:qado:vocabulary> .
+@base <http://purl.com/qado/ontology.ttl> .
 
-<urn:qado:vocabulary> rdf:type owl:Ontology ;
-                       owl:versionIRI <urn:qado:dataset/0.2.0> ;
-                       rdfs:comment "Ontology for Datasets representing Knowledge Graphs on Question Answering benchmarks."@en ;
-                       rdfs:label "QADO - Question Answering Dataset Ontology"@en .
+<http://purl.com/qado/ontology.ttl> rdf:type owl:Ontology ;
+                                     owl:versionIRI <urn:qado:dataset/0.3.0> ;
+                                     rdfs:comment "Ontology for datassets representing Knowledge Graphs on Question Answering (KGQA) benchmarks."@en ;
+                                     rdfs:label "QADO - Question Answering Dataset Ontology"@en .
 
 #################################################################
 #    Datatypes
@@ -24,329 +24,364 @@
 #    Object Properties
 #################################################################
 
+###  http://purl.com/qado/ontology.ttl#basicQADOObjectProperty
+qado:basicQADOObjectProperty rdf:type owl:ObjectProperty ;
+                             rdfs:subPropertyOf owl:topObjectProperty ;
+                             rdfs:comment "QADO object property available for all benchmarks"@en ;
+                             rdfs:label "basic QADO object property"@en .
+
+
+###  http://purl.com/qado/ontology.ttl#cwqObjectProperty
+qado:cwqObjectProperty rdf:type owl:ObjectProperty ;
+                       rdfs:subPropertyOf qado:extendedQADOObjectProperty ;
+                       rdfs:comment "QADO object property only available for CWQ benchmark"@en ;
+                       rdfs:label "CWQ object property"@en .
+
+
+###  http://purl.com/qado/ontology.ttl#extendedQADOObjectProperty
+qado:extendedQADOObjectProperty rdf:type owl:ObjectProperty ;
+                                rdfs:comment "QADO Object Property only available for a subset of benchmarks"@en ;
+                                rdfs:label "extended QADO object property"@en .
+
+
+###  http://purl.com/qado/ontology.ttl#hasAnswerContent
+qado:hasAnswerContent rdf:type owl:ObjectProperty ;
+                      rdfs:subPropertyOf qado:cwqObjectProperty ;
+                      rdfs:domain <urn:qado#ValidAnswer> ;
+                      rdfs:range <urn:qado#AnswerContent> ;
+                      rdfs:comment "Object Property linking an Answer Object to its corresponding content."@en ;
+                      rdfs:label "has Answer Content"@en .
+
+
 ###  urn:qado#hasAnswer
-qado:hasAnswer rdf:type owl:ObjectProperty ,
-                        owl:FunctionalProperty ;
-               rdfs:domain [ rdf:type owl:Class ;
-                             owl:unionOf ( qado:Answer
-                                           qado:Question
-                                         )
-                           ] ;
-               rdfs:range qado:Answer ;
-               rdfs:comment "Property linking a question to the corresponding answer."@en ;
-               rdfs:label "Question-Answer-Linking"@en .
+<urn:qado#hasAnswer> rdf:type owl:ObjectProperty ;
+                     rdfs:subPropertyOf qado:basicQADOObjectProperty ;
+                     rdf:type owl:FunctionalProperty ;
+                     rdfs:domain <urn:qado#Question> ;
+                     rdfs:range <urn:qado#Answer> ;
+                     rdfs:comment "Property linking a question to the corresponding answer."@en ;
+                     rdfs:label "has answer"@en .
 
 
 ###  urn:qado#hasSparqlQuery
-qado:hasSparqlQuery rdf:type owl:ObjectProperty ,
-                             owl:FunctionalProperty ;
-                    rdfs:domain qado:Question ;
-                    rdfs:range qado:Query ;
-                    rdfs:comment "Property linking a question to the corresponding SPARQL query."@en ;
-                    rdfs:label "Question-SPARQL-Query-Linking"@en .
+<urn:qado#hasSparqlQuery> rdf:type owl:ObjectProperty ;
+                          rdfs:subPropertyOf qado:basicQADOObjectProperty ;
+                          rdf:type owl:FunctionalProperty ;
+                          rdfs:domain <urn:qado#Question> ;
+                          rdfs:range <urn:qado#Query> ;
+                          rdfs:comment "Property linking a question to the corresponding SPARQL query."@en ;
+                          rdfs:label "has SPARQL query"@en .
 
 
 ###  urn:qado#isElementOf
-qado:isElementOf rdf:type owl:ObjectProperty ,
-                          owl:FunctionalProperty ;
-                 rdfs:domain qado:Question ;
-                 rdfs:range qado:Dataset ;
-                 rdfs:comment "Property connecting a question to its QA dataset."@en ;
-                 rdfs:label "Question-Benchmark-Linking"@en .
+<urn:qado#isElementOf> rdf:type owl:ObjectProperty ;
+                       rdfs:subPropertyOf qado:basicQADOObjectProperty ;
+                       rdf:type owl:FunctionalProperty ;
+                       rdfs:domain <urn:qado#Question> ;
+                       rdfs:range <urn:qado#Dataset> ;
+                       rdfs:comment "Property connecting a question to its QA dataset."@en ;
+                       rdfs:label "is element of"@en .
 
 
 #################################################################
 #    Data properties
 #################################################################
 
+###  http://purl.com/qado/ontology.ttl#computedQADOProperty
+qado:computedQADOProperty rdf:type owl:DatatypeProperty ;
+                          rdfs:subPropertyOf owl:topDataProperty ;
+                          rdfs:comment "QADO property computed on given basic properties"@en ;
+                          rdfs:label "computed QADO property"@en .
+
+
 ###  urn:qado#createdAt
-qado:createdAt rdf:type owl:DatatypeProperty ;
-               rdfs:subPropertyOf :cwqProperty ;
-               rdf:type owl:FunctionalProperty ;
-               rdfs:domain qado:Question ;
-               rdfs:range xsd:dateTime ;
-               rdfs:comment "Timestamp of question generation"@en ;
-               rdfs:label "has creation time"@en .
+<urn:qado#createdAt> rdf:type owl:DatatypeProperty ;
+                     rdfs:subPropertyOf :cwqProperty ;
+                     rdf:type owl:FunctionalProperty ;
+                     rdfs:domain <urn:qado#Question> ;
+                     rdfs:range xsd:dateTime ;
+                     rdfs:comment "Timestamp of question generation"@en ;
+                     rdfs:label "has creation time"@en .
 
 
 ###  urn:qado#hasAggregation
-qado:hasAggregation rdf:type owl:DatatypeProperty ;
-                    rdfs:subPropertyOf :qaldProperty ;
-                    rdf:type owl:FunctionalProperty ;
-                    rdfs:domain qado:Question ;
-                    rdfs:range xsd:boolean ;
-                    rdfs:comment "SPARQL query of the question uses aggregation functions."@en ;
-                    rdfs:label "has question has aggregations"@en .
+<urn:qado#hasAggregation> rdf:type owl:DatatypeProperty ;
+                          rdfs:subPropertyOf :qaldProperty ;
+                          rdf:type owl:FunctionalProperty ;
+                          rdfs:domain <urn:qado#Question> ;
+                          rdfs:range xsd:boolean ;
+                          rdfs:comment "SPARQL query of the question uses one or more aggregation functions"@en ;
+                          rdfs:label "is containing aggregations"@en .
 
 
 ###  urn:qado#hasAlias
-qado:hasAlias rdf:type owl:DatatypeProperty ;
-              rdfs:subPropertyOf :cwqProperty ;
-              rdfs:domain qado:AnswerContent ;
-              rdfs:range xsd:string ;
-              rdfs:comment "Property linking an alias of the given answer."@en ;
-              rdfs:label "has answer alias"@en .
+<urn:qado#hasAlias> rdf:type owl:DatatypeProperty ;
+                    rdfs:subPropertyOf :cwqProperty ;
+                    rdfs:domain <urn:qado#AnswerContent> ;
+                    rdfs:range xsd:string ;
+                    rdfs:comment "Property linking an alias of the given answer."@en ;
+                    rdfs:label "has answer alias"@en .
 
 
 ###  urn:qado#hasAnswerBody
-qado:hasAnswerBody rdf:type owl:DatatypeProperty ;
-                   rdfs:subPropertyOf :mintakaProperty ,
-                                      :qaldProperty ;
-                   rdfs:domain qado:Answer ;
-                   rdfs:range [ rdf:type rdfs:Datatype ;
-                                owl:unionOf ( xsd:anyURI
-                                              xsd:boolean
-                                              xsd:string
-                                            )
-                              ] ;
-                   rdfs:comment "Answer value"@en ;
-                   rdfs:label "has answer body"@en .
+<urn:qado#hasAnswerBody> rdf:type owl:DatatypeProperty ;
+                         rdfs:subPropertyOf :mintakaProperty ,
+                                            :qaldProperty ;
+                         rdfs:domain <urn:qado#Answer> ;
+                         rdfs:range [ rdf:type rdfs:Datatype ;
+                                      owl:unionOf ( xsd:anyURI
+                                                    xsd:boolean
+                                                    xsd:string
+                                                  )
+                                    ] ;
+                         rdfs:comment "Answer value"@en ;
+                         rdfs:label "has answer body"@en .
 
 
 ###  urn:qado#hasAnswerText
-qado:hasAnswerText rdf:type owl:DatatypeProperty ;
-                   rdfs:subPropertyOf :cwqProperty ;
-                   rdf:type owl:FunctionalProperty ;
-                   rdfs:domain qado:AnswerContent ;
-                   rdfs:range xsd:string ;
-                   rdfs:comment "The answer text of the given answer."@en ;
-                   rdfs:label "has question answer"@en .
+<urn:qado#hasAnswerText> rdf:type owl:DatatypeProperty ;
+                         rdfs:subPropertyOf :cwqProperty ;
+                         rdf:type owl:FunctionalProperty ;
+                         rdfs:domain <urn:qado#AnswerContent> ;
+                         rdfs:range xsd:string ;
+                         rdfs:comment "The answer text of the given answer."@en ;
+                         rdfs:label "has question answer"@en .
 
 
 ###  urn:qado#hasAnswerType
-qado:hasAnswerType rdf:type owl:DatatypeProperty ;
-                   rdfs:subPropertyOf :qaldProperty ,
-                                      :rubqProperty ;
-                   rdf:type owl:FunctionalProperty ;
-                   rdfs:domain [ rdf:type owl:Class ;
-                                 owl:unionOf ( qado:Answer
-                                               qado:Question
-                                             )
-                               ] ;
-                   rdfs:range xsd:string ;
-                   rdfs:comment "Answer type of a given answer."@en ;
-                   rdfs:label "has answer type"@en .
+<urn:qado#hasAnswerType> rdf:type owl:DatatypeProperty ;
+                         rdfs:subPropertyOf :qaldProperty ,
+                                            :rubqProperty ;
+                         rdf:type owl:FunctionalProperty ;
+                         rdfs:domain [ rdf:type owl:Class ;
+                                       owl:unionOf ( <urn:qado#Answer>
+                                                     <urn:qado#Question>
+                                                   )
+                                     ] ;
+                         rdfs:range xsd:string ;
+                         rdfs:comment "Answer type of a given answer."@en ;
+                         rdfs:label "has answer type"@en .
 
 
 ###  urn:qado#hasCompositionAnswer
-qado:hasCompositionAnswer rdf:type owl:DatatypeProperty ;
-                          rdfs:subPropertyOf :cwqProperty ;
-                          rdf:type owl:FunctionalProperty ;
-                          rdfs:domain qado:Question ;
-                          rdfs:range xsd:string ;
-                          rdfs:comment "Answer text of a composed question"@en ;
-                          rdfs:label "has composition answer"@en .
+<urn:qado#hasCompositionAnswer> rdf:type owl:DatatypeProperty ;
+                                rdfs:subPropertyOf :cwqProperty ;
+                                rdf:type owl:FunctionalProperty ;
+                                rdfs:domain <urn:qado#Question> ;
+                                rdfs:range xsd:string ;
+                                rdfs:comment "Answer text of a composed question"@en ;
+                                rdfs:label "has composition answer"@en .
 
 
 ###  urn:qado#hasCompositionalityType
-qado:hasCompositionalityType rdf:type owl:DatatypeProperty ;
-                             rdfs:subPropertyOf :cwqProperty ;
-                             rdf:type owl:FunctionalProperty ;
-                             rdfs:domain qado:Question ;
-                             rdfs:range xsd:string ;
-                             rdfs:comment "Type of composition done in this question"@en ;
-                             rdfs:label "has compositionality type"@en .
+<urn:qado#hasCompositionalityType> rdf:type owl:DatatypeProperty ;
+                                   rdfs:subPropertyOf :cwqProperty ;
+                                   rdf:type owl:FunctionalProperty ;
+                                   rdfs:domain <urn:qado#Question> ;
+                                   rdfs:range xsd:string ;
+                                   rdfs:comment "Type of composition done in this question"@en ;
+                                   rdfs:label "has compositionality type"@en .
 
 
 ###  urn:qado#hasEntityUriInQuestion
-qado:hasEntityUriInQuestion rdf:type owl:DatatypeProperty ;
-                            rdfs:subPropertyOf :rubqProperty ;
-                            rdfs:domain qado:Question ;
-                            rdfs:range xsd:anyURI ;
-                            rdfs:comment "Entity URI the given question relates to."@en ;
-                            rdfs:label "has question URI"@en .
+<urn:qado#hasEntityUriInQuestion> rdf:type owl:DatatypeProperty ;
+                                  rdfs:subPropertyOf :rubqProperty ;
+                                  rdfs:domain <urn:qado#Question> ;
+                                  rdfs:range xsd:anyURI ;
+                                  rdfs:comment "The given question contains an entity with the given URI"@en ;
+                                  rdfs:label "has entity"@en .
 
 
 ###  urn:qado#hasId
-qado:hasId rdf:type owl:DatatypeProperty ;
-           rdfs:subPropertyOf :basicQADOProperty ;
-           rdf:type owl:FunctionalProperty ;
-           rdfs:domain [ rdf:type owl:Class ;
-                         owl:unionOf ( qado:AnswerContent
-                                       qado:Question
-                                     )
-                       ] ;
-           rdfs:range [ rdf:type rdfs:Datatype ;
-                        owl:unionOf ( xsd:nonNegativeInteger
-                                      xsd:string
-                                    )
-                      ] ;
-           rdfs:comment "Property linking a question to its ID."@en ;
-           rdfs:label "has question ID"@en .
+<urn:qado#hasId> rdf:type owl:DatatypeProperty ;
+                 rdfs:subPropertyOf :basicQADOProperty ;
+                 rdf:type owl:FunctionalProperty ;
+                 rdfs:domain [ rdf:type owl:Class ;
+                               owl:unionOf ( <urn:qado#AnswerContent>
+                                             <urn:qado#Question>
+                                           )
+                             ] ;
+                 rdfs:range [ rdf:type rdfs:Datatype ;
+                              owl:unionOf ( xsd:nonNegativeInteger
+                                            xsd:string
+                                          )
+                            ] ;
+                 rdfs:comment "Property linking a question to its ID."@en ;
+                 rdfs:label "has question ID"@en .
 
 
 ###  urn:qado#hasKeyword
-qado:hasKeyword rdf:type owl:DatatypeProperty ;
-                rdfs:subPropertyOf :qaldProperty ;
-                rdfs:domain qado:Question ;
-                rdfs:range xsd:string ;
-                rdfs:comment "Property linking a Question with their keywords."@en ;
-                rdfs:label "has question keywords"@en .
+<urn:qado#hasKeyword> rdf:type owl:DatatypeProperty ;
+                      rdfs:subPropertyOf :qaldProperty ;
+                      rdfs:domain <urn:qado#Question> ;
+                      rdfs:range xsd:string ;
+                      rdfs:comment "Property linking a Question with a keyword."@en ;
+                      rdfs:label "has question keyword"@en .
 
 
 ###  urn:qado#hasMachineReadableQuestion
-qado:hasMachineReadableQuestion rdf:type owl:DatatypeProperty ;
-                                rdfs:subPropertyOf :cwqProperty ;
-                                rdf:type owl:FunctionalProperty ;
-                                rdfs:domain qado:Question ;
-                                rdfs:range xsd:string ;
-                                rdfs:comment "Machine readable form of the question text"@en ;
-                                rdfs:label "has machine-readable question"@en .
+<urn:qado#hasMachineReadableQuestion> rdf:type owl:DatatypeProperty ;
+                                      rdfs:subPropertyOf :cwqProperty ;
+                                      rdf:type owl:FunctionalProperty ;
+                                      rdfs:domain <urn:qado#Question> ;
+                                      rdfs:range xsd:string ;
+                                      rdfs:comment "Machine readable form of the question text"@en ;
+                                      rdfs:label "has machine-readable question"@en .
 
 
 ###  urn:qado#hasNNQTQuestion
-qado:hasNNQTQuestion rdf:type owl:DatatypeProperty ;
-                     rdfs:subPropertyOf :lcquad2Property ;
-                     rdf:type owl:FunctionalProperty ;
-                     rdfs:domain qado:Question ;
-                     rdfs:range xsd:string ;
-                     rdfs:comment "Question text in NNQT format"@en ;
-                     rdfs:label "has NNQT question format"@en .
+<urn:qado#hasNNQTQuestion> rdf:type owl:DatatypeProperty ;
+                           rdfs:subPropertyOf :lcquad2Property ;
+                           rdf:type owl:FunctionalProperty ;
+                           rdfs:domain <urn:qado#Question> ;
+                           rdfs:range xsd:string ;
+                           rdfs:comment "Question text in NNQT format"@en ;
+                           rdfs:label "has NNQT question format"@en .
 
 
 ###  urn:qado#hasParaphrasedQuestion
-qado:hasParaphrasedQuestion rdf:type owl:DatatypeProperty ;
-                            rdfs:subPropertyOf :lcquad2Property ;
-                            rdf:type owl:FunctionalProperty ;
-                            rdfs:domain qado:Question ;
-                            rdfs:range xsd:string ;
-                            rdfs:comment "has paraphrased question"@en ,
-                                         "has paraphrased version of question text."@en .
+<urn:qado#hasParaphrasedQuestion> rdf:type owl:DatatypeProperty ;
+                                  rdfs:subPropertyOf :lcquad2Property ;
+                                  rdf:type owl:FunctionalProperty ;
+                                  rdfs:domain <urn:qado#Question> ;
+                                  rdfs:range xsd:string ;
+                                  rdfs:comment "has paraphrased question"@en ,
+                                               "has paraphrased version of question text."@en .
 
 
 ###  urn:qado#hasQueryText
-qado:hasQueryText rdf:type owl:DatatypeProperty ;
-                  rdfs:subPropertyOf :basicQADOProperty ;
-                  rdfs:domain qado:Question ;
-                  rdfs:range xsd:string ;
-                  rdfs:comment "Property linking a question with the corresponding SPARQL query."@en ;
-                  rdfs:label "has SPARQL query"@en .
+<urn:qado#hasQueryText> rdf:type owl:DatatypeProperty ;
+                        rdfs:subPropertyOf :basicQADOProperty ;
+                        rdfs:domain <urn:qado#Question> ;
+                        rdfs:range xsd:string ;
+                        rdfs:comment "Property linking a question with the corresponding SPARQL query."@en ;
+                        rdfs:label "has SPARQL query"@en .
 
 
 ###  urn:qado#hasQuestion
-qado:hasQuestion rdf:type owl:DatatypeProperty ;
-                 rdfs:subPropertyOf :basicQADOProperty ;
-                 rdf:type owl:FunctionalProperty ;
-                 rdfs:domain qado:Question ;
-                 rdfs:range xsd:string ;
-                 rdfs:comment "Property linking a question with the question text."@en ;
-                 rdfs:label "has question text"@en .
+<urn:qado#hasQuestion> rdf:type owl:DatatypeProperty ;
+                       rdfs:subPropertyOf :basicQADOProperty ;
+                       rdf:type owl:FunctionalProperty ;
+                       rdfs:domain <urn:qado#Question> ;
+                       rdfs:range xsd:string ;
+                       rdfs:comment "Property linking a question with the question text."@en ;
+                       rdfs:label "has question text"@en .
 
 
 ###  urn:qado#hasQuestionProperty
-qado:hasQuestionProperty rdf:type owl:DatatypeProperty ;
-                         rdfs:subPropertyOf :rubqProperty ;
-                         rdfs:domain qado:Question ;
-                         rdfs:range xsd:string ;
-                         rdfs:comment "Property a question relates to."@en ;
-                         rdfs:label "has question property"@en .
+<urn:qado#hasQuestionProperty> rdf:type owl:DatatypeProperty ;
+                               rdfs:subPropertyOf :rubqProperty ;
+                               rdfs:domain <urn:qado#Question> ;
+                               rdfs:range xsd:string ;
+                               rdfs:comment "Property a question relates to."@en ;
+                               rdfs:label "has question property"@en .
 
 
 ###  urn:qado#hasSPARQLResult
-qado:hasSPARQLResult rdf:type owl:DatatypeProperty ;
-                     rdfs:subPropertyOf :qaldProperty ;
-                     rdf:type owl:FunctionalProperty ;
-                     rdfs:domain qado:Question ;
-                     rdfs:range xsd:string ;
-                     rdfs:comment "Property linking a question to its SPARQL result as stringified JSON object"@en ;
-                     rdfs:label "has question SPARQL result"@en .
+<urn:qado#hasSPARQLResult> rdf:type owl:DatatypeProperty ;
+                           rdfs:subPropertyOf :qaldProperty ;
+                           rdf:type owl:FunctionalProperty ;
+                           rdfs:domain <urn:qado#Question> ;
+                           rdfs:range xsd:string ;
+                           rdfs:comment "Property linking a question to its SPARQL result as stringified JSON object"@en ;
+                           rdfs:label "has question SPARQL result"@en .
 
 
 ###  urn:qado#hasSparqlTemplate
-qado:hasSparqlTemplate rdf:type owl:DatatypeProperty ;
-                       rdfs:subPropertyOf :lcquad2Property ;
-                       rdf:type owl:FunctionalProperty ;
-                       rdfs:domain qado:Question ;
-                       rdfs:range xsd:string ;
-                       rdfs:comment "SPARQL query template"@en ;
-                       rdfs:label "has SPARQL template"@en .
+<urn:qado#hasSparqlTemplate> rdf:type owl:DatatypeProperty ;
+                             rdfs:subPropertyOf :lcquad2Property ;
+                             rdf:type owl:FunctionalProperty ;
+                             rdfs:domain <urn:qado#Question> ;
+                             rdfs:range xsd:string ;
+                             rdfs:comment "Question has a SPARQL query template"@en ;
+                             rdfs:label "has SPARQL template"@en .
 
 
 ###  urn:qado#hasSparqlTemplateId
-qado:hasSparqlTemplateId rdf:type owl:DatatypeProperty ;
-                         rdfs:subPropertyOf :lcquad1Property ,
-                                            :lcquad2Property ;
-                         rdf:type owl:FunctionalProperty ;
-                         rdfs:domain qado:Question ;
-                         rdfs:range xsd:nonNegativeInteger ;
-                         rdfs:comment "ID of the used SPARQL template"@en ;
-                         rdfs:label "has SPARQL template ID"@en .
+<urn:qado#hasSparqlTemplateId> rdf:type owl:DatatypeProperty ;
+                               rdfs:subPropertyOf :lcquad1Property ,
+                                                  :lcquad2Property ;
+                               rdf:type owl:FunctionalProperty ;
+                               rdfs:domain <urn:qado#Question> ;
+                               rdfs:range xsd:nonNegativeInteger ;
+                               rdfs:comment "points to the ID of the used SPARQL template"@en ;
+                               rdfs:label "has SPARQL template ID"@en .
 
 
 ###  urn:qado#hasSubgraphType
-qado:hasSubgraphType rdf:type owl:DatatypeProperty ;
-                     rdfs:subPropertyOf :lcquad2Property ;
-                     rdf:type owl:FunctionalProperty ;
-                     rdfs:domain qado:Question ;
-                     rdfs:range xsd:string ;
-                     rdfs:comment "Type of the used subgraph"@en ;
-                     rdfs:label "has subgraph type"@en .
+<urn:qado#hasSubgraphType> rdf:type owl:DatatypeProperty ;
+                           rdfs:subPropertyOf :lcquad2Property ;
+                           rdf:type owl:FunctionalProperty ;
+                           rdfs:domain <urn:qado#Question> ;
+                           rdfs:range xsd:string ;
+                           rdfs:comment "points to the type of the used subgraph"@en ;
+                           rdfs:label "has subgraph type"@en .
 
 
 ###  urn:qado#hasTag
-qado:hasTag rdf:type owl:DatatypeProperty ;
-            rdfs:subPropertyOf :rubqProperty ;
-            rdfs:domain qado:Question ;
-            rdfs:range xsd:string ;
-            rdfs:comment "Optional tag of a question."@en ;
-            rdfs:label "has question tag"@en .
+<urn:qado#hasTag> rdf:type owl:DatatypeProperty ;
+                  rdfs:subPropertyOf :rubqProperty ;
+                  rdfs:domain <urn:qado#Question> ;
+                  rdfs:range xsd:string ;
+                  rdfs:comment "Optional tag of a question."@en ;
+                  rdfs:label "has question tag"@en .
 
 
 ###  urn:qado#hasTemplateIndex
-qado:hasTemplateIndex rdf:type owl:DatatypeProperty ;
-                      rdfs:subPropertyOf :lcquad2Property ;
-                      rdf:type owl:FunctionalProperty ;
-                      rdfs:domain qado:Question ;
-                      rdfs:range xsd:nonNegativeInteger ;
-                      rdfs:comment "Index of the used SPARQL template"@en ;
-                      rdfs:label "has SPARQL template index"@en .
+<urn:qado#hasTemplateIndex> rdf:type owl:DatatypeProperty ;
+                            rdfs:subPropertyOf :lcquad2Property ;
+                            rdf:type owl:FunctionalProperty ;
+                            rdfs:domain <urn:qado#Question> ;
+                            rdfs:range xsd:nonNegativeInteger ;
+                            rdfs:comment "Index of the used SPARQL template"@en ;
+                            rdfs:label "has SPARQL template index"@en .
 
 
 ###  urn:qado#hasWebqspId
-qado:hasWebqspId rdf:type owl:DatatypeProperty ;
-                 rdfs:subPropertyOf :cwqProperty ;
-                 rdf:type owl:FunctionalProperty ;
-                 rdfs:domain qado:Question ;
-                 rdfs:range xsd:string ;
-                 rdfs:comment "ID of the used web QSP question"@en ;
-                 rdfs:label "has Web QSP ID"@en .
+<urn:qado#hasWebqspId> rdf:type owl:DatatypeProperty ;
+                       rdfs:subPropertyOf :cwqProperty ;
+                       rdf:type owl:FunctionalProperty ;
+                       rdfs:domain <urn:qado#Question> ;
+                       rdfs:range xsd:string ;
+                       rdfs:comment "ID of the used web QSP question"@en ;
+                       rdfs:label "has Web QSP ID"@en .
 
 
 ###  urn:qado#hasWebqspQuestion
-qado:hasWebqspQuestion rdf:type owl:DatatypeProperty ;
-                       rdfs:subPropertyOf :cwqProperty ;
-                       rdf:type owl:FunctionalProperty ;
-                       rdfs:domain qado:Question ;
-                       rdfs:range xsd:string ;
-                       rdfs:comment "Question text in web QSP format"@en ;
-                       rdfs:label "has Web QSP question text"@en .
+<urn:qado#hasWebqspQuestion> rdf:type owl:DatatypeProperty ;
+                             rdfs:subPropertyOf :cwqProperty ;
+                             rdf:type owl:FunctionalProperty ;
+                             rdfs:domain <urn:qado#Question> ;
+                             rdfs:range xsd:string ;
+                             rdfs:comment "Question text in web QSP format"@en ;
+                             rdfs:label "has Web QSP question text"@en .
 
 
 ###  urn:qado#hasbeenTransferredToAnotherKnowledgeGraph
-qado:hasbeenTransferredToAnotherKnowledgeGraph rdf:type owl:DatatypeProperty ;
-                                               rdfs:subPropertyOf :basicQADOProperty ;
-                                               rdfs:domain qado:Question ;
-                                               rdfs:comment "Property referencing another question answering this one on another Knowledge Graph."@en ;
-                                               rdfs:label "has multi KG question"@en .
+<urn:qado#hasbeenTransferredToAnotherKnowledgeGraph> rdf:type owl:DatatypeProperty ;
+                                                     rdfs:subPropertyOf :basicQADOProperty ;
+                                                     rdfs:domain <urn:qado#Question> ;
+                                                     rdfs:comment "Property referencing another question instance that is representing the same question text for another Knowledge Graph"@en ;
+                                                     rdfs:label "has a question equivalent that was transferred to another Knowledge Graph"@en .
 
 
 ###  urn:qado#isHybrid
-qado:isHybrid rdf:type owl:DatatypeProperty ;
-              rdfs:subPropertyOf :qaldProperty ;
-              rdfs:domain qado:Question ;
-              rdfs:range xsd:boolean ;
-              rdfs:comment "Question combines different data sources."@en ;
-              rdfs:label "has qybrid question"@en .
+<urn:qado#isHybrid> rdf:type owl:DatatypeProperty ;
+                    rdfs:subPropertyOf :qaldProperty ;
+                    rdfs:domain <urn:qado#Question> ;
+                    rdfs:range xsd:boolean ;
+                    rdfs:comment "Question combines different data sources."@en ;
+                    rdfs:label "is hybrid question"@en .
 
 
 ###  urn:qado#isOnlyDBpediaCompatible
-qado:isOnlyDBpediaCompatible rdf:type owl:DatatypeProperty ;
-                             rdfs:subPropertyOf :qaldProperty ;
-                             rdf:type owl:FunctionalProperty ;
-                             rdfs:domain qado:Question ;
-                             rdfs:range xsd:boolean ;
-                             rdfs:comment "The given question works only on DBpedia."@en ;
-                             rdfs:label "is only compatible to DBpedia"@en .
+<urn:qado#isOnlyDBpediaCompatible> rdf:type owl:DatatypeProperty ;
+                                   rdfs:subPropertyOf :qaldProperty ;
+                                   rdf:type owl:FunctionalProperty ;
+                                   rdfs:domain <urn:qado#Question> ;
+                                   rdfs:range xsd:boolean ;
+                                   rdfs:comment "The given question works only on DBpedia."@en ;
+                                   rdfs:label "is only compatible with DBpedia"@en .
 
 
 ###  urn:qado:dataset#basicQADOProperty
@@ -360,7 +395,7 @@ qado:isOnlyDBpediaCompatible rdf:type owl:DatatypeProperty ;
 ###  urn:qado:dataset#category
 :category rdf:type owl:DatatypeProperty ;
           rdfs:subPropertyOf :mintakaProperty ;
-          rdfs:domain qado:Question ;
+          rdfs:domain <urn:qado#Question> ;
           rdfs:range xsd:string ;
           rdfs:comment "The associated category of a question."@en ;
           rdfs:label "Question category"@en .
@@ -369,7 +404,7 @@ qado:isOnlyDBpediaCompatible rdf:type owl:DatatypeProperty ;
 ###  urn:qado:dataset#complexityType
 :complexityType rdf:type owl:DatatypeProperty ;
                 rdfs:subPropertyOf :mintakaProperty ;
-                rdfs:domain qado:Question ;
+                rdfs:domain <urn:qado#Question> ;
                 rdfs:range xsd:string ;
                 rdfs:comment "The associated complexity type of a question."@en ;
                 rdfs:label "Complexity type"@en .
@@ -392,19 +427,33 @@ qado:isOnlyDBpediaCompatible rdf:type owl:DatatypeProperty ;
 ###  urn:qado:dataset#hasAnswerBodyLabel
 :hasAnswerBodyLabel rdf:type owl:DatatypeProperty ;
                     rdfs:subPropertyOf :mintakaProperty ;
-                    rdfs:domain qado:ValidAnswer ;
+                    rdfs:domain <urn:qado#ValidAnswer> ;
                     rdfs:range xsd:string ;
                     rdfs:comment "The label of an answer body."@en ;
-                    rdfs:label "Answer body label"@en .
+                    rdfs:label "has answer body label"@en .
 
 
 ###  urn:qado:dataset#hasPrefix
 :hasPrefix rdf:type owl:DatatypeProperty ;
            rdfs:subPropertyOf :basicQADOProperty ;
-           rdfs:domain qado:Dataset ;
+           rdfs:domain <urn:qado#Dataset> ;
            rdfs:range xsd:string ;
            rdfs:comment "The URI that has been replaced by a prefix."@en ;
-           rdfs:label "Has prefix"@en .
+           rdfs:label "has prefix"@en .
+
+
+###  urn:qado:dataset#lcquad1Property
+:lcquad1Property rdf:type owl:DatatypeProperty ;
+                 rdfs:subPropertyOf :lcquadProperty ;
+                 rdfs:comment "Property available for LC-QuAD 1"@en ;
+                 rdfs:label "LC-QuAD 1 Property"@en .
+
+
+###  urn:qado:dataset#lcquad2Property
+:lcquad2Property rdf:type owl:DatatypeProperty ;
+                 rdfs:subPropertyOf :lcquadProperty ;
+                 rdfs:comment "Property available for LC-QuAD 2"@en ;
+                 rdfs:label "LC-QuAD 2 Property"@en .
 
 
 ###  urn:qado:dataset#lcquadProperty
@@ -417,7 +466,7 @@ qado:isOnlyDBpediaCompatible rdf:type owl:DatatypeProperty ;
 ###  urn:qado:dataset#mention
 :mention rdf:type owl:DatatypeProperty ;
          rdfs:subPropertyOf :mintakaProperty ;
-         rdfs:domain qado:ValidAnswer ;
+         rdfs:domain <urn:qado#ValidAnswer> ;
          rdfs:range xsd:string ;
          rdfs:comment "A string mentioning the answer of the question."@en ;
          rdfs:label "Answer mention"@en .
@@ -433,7 +482,7 @@ qado:isOnlyDBpediaCompatible rdf:type owl:DatatypeProperty ;
 ###  urn:qado:dataset#normalizedQueryLength
 :normalizedQueryLength rdf:type owl:DatatypeProperty ;
                        rdfs:subPropertyOf :sparqlQueryProperty ;
-                       rdfs:domain qado:Query ;
+                       rdfs:domain <urn:qado#Query> ;
                        rdfs:range xsd:nonNegativeInteger ;
                        rdfs:comment "The length of a SPARQL query with normalized prefixes."@en ;
                        rdfs:label "Normalized SPARQL query length"@en .
@@ -442,7 +491,7 @@ qado:isOnlyDBpediaCompatible rdf:type owl:DatatypeProperty ;
 ###  urn:qado:dataset#numberOfFilters
 :numberOfFilters rdf:type owl:DatatypeProperty ;
                  rdfs:subPropertyOf :sparqlQueryProperty ;
-                 rdfs:domain qado:Query ;
+                 rdfs:domain <urn:qado#Query> ;
                  rdfs:range xsd:nonNegativeInteger ;
                  rdfs:comment "The number of FILTER statements used in a SPARQL query."@en ;
                  rdfs:label "Number of FILTER statements"@en .
@@ -451,7 +500,7 @@ qado:isOnlyDBpediaCompatible rdf:type owl:DatatypeProperty ;
 ###  urn:qado:dataset#numberOfModifierGroupBy
 :numberOfModifierGroupBy rdf:type owl:DatatypeProperty ;
                          rdfs:subPropertyOf :sparqlQueryProperty ;
-                         rdfs:domain qado:Query ;
+                         rdfs:domain <urn:qado#Query> ;
                          rdfs:range xsd:nonNegativeInteger ;
                          rdfs:comment "The number of GROUP BY modifiers of a SPARQL query."@en ;
                          rdfs:label "Number of GROUP BY modifiers"@en .
@@ -460,7 +509,7 @@ qado:isOnlyDBpediaCompatible rdf:type owl:DatatypeProperty ;
 ###  urn:qado:dataset#numberOfModifierHaving
 :numberOfModifierHaving rdf:type owl:DatatypeProperty ;
                         rdfs:subPropertyOf :sparqlQueryProperty ;
-                        rdfs:domain qado:Query ;
+                        rdfs:domain <urn:qado#Query> ;
                         rdfs:range xsd:nonNegativeInteger ;
                         rdfs:comment "The number of HAVING modifiers of a SPARQL query."@en ;
                         rdfs:label "Number of HAVING modifiers"@en .
@@ -469,7 +518,7 @@ qado:isOnlyDBpediaCompatible rdf:type owl:DatatypeProperty ;
 ###  urn:qado:dataset#numberOfModifierLimit
 :numberOfModifierLimit rdf:type owl:DatatypeProperty ;
                        rdfs:subPropertyOf :sparqlQueryProperty ;
-                       rdfs:domain qado:Query ;
+                       rdfs:domain <urn:qado#Query> ;
                        rdfs:range xsd:nonNegativeInteger ;
                        rdfs:comment "The number of LIMIT modifiers of a SPARQL query."@en ;
                        rdfs:label "Number of LIMIT modifiers"@en .
@@ -478,7 +527,7 @@ qado:isOnlyDBpediaCompatible rdf:type owl:DatatypeProperty ;
 ###  urn:qado:dataset#numberOfModifierOffset
 :numberOfModifierOffset rdf:type owl:DatatypeProperty ;
                         rdfs:subPropertyOf :sparqlQueryProperty ;
-                        rdfs:domain qado:Query ;
+                        rdfs:domain <urn:qado#Query> ;
                         rdfs:range xsd:nonNegativeInteger ;
                         rdfs:comment "The number of OFFSET modifiers of a SPARQL query."@en ;
                         rdfs:label "Number of OFFSET modifiers"@en .
@@ -487,7 +536,7 @@ qado:isOnlyDBpediaCompatible rdf:type owl:DatatypeProperty ;
 ###  urn:qado:dataset#numberOfModifierOrderBy
 :numberOfModifierOrderBy rdf:type owl:DatatypeProperty ;
                          rdfs:subPropertyOf :sparqlQueryProperty ;
-                         rdfs:domain qado:Query ;
+                         rdfs:domain <urn:qado#Query> ;
                          rdfs:range xsd:nonNegativeInteger ;
                          rdfs:comment "The number of ORDER BY modifiers of a SPARQL query."@en ;
                          rdfs:label "Number of ORDER BY modifiers"@en .
@@ -496,7 +545,7 @@ qado:isOnlyDBpediaCompatible rdf:type owl:DatatypeProperty ;
 ###  urn:qado:dataset#numberOfModifiers
 :numberOfModifiers rdf:type owl:DatatypeProperty ;
                    rdfs:subPropertyOf :sparqlQueryProperty ;
-                   rdfs:domain qado:Query ;
+                   rdfs:domain <urn:qado#Query> ;
                    rdfs:range xsd:nonNegativeInteger ;
                    rdfs:comment "The total amount of modifiers used in a SPARQL query."@en ;
                    rdfs:label "Number of modifiers"@en .
@@ -505,7 +554,7 @@ qado:isOnlyDBpediaCompatible rdf:type owl:DatatypeProperty ;
 ###  urn:qado:dataset#numberOfResources
 :numberOfResources rdf:type owl:DatatypeProperty ;
                    rdfs:subPropertyOf :sparqlQueryProperty ;
-                   rdfs:domain qado:Query ;
+                   rdfs:domain <urn:qado#Query> ;
                    rdfs:range xsd:nonNegativeInteger ;
                    rdfs:comment "Number of fixed entities, not variables, used in a SPARQL query"@en ;
                    rdfs:label "Number of resources"@en .
@@ -514,7 +563,7 @@ qado:isOnlyDBpediaCompatible rdf:type owl:DatatypeProperty ;
 ###  urn:qado:dataset#numberOfResourcesPredicates
 :numberOfResourcesPredicates rdf:type owl:DatatypeProperty ;
                              rdfs:subPropertyOf :sparqlQueryProperty ;
-                             rdfs:domain qado:Query ;
+                             rdfs:domain <urn:qado#Query> ;
                              rdfs:range xsd:nonNegativeInteger ;
                              rdfs:comment "The number of fixed entities, not variables, used as predicates in a SPARQL query."@en ;
                              rdfs:label "Number of resources as predicates"@en .
@@ -523,7 +572,7 @@ qado:isOnlyDBpediaCompatible rdf:type owl:DatatypeProperty ;
 ###  urn:qado:dataset#numberOfResourcesSubjectsObjects
 :numberOfResourcesSubjectsObjects rdf:type owl:DatatypeProperty ;
                                   rdfs:subPropertyOf :sparqlQueryProperty ;
-                                  rdfs:domain qado:Query ;
+                                  rdfs:domain <urn:qado#Query> ;
                                   rdfs:range xsd:nonNegativeInteger ;
                                   rdfs:comment "The number of fixed entities, not variables, used in a SPARQL query as subjects or objects."@en ;
                                   rdfs:label "Number of resources as subjects or objects"@en .
@@ -532,7 +581,7 @@ qado:isOnlyDBpediaCompatible rdf:type owl:DatatypeProperty ;
 ###  urn:qado:dataset#numberOfTriples
 :numberOfTriples rdf:type owl:DatatypeProperty ;
                  rdfs:subPropertyOf :sparqlQueryProperty ;
-                 rdfs:domain qado:Query ;
+                 rdfs:domain <urn:qado#Query> ;
                  rdfs:range xsd:nonNegativeInteger ;
                  rdfs:comment "The number of triples used in a WHERE clause of a SPARQL query."@en ;
                  rdfs:label "Number of triples"@en .
@@ -541,7 +590,7 @@ qado:isOnlyDBpediaCompatible rdf:type owl:DatatypeProperty ;
 ###  urn:qado:dataset#numberOfVariables
 :numberOfVariables rdf:type owl:DatatypeProperty ;
                    rdfs:subPropertyOf :sparqlQueryProperty ;
-                   rdfs:domain qado:Query ;
+                   rdfs:domain <urn:qado#Query> ;
                    rdfs:range xsd:nonNegativeInteger ;
                    rdfs:comment "The number of variables defined in a SPARQL query."@en ;
                    rdfs:label "Number of variables"@en .
@@ -557,7 +606,7 @@ qado:isOnlyDBpediaCompatible rdf:type owl:DatatypeProperty ;
 ###  urn:qado:dataset#queryType
 :queryType rdf:type owl:DatatypeProperty ;
            rdfs:subPropertyOf :sparqlQueryProperty ;
-           rdfs:domain qado:Query ;
+           rdfs:domain <urn:qado#Query> ;
            rdfs:range xsd:string ;
            rdfs:comment "Type of the used SPARQL query (ASK, SELECT, SELECTALL, SELECTDISTINCT, ...)."@en ;
            rdfs:label "SPARQL query type"@en .
@@ -566,7 +615,7 @@ qado:isOnlyDBpediaCompatible rdf:type owl:DatatypeProperty ;
 ###  urn:qado:dataset#questionEntity
 :questionEntity rdf:type owl:DatatypeProperty ;
                 rdfs:subPropertyOf :mintakaProperty ;
-                rdfs:domain qado:Question ;
+                rdfs:domain <urn:qado#Question> ;
                 rdfs:range xsd:string ;
                 rdfs:comment "The serialized JSON object describing an entity found in the question."@en ;
                 rdfs:label "Question entity"@en .
@@ -581,8 +630,8 @@ qado:isOnlyDBpediaCompatible rdf:type owl:DatatypeProperty ;
 
 ###  urn:qado:dataset#sparqlQueryProperty
 :sparqlQueryProperty rdf:type owl:DatatypeProperty ;
-                     rdfs:subPropertyOf :basicQADOProperty ;
-                     rdfs:domain qado:Query ;
+                     rdfs:subPropertyOf qado:computedQADOProperty ;
+                     rdfs:domain <urn:qado#Query> ;
                      rdfs:comment "Property available for all SPARQL query entities"@en ;
                      rdfs:label "SPARQL query property"@en .
 
@@ -590,7 +639,7 @@ qado:isOnlyDBpediaCompatible rdf:type owl:DatatypeProperty ;
 ###  urn:qado:dataset#supportingEnt
 :supportingEnt rdf:type owl:DatatypeProperty ;
                rdfs:subPropertyOf :mintakaProperty ;
-               rdfs:domain qado:ValidAnswer ;
+               rdfs:domain <urn:qado#ValidAnswer> ;
                rdfs:range xsd:anyURI ;
                rdfs:comment "Other entity supporting the found answer."@en ;
                rdfs:label "Supporting entity"@en .
@@ -599,24 +648,10 @@ qado:isOnlyDBpediaCompatible rdf:type owl:DatatypeProperty ;
 ###  urn:qado:dataset#supportingNum
 :supportingNum rdf:type owl:DatatypeProperty ;
                rdfs:subPropertyOf :mintakaProperty ;
-               rdfs:domain qado:ValidAnswer ;
+               rdfs:domain <urn:qado#ValidAnswer> ;
                rdfs:range xsd:string ;
                rdfs:comment "Number supporting the found answer."@en ;
                rdfs:label "Supporting number"@en .
-
-
-###  urn:qado:vocabulary#lcquad1Property
-:lcquad1Property rdf:type owl:DatatypeProperty ;
-                 rdfs:subPropertyOf :lcquadProperty ;
-                 rdfs:comment "Property available for LC-QuAD 1"@en ;
-                 rdfs:label "LC-QuAD 1 Property"@en .
-
-
-###  urn:qado:vocabulary#lcquad2Property
-:lcquad2Property rdf:type owl:DatatypeProperty ;
-                 rdfs:subPropertyOf :lcquadProperty ;
-                 rdfs:comment "Property available for LC-QuAD 2"@en ;
-                 rdfs:label "LC-QuAD 2 Property"@en .
 
 
 #################################################################
@@ -624,70 +659,70 @@ qado:isOnlyDBpediaCompatible rdf:type owl:DatatypeProperty ;
 #################################################################
 
 ###  urn:qado#Answer
-qado:Answer rdf:type owl:Class ;
-            rdfs:comment "Class with information about the answer of a given question."@en ;
-            rdfs:label "Answer"@en .
+<urn:qado#Answer> rdf:type owl:Class ;
+                  rdfs:comment "Class with information about the answer of a given question."@en ;
+                  rdfs:label "Answer"@en .
 
 
 ###  urn:qado#AnswerContent
-qado:AnswerContent rdf:type owl:Class ;
-                   rdfs:comment "Provides detailed information about the answer's content."@en ;
-                   rdfs:label "QA benchmark answer content"@en .
+<urn:qado#AnswerContent> rdf:type owl:Class ;
+                         rdfs:comment "Provides detailed information about the answer's content."@en ;
+                         rdfs:label "QA benchmark answer content"@en .
 
 
 ###  urn:qado#Dataset
-qado:Dataset rdf:type owl:Class ;
-             rdfs:comment "A transformed QA benchmark."@en ;
-             rdfs:label "QA benchmark"@en .
+<urn:qado#Dataset> rdf:type owl:Class ;
+                   rdfs:comment "A transformed QA benchmark."@en ;
+                   rdfs:label "QA benchmark"@en .
 
 
 ###  urn:qado#EmptyAnswer
-qado:EmptyAnswer rdf:type owl:Class ;
-                 rdfs:subClassOf qado:Answer ;
-                 owl:disjointWith qado:ValidAnswer ;
-                 rdfs:comment "There is no answer for the related question."@en ;
-                 rdfs:label "Empty Answer"@en .
+<urn:qado#EmptyAnswer> rdf:type owl:Class ;
+                       rdfs:subClassOf <urn:qado#Answer> ;
+                       owl:disjointWith <urn:qado#ValidAnswer> ;
+                       rdfs:comment "There is no answer for the related question."@en ;
+                       rdfs:label "Empty answer"@en .
 
 
 ###  urn:qado#FlawedQuestion
-qado:FlawedQuestion rdf:type owl:Class ;
-                    rdfs:subClassOf qado:Question ;
-                    owl:disjointWith qado:UnanswerableQuestion ,
-                                     qado:ValidQuestion ;
-                    rdfs:comment "QA benchmark question with flawed information."@en ;
-                    rdfs:label "Flawed QA benchmark Question"@en .
+<urn:qado#FlawedQuestion> rdf:type owl:Class ;
+                          rdfs:subClassOf <urn:qado#Question> ;
+                          owl:disjointWith <urn:qado#UnanswerableQuestion> ,
+                                           <urn:qado#ValidQuestion> ;
+                          rdfs:comment "QA benchmark question with invalid information, e.g. missing or truncated question text."@en ;
+                          rdfs:label "Flawed QA benchmark Question"@en .
 
 
 ###  urn:qado#Query
-qado:Query rdf:type owl:Class ;
-           rdfs:comment "A class containing information about the used query."@en ;
-           rdfs:label "QA benchmark query"@en .
+<urn:qado#Query> rdf:type owl:Class ;
+                 rdfs:comment "A class containing information about the used query."@en ;
+                 rdfs:label "QA benchmark query"@en .
 
 
 ###  urn:qado#Question
-qado:Question rdf:type owl:Class .
+<urn:qado#Question> rdf:type owl:Class .
 
 
 ###  urn:qado#UnanswerableQuestion
-qado:UnanswerableQuestion rdf:type owl:Class ;
-                          rdfs:subClassOf qado:Question ;
-                          owl:disjointWith qado:ValidQuestion ;
-                          rdfs:comment "A question with no answer."@en ;
-                          rdfs:label "Unanswerable question"@en .
+<urn:qado#UnanswerableQuestion> rdf:type owl:Class ;
+                                rdfs:subClassOf <urn:qado#Question> ;
+                                owl:disjointWith <urn:qado#ValidQuestion> ;
+                                rdfs:comment "A question with no answer."@en ;
+                                rdfs:label "Unanswerable question"@en .
 
 
 ###  urn:qado#ValidAnswer
-qado:ValidAnswer rdf:type owl:Class ;
-                 rdfs:subClassOf qado:Answer ;
-                 rdfs:comment "Class of valid answers."@en ;
-                 rdfs:label "Valid answer"@en .
+<urn:qado#ValidAnswer> rdf:type owl:Class ;
+                       rdfs:subClassOf <urn:qado#Answer> ;
+                       rdfs:comment "Class of valid answers."@en ;
+                       rdfs:label "Valid answer"@en .
 
 
 ###  urn:qado#ValidQuestion
-qado:ValidQuestion rdf:type owl:Class ;
-                   rdfs:subClassOf qado:Question ;
-                   rdfs:comment "Class of valid questions."@en ;
-                   rdfs:label "Valid question"@en .
+<urn:qado#ValidQuestion> rdf:type owl:Class ;
+                         rdfs:subClassOf <urn:qado#Question> ;
+                         rdfs:comment "Class of valid questions."@en ;
+                         rdfs:label "Valid question"@en .
 
 
 ###  Generated by the OWL API (version 4.5.9.2019-02-01T07:24:44Z) https://github.com/owlcs/owlapi

@@ -6,7 +6,7 @@
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
 @prefix void: <http://rdfs.org/ns/void#> .
 @prefix prov: <http://www.w3.org/ns/prov#> .
-@prefix qado: <urn:qado#> .
+@prefix qado: <http://purl.com/qado/ontology.ttl#> .
 @prefix ql: <http://semweb.mmlab.be/ns/ql#>.
 @base <URL#>.
 
@@ -17,7 +17,7 @@
         rml:referenceFormulation ql:JSONPath;
         rml:iterator "$.[*]"];
     rr:subjectMap [
-        rr:template "urn:qado#LABEL-dataset";
+        rr:template "http://purl.com/qado/ontology.ttl#LABEL-dataset";
         rr:class qado:Dataset];
     rr:predicateObjectMap [
         rr:predicate void:dataDump;
@@ -40,7 +40,7 @@
         rml:referenceFormulation ql:JSONPath;
         rml:iterator "$.[*]"];
     rr:subjectMap [
-        rr:template "urn:qado#LABEL-query-{id}";
+        rr:template "http://purl.com/qado/ontology.ttl#LABEL-query-{id}";
         rr:class qado:Query];
     rr:predicateObjectMap [
         rr:predicate qado:hasQueryText;
@@ -54,7 +54,7 @@
         rml:referenceFormulation ql:JSONPath;
         rml:iterator "$.[*]"];
     rr:subjectMap [
-        rr:template "urn:qado#LABEL-question-{id}";
+        rr:template "http://purl.com/qado/ontology.ttl#LABEL-question-{id}";
         rr:class qado:UnanswerableQuestion];
     rr:predicateObjectMap [
         rr:predicate qado:hasId;
@@ -71,11 +71,11 @@
     rr:predicateObjectMap [
         rr:predicate qado:hasSparqlQuery;
         rr:objectMap [
-            rr:template "urn:qado#LABEL-query-{id}"]];
+            rr:template "http://purl.com/qado/ontology.ttl#LABEL-query-{id}"]];
     rr:predicateObjectMap [
         rr:predicate qado:hasAnswer;
         rr:objectMap [
-            rr:template "urn:qado#LABEL-answer-{id}"]].
+            rr:template "http://purl.com/qado/ontology.ttl#LABEL-answer-{id}"]].
 
 <#AnswerMapping> a rr:TripleMap;
     rml:logicalSource [
@@ -83,5 +83,5 @@
         rml:referenceFormulation ql:JSONPath;
         rml:iterator "$.[*]"];
     rr:subjectMap [
-        rr:template "urn:qado#LABEL-answer-{id}";
+        rr:template "http://purl.com/qado/ontology.ttl#LABEL-answer-{id}";
         rr:class qado:EmptyAnswer].

@@ -6,7 +6,7 @@
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
 @prefix void: <http://rdfs.org/ns/void#> .
 @prefix prov: <http://www.w3.org/ns/prov#> .
-@prefix qado: <urn:qado#> .
+@prefix qado: <http://purl.com/qado/ontology.ttl#> .
 @prefix ql: <http://semweb.mmlab.be/ns/ql#>.
 @base <URL#>.
 
@@ -17,7 +17,7 @@
         rml:referenceFormulation ql:JSONPath;
         rml:iterator "$.[*]"];
     rr:subjectMap [
-        rr:template "urn:qado#LABEL-dataset";
+        rr:template "http://purl.com/qado/ontology.ttl#LABEL-dataset";
         rr:class qado:Dataset];
     rr:predicateObjectMap [
         rr:predicate void:dataDump;
@@ -41,7 +41,7 @@
         rml:referenceFormulation ql:JSONPath;
         rml:iterator "$.[*]"];
     rr:subjectMap [
-        rr:template "urn:qado#LABEL-query-{ID}";
+        rr:template "http://purl.com/qado/ontology.ttl#LABEL-query-{ID}";
         rr:class qado:Query];
     rr:predicateObjectMap [
         rr:predicate qado:hasQueryText;
@@ -56,7 +56,7 @@
         rml:referenceFormulation ql:JSONPath;
         rml:iterator "$.[?(@.answers)]"];
     rr:subjectMap [
-        rr:template "urn:qado#LABEL-question-{ID}";
+        rr:template "http://purl.com/qado/ontology.ttl#LABEL-question-{ID}";
         rr:class qado:ValidQuestion];
     rr:predicateObjectMap [
         rr:predicate qado:hasId;
@@ -66,7 +66,7 @@
     rr:predicateObjectMap [
         rr:predicate qado:isElementOf;
         rr:objectMap [
-            rr:template "urn:qado#LABEL-dataset"]];
+            rr:template "http://purl.com/qado/ontology.ttl#LABEL-dataset"]];
     rr:predicateObjectMap [
         rr:predicate qado:hasCompositionAnswer;
         rr:objectMap [
@@ -95,7 +95,7 @@
     rr:predicateObjectMap [
         rr:predicate qado:hasSparqlQuery;
         rr:objectMap [
-            rr:template "urn:qado#LABEL-query-{ID}"]];
+            rr:template "http://purl.com/qado/ontology.ttl#LABEL-query-{ID}"]];
     rr:predicateObjectMap [
         rr:predicate qado:hasWebqspId;
         rr:objectMap [
@@ -109,7 +109,7 @@
     rr:predicateObjectMap [
         rr:predicate qado:hasAnswer;
         rr:objectMap [
-            rr:template "urn:qado#LABEL-answer-{ID}"]].
+            rr:template "http://purl.com/qado/ontology.ttl#LABEL-answer-{ID}"]].
 
 
 <#UnanswerableQuestionMapping> a rr:TriplesMap;
@@ -118,7 +118,7 @@
         rml:referenceFormulation ql:JSONPath;
         rml:iterator "$.[?(!@.answers)]"];
     rr:subjectMap [
-        rr:template "urn:qado#LABEL-question-{ID}";
+        rr:template "http://purl.com/qado/ontology.ttl#LABEL-question-{ID}";
         rr:class qado:UnanswerableQuestion];
     rr:predicateObjectMap [
         rr:predicate qado:hasId;
@@ -128,7 +128,7 @@
     rr:predicateObjectMap [
         rr:predicate qado:isElementOf;
         rr:objectMap [
-            rr:template "urn:qado#LABEL-dataset"]];
+            rr:template "http://purl.com/qado/ontology.ttl#LABEL-dataset"]];
     rr:predicateObjectMap [
         rr:predicate qado:hasCompositionAnswer;
         rr:objectMap [
@@ -157,7 +157,7 @@
     rr:predicateObjectMap [
         rr:predicate qado:hasSparqlQuery;
         rr:objectMap [
-            rr:template "urn:qado#LABEL-query-{ID}"]];
+            rr:template "http://purl.com/qado/ontology.ttl#LABEL-query-{ID}"]];
     rr:predicateObjectMap [
         rr:predicate qado:hasWebqspId;
         rr:objectMap [
@@ -171,7 +171,7 @@
     rr:predicateObjectMap [
         rr:predicate qado:hasAnswer;
         rr:objectMap [
-            rr:template "urn:qado#LABEL-answer-{ID}"]].
+            rr:template "http://purl.com/qado/ontology.ttl#LABEL-answer-{ID}"]].
 
 
 <#AnswerMapping> a rr:TriplesMap;
@@ -180,12 +180,12 @@
         rml:referenceFormulation ql:JSONPath;
         rml:iterator "$.[?(@.answers)]"];
     rr:subjectMap [
-        rr:template "urn:qado#LABEL-answer-{ID}";
+        rr:template "http://purl.com/qado/ontology.ttl#LABEL-answer-{ID}";
         rr:class qado:ValidAnswer];
     rr:predicateObjectMap [
-        rr:predicate qado:hasAnswer;
+        rr:predicate qado:hasAnswerContent;
         rr:objectMap [
-            rr:template "urn:qado#LABEL-answer-content-{answers.[*].answer_id}"]].
+            rr:template "http://purl.com/qado/ontology.ttl#LABEL-answer-content-{answers.[*].answer_id}"]].
 
 
 <#EmptyAnswerMapping> a rr:TriplesMap;
@@ -194,7 +194,7 @@
         rml:referenceFormulation ql:JSONPath;
         rml:iterator "$.[?(!@.answers)]"];
     rr:subjectMap [
-        rr:template "urn:qado#LABEL-answer-{ID}";
+        rr:template "http://purl.com/qado/ontology.ttl#LABEL-answer-{ID}";
         rr:class qado:EmptyAnswer].
 
 
@@ -204,7 +204,7 @@
         rml:referenceFormulation ql:JSONPath;
         rml:iterator "$..answers.[*]"];
     rr:subjectMap [
-        rr:template "urn:qado#LABEL-answer-content-{answer_id}";
+        rr:template "http://purl.com/qado/ontology.ttl#LABEL-answer-content-{answer_id}";
         rr:class qado:AnswerContent];
     rr:predicateObjectMap [
         rr:predicate qado:hasId;
