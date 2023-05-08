@@ -24,29 +24,29 @@ qado:Question rdf:type rdfs:Datatype .
 #    Object Properties
 #################################################################
 
-###  http://purl.com/qado/ontology.ttl##basicQADOObjectProperty
-<http://purl.com/qado/ontology.ttl##basicQADOObjectProperty> rdf:type owl:ObjectProperty ;
+###  http://purl.com/qado/ontology.ttl#basicQADOObjectProperty
+<http://purl.com/qado/ontology.ttl#basicQADOObjectProperty> rdf:type owl:ObjectProperty ;
                                                              rdfs:subPropertyOf owl:topObjectProperty ;
                                                              rdfs:comment "QADO object property available for all benchmarks"@en ;
                                                              rdfs:label "basic QADO object property"@en .
 
 
-###  http://purl.com/qado/ontology.ttl##cwqObjectProperty
-<http://purl.com/qado/ontology.ttl##cwqObjectProperty> rdf:type owl:ObjectProperty ;
-                                                       rdfs:subPropertyOf <http://purl.com/qado/ontology.ttl##extendedQADOObjectProperty> ;
+###  http://purl.com/qado/ontology.ttl#cwqObjectProperty
+<http://purl.com/qado/ontology.ttl#cwqObjectProperty> rdf:type owl:ObjectProperty ;
+                                                       rdfs:subPropertyOf <http://purl.com/qado/ontology.ttl#extendedQADOObjectProperty> ;
                                                        rdfs:comment "QADO object property only available for CWQ benchmark"@en ;
                                                        rdfs:label "CWQ object property"@en .
 
 
-###  http://purl.com/qado/ontology.ttl##extendedQADOObjectProperty
-<http://purl.com/qado/ontology.ttl##extendedQADOObjectProperty> rdf:type owl:ObjectProperty ;
+###  http://purl.com/qado/ontology.ttl#extendedQADOObjectProperty
+<http://purl.com/qado/ontology.ttl#extendedQADOObjectProperty> rdf:type owl:ObjectProperty ;
                                                                 rdfs:comment "QADO Object Property only available for a subset of benchmarks"@en ;
                                                                 rdfs:label "extended QADO object property"@en .
 
 
-###  http://purl.com/qado/ontology.ttl##hasAnswerContent
-<http://purl.com/qado/ontology.ttl##hasAnswerContent> rdf:type owl:ObjectProperty ;
-                                                      rdfs:subPropertyOf <http://purl.com/qado/ontology.ttl##cwqObjectProperty> ;
+###  http://purl.com/qado/ontology.ttl#hasAnswerContent
+<http://purl.com/qado/ontology.ttl#hasAnswerContent> rdf:type owl:ObjectProperty ;
+                                                      rdfs:subPropertyOf <http://purl.com/qado/ontology.ttl#cwqObjectProperty> ;
                                                       rdfs:domain <http://purl.com/qado/ontology.ttl#ValidAnswer> ;
                                                       rdfs:range <http://purl.com/qado/ontology.ttl#AnswerContent> ;
                                                       rdfs:comment "Object Property linking an Answer Object to its corresponding content."@en ;
@@ -55,7 +55,7 @@ qado:Question rdf:type rdfs:Datatype .
 
 ###  http://purl.com/qado/ontology.ttl#hasAnswer
 <http://purl.com/qado/ontology.ttl#hasAnswer> rdf:type owl:ObjectProperty ;
-                     rdfs:subPropertyOf <http://purl.com/qado/ontology.ttl##basicQADOObjectProperty> ;
+                     rdfs:subPropertyOf <http://purl.com/qado/ontology.ttl#basicQADOObjectProperty> ;
                      rdf:type owl:FunctionalProperty ;
                      rdfs:domain <http://purl.com/qado/ontology.ttl#Question> ;
                      rdfs:range <http://purl.com/qado/ontology.ttl#Answer> ;
@@ -65,7 +65,7 @@ qado:Question rdf:type rdfs:Datatype .
 
 ###  http://purl.com/qado/ontology.ttl#hasSparqlQuery
 <http://purl.com/qado/ontology.ttl#hasSparqlQuery> rdf:type owl:ObjectProperty ;
-                          rdfs:subPropertyOf <http://purl.com/qado/ontology.ttl##basicQADOObjectProperty> ;
+                          rdfs:subPropertyOf <http://purl.com/qado/ontology.ttl#basicQADOObjectProperty> ;
                           rdf:type owl:FunctionalProperty ;
                           rdfs:domain <http://purl.com/qado/ontology.ttl#Question> ;
                           rdfs:range <http://purl.com/qado/ontology.ttl#Query> ;
@@ -75,7 +75,7 @@ qado:Question rdf:type rdfs:Datatype .
 
 ###  http://purl.com/qado/ontology.ttl#isElementOf
 <http://purl.com/qado/ontology.ttl#isElementOf> rdf:type owl:ObjectProperty ;
-                       rdfs:subPropertyOf <http://purl.com/qado/ontology.ttl##basicQADOObjectProperty> ;
+                       rdfs:subPropertyOf <http://purl.com/qado/ontology.ttl#basicQADOObjectProperty> ;
                        rdf:type owl:FunctionalProperty ;
                        rdfs:domain <http://purl.com/qado/ontology.ttl#Question> ;
                        rdfs:range <http://purl.com/qado/ontology.ttl#Dataset> ;
@@ -87,8 +87,8 @@ qado:Question rdf:type rdfs:Datatype .
 #    Data properties
 #################################################################
 
-###  http://purl.com/qado/ontology.ttl##computedQADOProperty
-<http://purl.com/qado/ontology.ttl##computedQADOProperty> rdf:type owl:DatatypeProperty ;
+###  http://purl.com/qado/ontology.ttl#computedQADOProperty
+<http://purl.com/qado/ontology.ttl#computedQADOProperty> rdf:type owl:DatatypeProperty ;
                                                           rdfs:subPropertyOf owl:topDataProperty ;
                                                           rdfs:comment "QADO property computed on given basic properties"@en ;
                                                           rdfs:label "computed QADO property"@en .
@@ -630,7 +630,7 @@ qado:Question rdf:type rdfs:Datatype .
 
 ###  urn:qado:dataset#sparqlQueryProperty
 <urn:qado:dataset#sparqlQueryProperty> rdf:type owl:DatatypeProperty ;
-                                       rdfs:subPropertyOf <http://purl.com/qado/ontology.ttl##computedQADOProperty> ;
+                                       rdfs:subPropertyOf <http://purl.com/qado/ontology.ttl#computedQADOProperty> ;
                                        rdfs:domain <http://purl.com/qado/ontology.ttl#Query> ;
                                        rdfs:comment "Property available for all SPARQL query entities"@en ;
                                        rdfs:label "SPARQL query property"@en .
