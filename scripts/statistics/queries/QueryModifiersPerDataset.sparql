@@ -1,4 +1,4 @@
-PREFIX qado: <urn:qado#>
+PREFIX qado: <http://purl.com/qado/ontology.ttl#>
 
 SELECT ?benchmark
 (SUM(?limits) AS ?numLimit)

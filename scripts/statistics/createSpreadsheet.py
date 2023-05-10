@@ -1,40 +1,11 @@
 import os.path
 from datetime import date
-from json import loads, load
+from json import loads
 import numpy as np
 from collections import defaultdict
-from config import triplestore_endpoint
+from config import triplestore_endpoint, user, password, request_method
 import pandas as pd
 from SPARQLWrapper import SPARQLWrapper, JSON
-
-
-def load_chart(chart_file):
-    """
-    Loading the configuration file of a chart from filesystem
-
-    :param chart_file: config file name in 'charts' subdirectory
-    :raises FileNotFoundError: config file doesn't exist
-    :return: configuration as JSON object
-    """
-    if not os.path.exists(f'charts/{chart_file}'):
-        raise FileNotFoundError(f'Chart for {chart_file} not found')
-
-    with open(f'charts/{chart_file}') as f:
-        return load(f)
-
-
-def load_image_data(image_file) -> dict | None:
-    """
-    Read the image configuration for 'images' subdirectory
-
-    :param image_file: file name in 'images' subdirectory
-    :return: configuration as JSON object
-    """
-    image_path = f'images/{image_file}'
-
-    if os.path.exists(image_path):
-        with open(image_path) as f:
-            return load(f)
 
 
 def get_sheet_config(sparql_path: str):
@@ -50,6 +21,8 @@ def get_sheet_config(sparql_path: str):
 
         # run SPARQL query on Stardog endpoint
         sparql = SPARQLWrapper(triplestore_endpoint)
+        sparql.setCredentials(user, password)
+        sparql.setMethod(request_method)
         sparql.setReturnFormat(JSON)
         sparql.setQuery(query)
 

@@ -1,4 +1,4 @@
-PREFIX qado: <urn:qado#>
+PREFIX qado: <http://purl.com/qado/ontology.ttl#>
 
 SELECT ?benchmark (GROUP_CONCAT(?queryLength ; SEPARATOR=",") AS ?concat) (GROUP_CONCAT(DISTINCT ?prefix ; SEPARATOR=" ") AS ?prefixes) {
     ?question qado:isElementOf ?benchmark ;
