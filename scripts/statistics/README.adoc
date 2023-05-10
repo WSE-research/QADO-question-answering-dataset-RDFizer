@@ -1,7 +1,7 @@
 = SPARQL dataset statistics
 
 This subproject address the need of a good understanding of the characteristics of Knowledge Graph Question Answering benchmark datasets.
-For this purpose, a tool is provided here to create a Excel Spreadsheet with statistics from a triplestore, currently the https://www.stardog.com/[Stardog triplestore] is supported.
+For this purpose, a tool is provided here to create CSV files with statistics from a triplestore.
 You need to install https://docs.docker.com/get-docker/[Docker]
 and run the following command.
 
@@ -11,7 +11,7 @@ and run the following command.
 ----
 
 This script creates new CSV files with all statistics
-and stores it at `~/QADO-statistics/QADO-statistics-$+{statistic_name}+-$+{current_date}+.xlsx`.
+and stores it at `~/QADO-statistics/QADO-statistics-${statistic_name}-${current_date}.csv`.
 
 == Configuration
 === Script configuration
@@ -21,7 +21,7 @@ You might edit the `config.py` to select your triplestore.
 === Statistics
 
 Create your SPARQL queries and store them into the `queries` directory. 
-The tool creates a new worksheet for each SPARQL query file.
+The tool creates a new CSV file for each SPARQL query file.
 
 ==== Boxplot data
 
