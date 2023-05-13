@@ -91,7 +91,7 @@ By default, the following datasets/formats are supported:
 ** format identifier: `mintaka`
 * https://www.tau-nlp.sites.tau.ac.il/compwebq[*ComplexWebQuestions:* A dataset for answering complex questions that require reasoning over multiple web snippets]
 ** format identifier: `cwq`
-* https://github.com/coastalcph/seq2sparql[Compositional Wikidata Questions]
+* (beta) https://github.com/coastalcph/seq2sparql[Compositional Wikidata Questions]
 ** format identifier: `compositional_wikidata`
 
 == Supported output formats
