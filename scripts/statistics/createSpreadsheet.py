@@ -87,6 +87,7 @@ def main():
     for title, sheet in sheets:
         statistic = pd.DataFrame(sheet)
         statistic.to_csv(f'output/QADO-statistics-{title}-{today}.csv', index=False)
+    print(len(sheets), "statistics files written.")
 
 
 if __name__ == '__main__':
