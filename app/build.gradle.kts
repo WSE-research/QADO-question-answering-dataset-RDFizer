@@ -8,7 +8,7 @@
 
 plugins {
     // Apply the org.jetbrains.kotlin.jvm Plugin to add support for Kotlin.
-    kotlin("jvm") version "1.8.10"
+    kotlin("jvm") version "1.8.21"
     kotlin("plugin.serialization") version "1.8.21"
 
     // Apply the application plugin to add support for building a CLI application in Java.
@@ -32,13 +32,13 @@ dependencies {
     implementation("org.jetbrains.kotlin:kotlin-stdlib-jdk8")
 
     implementation("io.ktor:ktor-server-core:2.2.4")
-    implementation("io.ktor:ktor-server-netty:2.2.4")
+    implementation("io.ktor:ktor-server-netty:2.3.0")
     implementation("io.ktor:ktor-server-content-negotiation:2.2.4")
     implementation("io.ktor:ktor-client-content-negotiation:2.2.4")
     implementation("io.ktor:ktor-serialization-gson:2.2.4")
-    implementation("io.ktor:ktor-client-core:2.2.4")
+    implementation("io.ktor:ktor-client-core:2.3.0")
     implementation("io.ktor:ktor-client-cio:2.2.4")
-    implementation("io.ktor:ktor-server-html-builder:2.2.4")
+    implementation("io.ktor:ktor-server-html-builder:2.3.0")
     implementation("ch.qos.logback:logback-classic:1.4.6")
 
     // Use the Kotlin test library.

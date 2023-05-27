@@ -1,4 +1,4 @@
-PREFIX qado: <urn:qado#>
+PREFIX qado: <http://purl.com/qado/ontology.ttl#>
 PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
 
 SELECT ?benchmark (COUNT(?question) as ?questions)
