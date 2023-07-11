@@ -38,7 +38,7 @@ dependencies {
     implementation("io.ktor:ktor-serialization-gson:2.2.4")
     implementation("io.ktor:ktor-client-core:2.3.2")
     implementation("io.ktor:ktor-client-cio:2.3.2")
-    implementation("io.ktor:ktor-server-html-builder:2.3.0")
+    implementation("io.ktor:ktor-server-html-builder:2.3.2")
     implementation("ch.qos.logback:logback-classic:1.4.8")
 
     // Use the Kotlin test library.
