@@ -8,7 +8,7 @@
 @base <http://purl.com/qado/ontology.ttl#> .
 
 <http://purl.com/qado/ontology.ttl#> rdf:type owl:Ontology ;
-                                      owl:versionIRI <urn:qado:dataset/0.3.0> ;
+                                      owl:versionIRI <urn:qado:dataset/0.4.0> ;
                                       rdfs:comment "Ontology for datassets representing Knowledge Graphs on Question Answering (KGQA) benchmarks."@en ;
                                       rdfs:label "QADO - Question Answering Dataset Ontology"@en .
 
@@ -32,6 +32,17 @@ qado:hasAnswer rdf:type owl:ObjectProperty ;
                rdfs:range qado:Answer ;
                rdfs:comment "Property linking a question to the corresponding answer."@en ;
                rdfs:label "has answer"@en .
+
+
+###  http://purl.com/qado/ontology.ttl#hasSPARQLCheck
+qado:hasSPARQLCheck rdf:type owl:ObjectProperty ;
+                    rdfs:subPropertyOf owl:topObjectProperty ;
+                    rdf:type owl:FunctionalProperty ,
+                             owl:InverseFunctionalProperty ;
+                    rdfs:domain qado:Query ;
+                    rdfs:range qado:SPARQLCheck ;
+                    rdfs:comment "Property linking a QADO Query object with an QADO SPARQL check object"@en ;
+                    rdfs:label "has SPARQL Check"@en .
 
 
 ###  http://purl.com/qado/ontology.ttl#hasSparqlQuery
@@ -106,6 +117,15 @@ qado:cwqProperty rdf:type owl:DatatypeProperty ;
                  rdfs:subPropertyOf qado:extendedQADOProperty ;
                  rdfs:comment "Property available for all entries of the CWQ benchmark"@en ;
                  rdfs:label "CWQ property"@en .
+
+
+###  http://purl.com/qado/ontology.ttl#didNotWorkAt
+qado:didNotWorkAt rdf:type owl:DatatypeProperty ;
+                  rdfs:subPropertyOf qado:basicQADOProperty ;
+                  rdfs:domain qado:SPARQLCheck ;
+                  rdfs:range xsd:dateTime ;
+                  rdfs:comment "Dates at which the corresponding knowledge graph of the SPARQL query returned no result."@en ;
+                  rdfs:label "did not work at"@en .
 
 
 ###  http://purl.com/qado/ontology.ttl#extendedQADOProperty
@@ -618,6 +638,15 @@ qado:supportingNum rdf:type owl:DatatypeProperty ;
                    rdfs:label "Supporting number"@en .
 
 
+###  http://purl.com/qado/ontology.ttl#testedSuccessfullyAt
+qado:testedSuccessfullyAt rdf:type owl:DatatypeProperty ;
+                          rdfs:subPropertyOf qado:basicQADOProperty ;
+                          rdfs:domain qado:SPARQLCheck ;
+                          rdfs:range xsd:dateTime ;
+                          rdfs:comment "Dates at which the knowledge graph corresponding to the SPARQL query returns valid results."@en ;
+                          rdfs:label "tested successfully at"@en .
+
+
 #################################################################
 #    Classes
 #################################################################
@@ -659,6 +688,12 @@ qado:Query rdf:type owl:Class ;
 
 ###  http://purl.com/qado/ontology.ttl#Question
 qado:Question rdf:type owl:Class .
+
+
+###  http://purl.com/qado/ontology.ttl#SPARQLCheck
+qado:SPARQLCheck rdf:type owl:Class ;
+                 rdfs:label "Class providing information about the validation of stored SPARQL queries."@en ,
+                            "SPARQL Check"@en .
 
 
 ###  http://purl.com/qado/ontology.ttl#UnanswerableQuestion
