@@ -140,3 +140,6 @@ token.json
 *.png
 *.xlsx
 *.csv
+
+# local binary files
+app/bin

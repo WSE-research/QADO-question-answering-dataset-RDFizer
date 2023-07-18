@@ -1,37 +1,67 @@
+:toc:
+:toclevels: 5
+:toc-placement!:
+:source-highlighter: highlight.js
+ifdef::env-github[]
+:tip-caption: :bulb:
+:note-caption: :information_source:
+:important-caption: :heavy_exclamation_mark:
+:caution-caption: :fire:
+:warning-caption: :warning:
+endif::[]
+
+++++
+<a href="https://github.com/search?q=topic%3Aqado+org%3AWSE-research&type=Repositories" title="see all QADO repositories">
+<img align="right" role="right" height="128" src="https://repository-images.githubusercontent.com/431670262/b11511f7-28c4-4d44-a884-9987128b535f"/>
+</a>
+++++
+
 = SPARQL dataset statistics
 
-This subproject address the need of a good understanding of the characteristics of Knowledge Graph Question Answering benchmark datasets.
-For this purpose, a tool is provided here to create CSV files with statistics from a triplestore.
-You need to install https://docs.docker.com/get-docker/[Docker]
-and run the following command.
+This subproject (part of https://github.com/WSE-research/QADO-question-answering-dataset-RDFizer[QADO question answering dataset RDFizer]) address the need of a good understanding of the characteristics of Knowledge Graph Question Answering (KGQA) benchmark datasets.
+For this purpose, a tool is provided here to create CSV files containing statistics about the RDFized data in a triplestore.
+
+toc::[]
+
+== Requirements
+
+* https://docs.docker.com/get-docker/[Docker] needs to be installed on your system
+* your triplestore needs to be accessible via SPARQL endpoint (cf. link:#configuration[Section Configuration])
+
+== Usage
 
 [source]
 ----
 ./createSpreadsheet.sh
 ----
 
-This script creates new CSV files with all statistics
-and stores it at `~/QADO-statistics/QADO-statistics-${statistic_name}-${current_date}.csv`.
+This script creates new CSV files with all statistics and stores them following the pattern `QADO-statistics-${statistic_name}-${current_date}.csv` in the folder `/tmp/QADO-statistics/` (by default).
+To change the output directory, you can provide a parameter to the script, e.g.:
+
+[source]
+----
+./createSpreadsheet.sh myOutputDirectory
+----
 
 == Configuration
 === Script configuration
 
-You might edit the `config.py` to select your triplestore.
+You might edit the `config.py` to select the triplestore where your data is stored.
 
 === Statistics
 
-Create your SPARQL queries and store them into the `queries` directory. 
-The tool creates a new CSV file for each SPARQL query file.
+A number of existing statistics are already implemented.
+To create your own statistics, just store your SPARQL queries into the link:./queries[`queries`] directory. 
+This tool creates a new CSV file for each SPARQL query file.
 
 ==== Boxplot data
 
-If you want to generate a boxplot, you need to store your query with the file ending `_boxplot.sparql`. 
-Additionally, the data for the boxplot needs to be selected via `(GROUP_CONCAT(?YOUR_VARIABLE ; SEPARATOR = ",") AS ?concat)`.
-
+If you want to generate a boxplot chart, you need to store your query with the file ending `_boxplot.sparql`. 
+Additionally, the data for the boxplot chart needs to be selected via `(GROUP_CONCAT(?YOUR_VARIABLE ; SEPARATOR = ",") AS ?concat)`.
 
 == Default statistics
 
-The tool generates per default the following statistics for RDFized QA benchmarks:
+The tool generates per default the following statistics for RDFized Question Answering benchmarks:
 
 * Query length per benchmark
 * Query modifiers per benchmark
