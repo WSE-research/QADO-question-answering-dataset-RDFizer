@@ -37,8 +37,7 @@ qado:hasAnswer rdf:type owl:ObjectProperty ;
 ###  http://purl.com/qado/ontology.ttl#hasSPARQLCheck
 qado:hasSPARQLCheck rdf:type owl:ObjectProperty ;
                     rdfs:subPropertyOf owl:topObjectProperty ;
-                    rdf:type owl:FunctionalProperty ,
-                             owl:InverseFunctionalProperty ;
+                    rdf:type owl:InverseFunctionalProperty ;
                     rdfs:domain qado:Query ;
                     rdfs:range qado:SPARQLCheck ;
                     rdfs:comment "Property linking a QADO Query object with an QADO SPARQL check object"@en ;
@@ -100,6 +99,16 @@ qado:computedQADOProperty rdf:type owl:DatatypeProperty ;
                           rdfs:subPropertyOf owl:topDataProperty ;
                           rdfs:comment "QADO property computed on given basic properties"@en ;
                           rdfs:label "computed QADO property"@en .
+
+
+###  http://purl.com/qado/ontology.ttl#correspondsToKnowledgeGraph
+qado:correspondsToKnowledgeGraph rdf:type owl:DatatypeProperty ;
+                                 rdfs:subPropertyOf qado:sparqlQueryProperty ;
+                                 rdf:type owl:FunctionalProperty ;
+                                 rdfs:domain qado:Query ;
+                                 rdfs:range xsd:anyURI ;
+                                 rdfs:comment "Property linking a Query object with the uri of the corresponding knowledge graph endpoint"@en ;
+                                 rdfs:label "corresponds to knowledge graph"@en .
 
 
 ###  http://purl.com/qado/ontology.ttl#createdAt
