@@ -35,7 +35,7 @@ dependencies {
     implementation("io.ktor:ktor-server-netty:2.3.3")
     implementation("io.ktor:ktor-server-content-negotiation:2.3.3")
     implementation("io.ktor:ktor-client-content-negotiation:2.3.3")
-    implementation("io.ktor:ktor-serialization-gson:2.3.2")
+    implementation("io.ktor:ktor-serialization-gson:2.3.3")
     implementation("io.ktor:ktor-client-core:2.3.3")
     implementation("io.ktor:ktor-client-cio:2.3.3")
     implementation("io.ktor:ktor-server-html-builder:2.3.3")
