@@ -272,6 +272,31 @@
             rml:reference "question.[?(@.language == \"nl\")].keywords";
             rr:language "nl"]];
     rr:predicateObjectMap [
+        rr:predicate qado:hasKeyword;
+        rr:objectMap [
+            rml:reference "question.[?(@.language == \"uk\")].keywords";
+            rr:language "uk"]];
+    rr:predicateObjectMap [
+        rr:predicate qado:hasKeyword;
+        rr:objectMap [
+            rml:reference "question.[?(@.language == \"lt\")].keywords";
+            rr:language "lt"]];
+    rr:predicateObjectMap [
+        rr:predicate qado:hasKeyword;
+        rr:objectMap [
+            rml:reference "question.[?(@.language == \"be\")].keywords";
+            rr:language "be"]];
+    rr:predicateObjectMap [
+        rr:predicate qado:hasKeyword;
+        rr:objectMap [
+            rml:reference "question.[?(@.language == \"ba\")].keywords";
+            rr:language "ba"]];
+    rr:predicateObjectMap [
+        rr:predicate qado:hasKeyword;
+        rr:objectMap [
+            rml:reference "question.[?(@.language == \"hy\")].keywords";
+            rr:language "hy"]];
+    rr:predicateObjectMap [
         rr:predicate qado:hasAnswer;
         rr:objectMap [
             rr:template "http://purl.com/qado/ontology.ttl#LABEL-answer-{id}"]];
