@@ -18,7 +18,6 @@ endif::[]
 
 = QADO Question Answering Dataset RDFizer
 
-
 This tool provides a web service to convert particular question answering datasets (represented in JSON format) into https://www.w3.org/TR/turtle/[RDF Turtle]. 
 It uses the https://github.com/WSE-research/QADO-question-answering-dataset-RDFizer/blob/main/app/ontology/qa-benchmark-ontology.ttl[Question Answering Dataset Ontology (QADO)] to represent the data in RDF.
 
@@ -27,10 +26,9 @@ toc::[]
 == Setup service
 
 === Configuration
+
 This service needs a running instance of https://github.com/WSE-research/QADO-RML-Applicator[QADO RML Applicator].
-The host of a instance, e. g. http://localhost:8000, has to be
-provided by setting the environment variable
-`RML_APPLICATOR_HOST`. Additionally, an instance of
+The host of a instance (e. g., http://localhost:8000) has to be provided by setting the environment variable `RML_APPLICATOR_HOST`. 
 
 === Using Gradle
 
@@ -38,12 +36,11 @@ To run the service locally run `./gradlew run`.
 
 === Using Docker
 
-Otherwise, you can set up a Docker image running the service by pulling the following
-image:
+Otherwise, you can set up a Docker image running the service by pulling the https://hub.docker.com/r/wseresearch/qado-rdfizer/tags[prepared image]:
 
 [source,bash]
 ----
-docker pull bigoli98/rdfizer:latest
+docker pull wseresearch/qado-rdfizer:latest
 ----
 
 Alternatively you can build the Docker image from source.
@@ -51,18 +48,18 @@ To start a Docker container use the following command:
 
 [source,shell]
 ----
-docker run -d --env RML_APPLICATOR_HOST="YOUR RML APPLICATOR HOST" -p "$EXTERNAL_PORT:8080" bigoli98/rdfizer:latest
+docker run -d --env RML_APPLICATOR_HOST="YOUR RML APPLICATOR HOST" -p "$EXTERNAL_PORT:8080" wseresearch/qado-rdfizer:latest
 ----
 
 == Accessing the service
+
 === Basic UI
-This service provides a basic UI at `$HOST:$PORT/` where you can
-transform a dataset and view the results directly in the
-web browser.
+
+This service provides a basic UI at `$HOST:$PORT/` where you can transform a dataset and view the results directly in the web browser.
 
 === API endpoint
-To transform a JSON file to RDF perform a `POST`-Request at `$HOST:$PORT/json2rdf`
-with a JSON payload of the following structure:
+
+To transform a JSON file to RDF perform a `POST`-Request at `$HOST:$PORT/json2rdf` with a JSON payload of the following structure:
 
 [source,json]
 ----
@@ -77,7 +74,7 @@ with a JSON payload of the following structure:
 
 == Supported Datasets
 
-By default, the following datasets/formats are supported:
+By default, the following datasets/formats are supported (link:./app/mappings[using these RML mappings]):
 
 * https://github.com/ag-sc/QALD[*QALD:* Question Answering over Linked Data]
 ** format identifier: `qald`
@@ -97,6 +94,7 @@ By default, the following datasets/formats are supported:
 ** format identifier: `compositional_wikidata`
 
 == Supported output formats
+
 You can choose the output format of the service by providing
 an `Accept Header`. The following `Content-Types` are supported:
 
