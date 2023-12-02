@@ -212,6 +212,32 @@
             rml:reference "question.[?(@.language == \"nl\")].string";
             rr:language "nl"]];
     rr:predicateObjectMap [
+        rr:predicate qado:hasQuestion;
+        rr:objectMap [
+            rml:reference "question.[?(@.language == \"uk\")].string";
+            rr:language "uk"]];
+    rr:predicateObjectMap [
+        rr:predicate qado:hasQuestion;
+        rr:objectMap [
+            rml:reference "question.[?(@.language == \"lt\")].string";
+            rr:language "lt"]];
+    rr:predicateObjectMap [
+        rr:predicate qado:hasQuestion;
+        rr:objectMap [
+            rml:reference "question.[?(@.language == \"be\")].string";
+            rr:language "be"]];
+    rr:predicateObjectMap [
+        rr:predicate qado:hasQuestion;
+        rr:objectMap [
+            rml:reference "question.[?(@.language == \"ba\")].string";
+            rr:language "ba"]];
+    rr:predicateObjectMap [
+        rr:predicate qado:hasQuestion;
+        rr:objectMap [
+            rml:reference "question.[?(@.language == \"hy\")].string";
+            rr:language "hy"]];
+            
+    rr:predicateObjectMap [
         rr:predicate qado:hasKeyword;
         rr:objectMap [
             rml:reference "question.[?(@.language == \"de\")].keywords";
@@ -409,6 +435,32 @@
             rml:reference "question.[?(@.language == \"nl\")].string";
             rr:language "nl"]];
     rr:predicateObjectMap [
+        rr:predicate qado:hasQuestion;
+        rr:objectMap [
+            rml:reference "question.[?(@.language == \"uk\")].string";
+            rr:language "uk"]];
+    rr:predicateObjectMap [
+        rr:predicate qado:hasQuestion;
+        rr:objectMap [
+            rml:reference "question.[?(@.language == \"lt\")].string";
+            rr:language "lt"]];
+    rr:predicateObjectMap [
+        rr:predicate qado:hasQuestion;
+        rr:objectMap [
+            rml:reference "question.[?(@.language == \"be\")].string";
+            rr:language "be"]];
+    rr:predicateObjectMap [
+        rr:predicate qado:hasQuestion;
+        rr:objectMap [
+            rml:reference "question.[?(@.language == \"ba\")].string";
+            rr:language "ba"]];
+    rr:predicateObjectMap [
+        rr:predicate qado:hasQuestion;
+        rr:objectMap [
+            rml:reference "question.[?(@.language == \"hy\")].string";
+            rr:language "hy"]];
+            
+    rr:predicateObjectMap [
         rr:predicate qado:hasKeyword;
         rr:objectMap [
             rml:reference "question.[?(@.language == \"de\")].keywords";
@@ -468,6 +520,31 @@
         rr:objectMap [
             rml:reference "question.[?(@.language == \"nl\")].keywords";
             rr:language "nl"]];
+    rr:predicateObjectMap [
+        rr:predicate qado:hasKeyword;
+        rr:objectMap [
+            rml:reference "question.[?(@.language == \"uk\")].keywords";
+            rr:language "uk"]];
+    rr:predicateObjectMap [
+        rr:predicate qado:hasKeyword;
+        rr:objectMap [
+            rml:reference "question.[?(@.language == \"lt\")].keywords";
+            rr:language "lt"]];
+    rr:predicateObjectMap [
+        rr:predicate qado:hasKeyword;
+        rr:objectMap [
+            rml:reference "question.[?(@.language == \"be\")].keywords";
+            rr:language "be"]];
+    rr:predicateObjectMap [
+        rr:predicate qado:hasKeyword;
+        rr:objectMap [
+            rml:reference "question.[?(@.language == \"ba\")].keywords";
+            rr:language "ba"]];
+    rr:predicateObjectMap [
+        rr:predicate qado:hasKeyword;
+        rr:objectMap [
+            rml:reference "question.[?(@.language == \"hy\")].keywords";
+            rr:language "hy"]];
     rr:predicateObjectMap [
         rr:predicate qado:hasAnswer;
         rr:objectMap [
