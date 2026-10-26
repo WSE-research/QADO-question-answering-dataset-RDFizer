@@ -3,8 +3,7 @@ COPY app/ app/
 WORKDIR /home/gradle/app
 RUN gradle installDist
 
-FROM openjdk:latest
-RUN microdnf install findutils
+FROM eclipse-temurin:17-jre
 COPY --from=build /home/gradle/app/build/install/app /rdfizer
 WORKDIR /rdfizer/bin
 COPY app/ontology ./ontology
