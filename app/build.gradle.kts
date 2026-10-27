@@ -31,14 +31,14 @@ dependencies {
     // Use the Kotlin JDK 8 standard library.
     implementation("org.jetbrains.kotlin:kotlin-stdlib-jdk8")
 
-    implementation("io.ktor:ktor-server-core:2.3.13")
-    implementation("io.ktor:ktor-server-netty:2.3.13")
-    implementation("io.ktor:ktor-server-content-negotiation:2.3.13")
-    implementation("io.ktor:ktor-client-content-negotiation:2.3.13")
-    implementation("io.ktor:ktor-serialization-gson:2.3.13")
-    implementation("io.ktor:ktor-client-core:2.3.13")
-    implementation("io.ktor:ktor-client-cio:2.3.13")
-    implementation("io.ktor:ktor-server-html-builder:2.3.13")
+    implementation("io.ktor:ktor-server-core:3.6.0")
+    implementation("io.ktor:ktor-server-netty:3.6.0")
+    implementation("io.ktor:ktor-server-content-negotiation:3.6.0")
+    implementation("io.ktor:ktor-client-content-negotiation:3.6.0")
+    implementation("io.ktor:ktor-serialization-gson:3.6.0")
+    implementation("io.ktor:ktor-client-core:3.6.0")
+    implementation("io.ktor:ktor-client-cio:3.6.0")
+    implementation("io.ktor:ktor-server-html-builder:3.6.0")
     implementation("ch.qos.logback:logback-classic:1.5.38")
 
     // Use the Kotlin test library.
